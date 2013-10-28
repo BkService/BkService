@@ -6,24 +6,40 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>My private cabinet</title>
-	<link rel="stylesheet" type="text/css" href="cabinet.css"/>
+	<link rel="stylesheet" type="text/css" href="styles/cabinet.css"/>
 </head>
 <body>
 <%
+	//это убрать отсюда нафиг. это очень плохая заглушка =)
 	User user = (User)request.getSession().getAttribute("user");
+	String namePage = (String) request.getSession().getAttribute("pagetype");
+	if(namePage == null || namePage.isEmpty())
+		namePage = "main.jsp";
 %>
 	<div class="header">
-		<img src="" class="avatar"/>
+		<img src="imgs/ava.jpg" class="avatar"/>
 		<div class="account">
+			<!-- get info about user from connectionManager -->
 			Your name: <%= " " + user.getUserName() %><br>
-			Your id:   <%= " " + user.getUserId().toString() %>
+			Your id:   <%= " " + user.getUserId().toString() %><br>
+			User info....
 		</div>
-		<a class="logout" href="/SimpleServer/LogoutHandler">Logout</a>
+		<div class="logout"><a href="/SimpleServer/LogoutHandler">Logout</a></div>
 	</div>
 	
-	<div class="content">
-		<br>
-		Content here
+	<div>
+		<div class="blockmenu">
+			<span class="labelmenu">Menu</span>
+			<table>
+				<tr><td class="itemmenu">Main page</td></tr>
+				<tr><td class="itemmenu">Upcoming events</td></tr>
+				<tr><td class="itemmenu">My history of bets</td></tr>
+				<tr><td class="itemmenu">Options</td></tr>
+			</table>
+		</div>
+		<div class="workspace">
+			<jsp:include page="<%=namePage%>"></jsp:include>
+		</div>
 	</div>
 </body>
 </html>

@@ -38,3 +38,6 @@ table.form{
 span.surelyField {
 	color: rgb(255, 100, 200);
 }
+div.message {
+	color: rgb(255, 80, 80);
+}

@@ -6,8 +6,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Its working</title>
-	<link rel="stylesheet" type="text/css" href="index.css"/>
-	<script src="index.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="styles/index.css"/>
+	<script src="js/index.js" type="text/javascript"></script>
 	<script src="http://code.jquery.com/jquery-git2.js" type="text/javascript"></script>
 </head>
 <body>
@@ -16,10 +16,12 @@
 	</h2>
 	<%
 		User user = (User)request.getSession().getAttribute("user");
+		String msg = (String) request.getSession().getAttribute("msg");
+		msg = (msg == null) ? "" : msg;
 		if(user != null) {
 			request.getRequestDispatcher("/cabinet.jsp").forward(request, response);
 		} else {
-	%>
+	%>	
 		<div id="signin" class="visible">
 			<h4>Sign in, please:</h4>
 			<form id="signform" action="/SimpleServer/LoginHandler" method="post" 
@@ -39,6 +41,10 @@
 			<div class="action" onClick="replaceShow();">Sign in here</div>
 		</div>
 	<%	}  %>
-	
+	<br>
+	<div class="message"><%= msg %></div>
+	<%
+		request.getSession().setAttribute("msg", null);
+	%>
 </body>
 </html>

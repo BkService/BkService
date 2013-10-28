@@ -8,6 +8,7 @@
 	<title>Its working</title>
 	<link rel="stylesheet" type="text/css" href="index.css"/>
 	<script src="index.js" type="text/javascript"></script>
+	<script src="http://code.jquery.com/jquery-git2.js" type="text/javascript"></script>
 </head>
 <body>
 	<h2>
@@ -21,17 +22,19 @@
 	%>
 		<div id="signin" class="visible">
 			<h4>Sign in, please:</h4>
-			<form action="/SimpleServer/LoginHandler" method="post">
-				<input name="uname" type="text" value="input name here"/>
-				<input type="submit" value="SignIn"/>
+			<form id="signform" action="/SimpleServer/LoginHandler" method="post" 
+							onsubmit="">
+				<input id="signuname" name="uname" type="text" placeholder="input login"/><br>
+				<input id="signpasswd" name="passwd" type="password" placeholder="input password"/><br>
+				<input type="submit" value="SignIn" onclick="return validatorLogin();"/>
 			</form>	
 			<br>
 			<div class="action" onClick="replaceShow();">Registrations</div>
 		</div>
 		<div id="registration" class="none">
-			Fields for registration new account will be here.<br><br>
-			Input users data and<br>
-			save it to storage on server.<br>
+			<br>Input data to this fields and press OK<br><br>
+			<jsp:include page="registration_form.html"></jsp:include>
+			<br><br>
 			If you have account of <s>hell</s> Simple Server,
 			<div class="action" onClick="replaceShow();">Sign in here</div>
 		</div>

@@ -4,26 +4,23 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
-  
   <servlet>
     <servlet-name>loginServlet</servlet-name>
     <servlet-class>juniors.server.ext.web.ui.handlers.LoginHandler</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>logoutServlet</servlet-name>
-  	<servlet-class>juniors.server.ext.web.ui.handlers.LogoutHandler</servlet-class>
+    <servlet-name>logoutServlet</servlet-name>
+    <servlet-class>juniors.server.ext.web.ui.handlers.LogoutHandler</servlet-class>
   </servlet>
-  
   <servlet-mapping>
     <servlet-name>loginServlet</servlet-name>
     <url-pattern>/LoginHandler</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>logoutServlet</servlet-name>
-  	<url-pattern>/LogoutHandler</url-pattern>
+    <servlet-name>logoutServlet</servlet-name>
+    <url-pattern>/LogoutHandler</url-pattern>
   </servlet-mapping>
   <session-config>
-  	<session-timeout>30</session-timeout>
+    <session-timeout>30</session-timeout>
   </session-config>
-  
 </web-app>

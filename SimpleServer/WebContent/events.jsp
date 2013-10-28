@@ -1,0 +1,2 @@
+
+<%= "The page have events!" %>

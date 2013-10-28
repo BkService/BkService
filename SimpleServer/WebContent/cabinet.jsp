@@ -31,8 +31,8 @@
 		<div class="blockmenu">
 			<span class="labelmenu">Menu</span>
 			<table>
-				<tr><td class="itemmenu">Main page</td></tr>
-				<tr><td class="itemmenu">Upcoming events</td></tr>
+				<tr><td class="itemmenu"><a href="/SimpleServer/tomain">Main page</a></td></tr>
+				<tr><td class="itemmenu"><a href="/SimpleServer/toevent">Upcoming events</a></td></tr>
 				<tr><td class="itemmenu">My history of bets</td></tr>
 				<tr><td class="itemmenu">Options</td></tr>
 			</table>

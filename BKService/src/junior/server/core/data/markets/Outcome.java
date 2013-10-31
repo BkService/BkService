@@ -4,27 +4,27 @@ import java.util.LinkedList;
 import junior.server.core.data.bets.*;
 
 public class Outcome {
-	private final Integer outcome_id;
+	private final Integer outcomeId;
 	private Double coefficient; //всегда больше 1
 	private String description;
 	private LinkedList<Bet> bets; // контейнер со ставками на данный исход
 	
 	public Outcome(Integer id){
-		outcome_id = id;
+		outcomeId = id;
 		coefficient = 1.0;
 		description = "No available description.";
 		bets = new LinkedList<Bet>();
 	}
 	
 	public Outcome(Integer id, Double coefficient){
-		outcome_id = id;
+		outcomeId = id;
 		this.coefficient = coefficient;
 		description = "No available description.";
 		bets = new LinkedList<Bet>();
 	}
 	
 	public Outcome(Integer id, Double coefficient, String description){
-		outcome_id = id;
+		outcomeId = id;
 		this.coefficient = coefficient;
 		this.description = description;
 		bets = new LinkedList<Bet>();
@@ -57,7 +57,7 @@ public class Outcome {
 	 * @return
 	 */
 	public Integer getOutcomeId(){
-		return outcome_id;
+		return outcomeId;
 	}
 	
 	/**

@@ -143,6 +143,15 @@ public class UserManager implements UserManagerInterface{
 		return true;
 	}
 	
+	@Override
+	public int getCountUsers(){
+		return userMap.size();
+	}
+	
+	@Override
+	public int getCountAuthorizedUsers(){
+		return authorizedUsers.size();
+	}
 	
 	/**
 	 * для проведения тестов

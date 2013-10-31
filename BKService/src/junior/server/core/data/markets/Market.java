@@ -2,21 +2,24 @@ package junior.server.core.data.markets;
 
 import java.util.HashMap;
 
+import junior.server.core.data.bets.Bet;
 import junior.server.core.data.users.User;
 
 public class Market {
-	private final Integer marked_id;
+	private final Integer marketId;
 	private HashMap<Integer, Outcome> outcomesMap;
 	private String description;
 	
 	public Market(Integer id){
-		marked_id = id;
+		marketId = id;
 		description = "No available description.";
+		outcomesMap = new HashMap<Integer, Outcome>();
 	}
 	
-	public Market(Integer id, String new_description){
-		marked_id = id;
-		description = new_description;
+	public Market(Integer id, String newDescription){
+		marketId = id;
+		description = newDescription;
+		outcomesMap = new HashMap<Integer, Outcome>();
 	}
 	
 	/**
@@ -32,8 +35,8 @@ public class Market {
 	 * @param new_description
 	 * @return true - описание задано. False - произошла ошибка.
 	 */
-	public boolean setDescription(String new_description){
-		description = new_description;
+	public boolean setDescription(String newDescription){
+		description = newDescription;
 		
 		return true;
 	}
@@ -43,7 +46,7 @@ public class Market {
 	 * @return
 	 */
 	public Integer getMarketId(){
-		return marked_id;
+		return marketId;
 	}
 	
 	/**
@@ -51,12 +54,14 @@ public class Market {
 	 * @param new_outcome
 	 * @return true - добавил. false - не добавил
 	 */
-	public boolean addOutcome(Outcome new_outcome){
-		if (outcomesMap.put(new_outcome.getOutcomeId(), new_outcome) == null){
-			return true;
+	public boolean addOutcome(Outcome newOutcome){
+		int id = newOutcome.getOutcomeId();
+		if (outcomesMap.containsKey(id)){
+			return false;
 		}
 		else{
-			return false;
+			outcomesMap.put(id, newOutcome);
+			return true;
 		}
 	}
 	
@@ -66,14 +71,24 @@ public class Market {
 	}
 	
 	/**
+	 * Пока заглушка
 	 * 
-	 * @param bet_id
+	 * @param betId
 	 * @param user
-	 * @param outcome_id
+	 * @param outcomeId
 	 * @return
 	 */
-	public Bet makeBet(Integer bet_id, User user, Integer outcome_id){
-		
+	public Bet makeBet(Integer betId, User user, Integer outcomeId){
+		return null;
+	}
+	
+	/**
+	 * заглушка
+	 * @param idWinOutcame
+	 * @return
+	 */
+	public boolean calculateMarket(int idWinOutcame){
+		return false;
 	}
 }
 

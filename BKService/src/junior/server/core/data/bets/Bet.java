@@ -2,7 +2,6 @@ package junior.server.core.data.bets;
 
 import junior.server.core.data.markets.*;
 import junior.server.core.data.users.*;
-import junior.server.core.data.events.*;
 
 /**
  * 

@@ -60,6 +60,18 @@ public interface UserManagerInterface {
 	 */
 	public boolean authorizeUser(Integer user_id);
 	
+	/**
+	 * 
+	 * @return количество зарегистрированных пользователей
+	 */
+	public int getCountUsers();
+	
+	/**
+	 * 
+	 * @return количество авторизованных пользователей
+	 */
+	public int getCountAuthorizedUsers();
+	
 }
 
 

@@ -80,6 +80,14 @@ public class Event {
 	public Integer getEventId(){
 		return id;
 	}
+	
+	/**
+	 * 
+	 * @return количество маркетов
+	 */
+	public int getMarketsCount(){
+		return markets.size();
+	}
 }
 
 

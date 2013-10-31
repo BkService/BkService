@@ -68,5 +68,17 @@ public class Data implements UserManagerInterface, EventManagerInterface{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public int getCountUsers() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getCountAuthorizedUsers() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }

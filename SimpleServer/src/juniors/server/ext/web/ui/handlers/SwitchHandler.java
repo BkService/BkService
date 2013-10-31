@@ -1,4 +1,4 @@
-package juniors.server.ext.web;
+package juniors.server.ext.web.ui.handlers;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -6,16 +6,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class SwitchToMain extends HttpServlet {
+public class SwitchHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public SwitchToMain() {
+
+    public SwitchHandler() {
         super();
     }
 
-	protected void service(HttpServletRequest request, HttpServletResponse response) 
+	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getSession().setAttribute("pagetype", "main.jsp");
+		String pgname = request.getParameter("target");
+		if(pgname == null || pgname.isEmpty())
+			pgname = "main";
+		request.getSession().setAttribute("pagetype", pgname);
 		request.getRequestDispatcher("/cabinet.jsp").forward(request, response);
 	}
 

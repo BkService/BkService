@@ -19,7 +19,7 @@
 		String msg = (String) request.getSession().getAttribute("msg");
 		msg = (msg == null) ? "" : msg;
 		if(user != null) {
-			request.getRequestDispatcher("/cabinet.jsp").forward(request, response);
+			request.getRequestDispatcher("/SwitchHandler").forward(request, response);
 		} else {
 	%>	
 		<div id="signin" class="visible">
@@ -35,7 +35,7 @@
 		</div>
 		<div id="registration" class="none">
 			<br>Input data to this fields and press OK<br><br>
-			<jsp:include page="registration_form.html"></jsp:include>
+			<jsp:include page="include/registration_form.html"></jsp:include>
 			<br><br>
 			If you have account of <s>hell</s> Simple Server,
 			<div class="action" onClick="replaceShow();">Sign in here</div>

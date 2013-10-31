@@ -21,7 +21,12 @@ function validatorRegForm() {
 	var passwd = document.getElementById('regpasswd').value;
 	var rpasswd = document.getElementById('regrpasswd').value;
 	var numVisa = document.getElementById('regvisa').value;
+	var username = document.getElementById('regname').value;
 	
+	if(username == null || username.length < 1) {
+		alert('Name can not be empty');
+		return false;
+	}
 	if(login.length < 3 || login == null) {
 		alert('Login must be more 2 chars');
 		return false;

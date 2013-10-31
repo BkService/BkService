@@ -4,6 +4,9 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+  <!-- 
+  		Servlets
+   -->
   <servlet>
     <servlet-name>loginServlet</servlet-name>
     <servlet-class>juniors.server.ext.web.ui.handlers.LoginHandler</servlet-class>
@@ -21,13 +24,12 @@
     <servlet-class>juniors.server.ext.web.ui.handlers.RegistrationHandler</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>switchToMain</servlet-name>
-    <servlet-class>juniors.server.ext.web.SwitchToMain</servlet-class>
+  	<servlet-name>switcher</servlet-name>
+  	<servlet-class>juniors.server.ext.web.ui.handlers.SwitchHandler</servlet-class>
   </servlet>
-  <servlet>
-    <servlet-name>switchToEvent</servlet-name>
-    <servlet-class>juniors.server.ext.web.SwitchToEvent</servlet-class>
-  </servlet>
+  <!-- 
+  		Mapping servlets
+   -->
   <servlet-mapping>
     <servlet-name>loginServlet</servlet-name>
     <url-pattern>/LoginHandler</url-pattern>
@@ -45,13 +47,12 @@
     <url-pattern>/RegistrationHandler</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>switchToMain</servlet-name>
-    <url-pattern>/tomain</url-pattern>
+  	<servlet-name>switcher</servlet-name>
+  	<url-pattern>/SwitchHandler</url-pattern>
   </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>switchToEvent</servlet-name>
-    <url-pattern>/toevent</url-pattern>
-  </servlet-mapping>
+   <!-- 
+  		Configuration
+   -->
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>

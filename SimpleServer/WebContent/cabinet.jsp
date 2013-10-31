@@ -7,6 +7,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>My private cabinet</title>
 	<link rel="stylesheet" type="text/css" href="styles/cabinet.css"/>
+	<link rel="stylesheet" type="text/css" href="styles/events.css"/>
+	<script type="text/javascript" src="js/jsRequests.js"></script>
 </head>
 <body>
 <%
@@ -14,7 +16,7 @@
 	User user = (User)request.getSession().getAttribute("user");
 	String namePage = (String) request.getSession().getAttribute("pagetype");
 	if(namePage == null || namePage.isEmpty())
-		namePage = "main.jsp";
+		namePage = "main";
 %>
 	<div class="header">
 		<img src="imgs/ava.jpg" class="avatar"/>
@@ -31,12 +33,19 @@
 		<div class="blockmenu">
 			<span class="labelmenu">Menu</span>
 			<table>
-				<tr><td class="itemmenu"><a href="/SimpleServer/tomain">Main page</a></td></tr>
-				<tr><td class="itemmenu"><a href="/SimpleServer/toevent">Upcoming events</a></td></tr>
-				<tr><td class="itemmenu">My history of bets</td></tr>
-				<tr><td class="itemmenu">Options</td></tr>
+				<tr><td class="itemmenu"><a id="main" style="cursor: pointer;" 
+										onclick="switchPage(this);">Main page</a></td></tr>
+				<tr><td class="itemmenu"><a id="events" style="cursor: pointer;" 
+										onclick="switchPage(this);">Upcoming events</a></td></tr>
+				<tr><td class="itemmenu"><a id="history" style="cursor: pointer;" 
+										onclick="switchPage(this);">My history of bets</a></td></tr>
+				<tr><td class="itemmenu"><a id="options" style="cursor: pointer;" 
+										onclick="switchPage(this);">Options</a></td></tr>
 			</table>
 		</div>
+		<%
+			namePage = "include/" + namePage + ".jsp";
+		%>
 		<div class="workspace">
 			<jsp:include page="<%=namePage%>"></jsp:include>
 		</div>

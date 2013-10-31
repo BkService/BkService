@@ -22,7 +22,7 @@ public class LoginHandler extends HttpServlet {
 		
 		User user = new User(request.getParameter("uname"));
 		request.getSession().setAttribute("user", user);
-		request.getRequestDispatcher("/cabinet.jsp").forward(request, response);
+		request.getRequestDispatcher("/SwitchHandler").forward(request, response);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 

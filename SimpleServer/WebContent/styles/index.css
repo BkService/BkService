@@ -27,6 +27,7 @@ div.action {
 }
 div.action:HOVER {
 	font-family: cursive;
+	cursor: pointer;
 }
 td.label {
 	text-align: left;

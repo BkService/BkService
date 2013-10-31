@@ -45,3 +45,10 @@ td.itemmenu {
 	font-size: large;
 	margin-left: 5%;
 }
+td.itemmenu:VISITED, td.itemmenu:ACTIVE, td.itemmenu:AFTER, td.itemmenu:LINK {
+	color: balck;
+}
+td.itemmenu:hover {
+	background-color: lime;
+	color: black;
+}

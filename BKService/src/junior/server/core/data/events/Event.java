@@ -27,6 +27,7 @@ public class Event {
 	
 	public Event(int id, String new_description){
 		this.id = id;
+		markets = new HashMap<Integer, Market>();
 		description = new_description;
 	}
 	

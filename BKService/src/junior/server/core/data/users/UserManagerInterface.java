@@ -53,6 +53,13 @@ public interface UserManagerInterface {
 	public boolean changeUserData(String login, String new_name, 
 			String new_surname, String new_password, String new_bank_account);
 	
+	/**
+	 * 
+	 * @param user_id
+	 * @return true - залогинен. false - уже залогинен, нет такого пользователя и т.д.
+	 */
+	public boolean authorizeUser(Integer user_id);
+	
 }
 
 

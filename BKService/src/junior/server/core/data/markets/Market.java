@@ -62,6 +62,10 @@ public class Market {
 	public HashMap<Integer, ResultMarket> getResultMap(){
 		return resultsMap;
 	}
+	
+	public Bet makeBet(Integer bet_id, User user){
+		
+	}
 }
 
 

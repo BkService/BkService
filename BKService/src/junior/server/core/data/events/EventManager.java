@@ -11,7 +11,7 @@ public class EventManager implements EventManagerInterface {
 	HashMap<Integer, Event> eventsMap;	
 	
 	@Override
-	public Event createEvent(Event new_event) {
+	public Event addEvent(Event new_event) {
 		return eventsMap.put(new_event.getEventId(), new_event);
 	}
 

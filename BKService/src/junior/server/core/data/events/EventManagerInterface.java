@@ -10,7 +10,7 @@ public interface EventManagerInterface {
 	 * @param new_event
 	 * @return ссылка на созданное событие
 	 */
-	public Event createEvent(Event new_event);
+	public Event addEvent(Event new_event);
 	
 	/**
 	 * Получить ссылку на событие по id

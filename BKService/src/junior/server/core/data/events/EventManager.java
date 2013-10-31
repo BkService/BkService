@@ -1,6 +1,7 @@
 package junior.server.core.data.events;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Реализация интерфейса EventManagerInterface
@@ -8,7 +9,11 @@ import java.util.HashMap;
  *
  */
 public class EventManager implements EventManagerInterface {
-	HashMap<Integer, Event> eventsMap;	
+	Map<Integer, Event> eventsMap;	
+	
+	public EventManager(){
+		eventsMap = new HashMap<Integer, Event>();
+	}
 	
 	@Override
 	public Event addEvent(Event new_event) {

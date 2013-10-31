@@ -15,7 +15,7 @@ public interface EventManagerInterface {
 	/**
 	 * Получить ссылку на событие по id
 	 * @param event_id
-	 * @return сссылка на событе. Если такого не существует - возвращает null
+	 * @return cсылка на событе. Если такого не существует - возвращает null
 	 */
 	public Event getEvent(int event_id);
 	

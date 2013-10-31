@@ -2,9 +2,11 @@ package junior.server.core.data.markets;
 
 import java.util.HashMap;
 
+import junior.server.core.data.users.User;
+
 public class Market {
 	private final Integer marked_id;
-	private HashMap<Integer, ResultMarket> resultsMap;
+	private HashMap<Integer, Outcome> outcomesMap;
 	private String description;
 	
 	public Market(Integer id){
@@ -46,11 +48,11 @@ public class Market {
 	
 	/**
 	 * Добавить новый исход. Id исхода в пределах маркета должен быть уникальным
-	 * @param new_result
+	 * @param new_outcome
 	 * @return true - добавил. false - не добавил
 	 */
-	public boolean addResult(ResultMarket new_result){
-		if (resultsMap.put(new_result.getResultId(), new_result) == null){
+	public boolean addOutcome(Outcome new_outcome){
+		if (outcomesMap.put(new_outcome.getOutcomeId(), new_outcome) == null){
 			return true;
 		}
 		else{
@@ -59,11 +61,18 @@ public class Market {
 	}
 	
 	// нужна ли такая возможность и как её лучше реализовать?
-	public HashMap<Integer, ResultMarket> getResultMap(){
-		return resultsMap;
+	public HashMap<Integer, Outcome> getOutcomeMap(){
+		return outcomesMap;
 	}
 	
-	public Bet makeBet(Integer bet_id, User user){
+	/**
+	 * 
+	 * @param bet_id
+	 * @param user
+	 * @param outcome_id
+	 * @return
+	 */
+	public Bet makeBet(Integer bet_id, User user, Integer outcome_id){
 		
 	}
 }

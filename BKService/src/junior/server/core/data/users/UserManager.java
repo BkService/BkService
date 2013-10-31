@@ -1,17 +1,17 @@
 package junior.server.core.data.users;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class UserManager implements UserManagerInterface{
 	
-	private Map<String, User> userMap; // Контейнер с пользователями. Ключь для объекта - логин. 
-	// возможно это лучше проверять javascript-ом прям на страничке, но добавлю
-	private final int MAX_LENGTH_LOGIN = 20;
-	private final int MIN_LENGTH_LOGIN = 5;
+	private Map<String, User> userMap; // Контейнер с пользователями. Ключь для объекта - логин. 	
+	private Map<Integer, User> authorizedUsers; // контейнер с авторизованными пользователями
 	
 	public UserManager(){
 		userMap = new HashMap<String, User>();
+		authorizedUsers = new HashMap<Integer, User>();
 	}
 	
 	/**
@@ -19,7 +19,7 @@ public class UserManager implements UserManagerInterface{
 	 * @param login
 	 * @return user с указанным логином 
 	 */
-	public UserInterface getUser(String login){
+	public User getUser(String login){
 		return userMap.get(login);
 	}
 	
@@ -100,6 +100,51 @@ public class UserManager implements UserManagerInterface{
 	}*/
 	
 	/**
+	 * Задать пользователю с указаным логином новые имя, фамилию, номер счёти и пароль
+	 */
+	@Override
+	public boolean changeUserData(String login, String new_name,
+			String new_surname, String new_password, String new_bank_account) {
+		User user = userMap.get(login);
+		
+		if (user == null){
+			return false;
+		}
+		
+		user.setSurname(new_surname);
+		user.setBankAccount(new_bank_account);
+		user.setName(new_name);
+		user.setPassword(new_password);
+		
+		return true;
+	}
+	
+	
+	/**
+	 * Авторизовать пользователя
+	 * @param user_id - ключ
+	 * @return true - авторизован. false - невозможно авторизовать
+	 */
+	@Override
+	public boolean authorizeUser(Integer user_id) {
+		User user = userMap.get(user_id);
+		
+		// если пользователя не существует или пользователь уже авторизован
+		if (user == null || user.isAuthorized){
+			return false;
+		}
+		
+		user.lastTimeActive = Calendar.getInstance();
+		user.isAuthorized = true;
+		
+		// user_id заменим на какой то ключ
+		authorizedUsers.put(user_id, user);
+		
+		return true;
+	}
+	
+	
+	/**
 	 * для проведения тестов
 	 * @param args - не используется
 	 */
@@ -108,17 +153,5 @@ public class UserManager implements UserManagerInterface{
 
 	}
 
-	@Override
-	public boolean conteinsUser(String login) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean changeUserData(String login, String new_name,
-			String new_surname, String new_password, String new_bank_account) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	
 }

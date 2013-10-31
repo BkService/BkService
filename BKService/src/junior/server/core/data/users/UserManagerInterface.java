@@ -9,7 +9,7 @@ public interface UserManagerInterface {
 	 * @param login
 	 * @return true - пользователь с таким логином существует
 	 */
-	public boolean conteinsUser(String login);
+	public boolean containsUser(String login);
 	
 	/**
 	 * Меняет логин, если новый логин ещё не занят и подходит (по длине пока что)
@@ -39,7 +39,7 @@ public interface UserManagerInterface {
 	 * @return объект пользователя (не желательно, изменение данных 
 	 * через его интерфейсы  
 	 */
-	public UserInterface getUser(String login);
+	public User getUser(String login);
 	
 	/**
 	 * 

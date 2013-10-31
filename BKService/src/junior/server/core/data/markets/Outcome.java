@@ -3,28 +3,28 @@ package junior.server.core.data.markets;
 import java.util.LinkedList;
 import junior.server.core.data.bets.*;
 
-public class ResultMarket {
-	private final Integer result_id;
-	private Integer coefficient; //всегда больше 1
+public class Outcome {
+	private final Integer outcome_id;
+	private Double coefficient; //всегда больше 1
 	private String description;
 	private LinkedList<Bet> bets; // контейнер со ставками на данный исход
 	
-	public ResultMarket(Integer id){
-		result_id = id;
-		coefficient = 1;
+	public Outcome(Integer id){
+		outcome_id = id;
+		coefficient = 1.0;
 		description = "No available description.";
 		bets = new LinkedList<Bet>();
 	}
 	
-	public ResultMarket(Integer id, Integer coefficient){
-		result_id = id;
+	public Outcome(Integer id, Double coefficient){
+		outcome_id = id;
 		this.coefficient = coefficient;
 		description = "No available description.";
 		bets = new LinkedList<Bet>();
 	}
 	
-	public ResultMarket(Integer id, Integer coefficient, String description){
-		result_id = id;
+	public Outcome(Integer id, Double coefficient, String description){
+		outcome_id = id;
 		this.coefficient = coefficient;
 		this.description = description;
 		bets = new LinkedList<Bet>();
@@ -34,7 +34,7 @@ public class ResultMarket {
 	 * 
 	 * @return коэффициент для исхода
 	 */
-	public Integer getCoefficient(){
+	public Double getCoefficient(){
 		return coefficient;
 	}
 	
@@ -43,7 +43,7 @@ public class ResultMarket {
 	 * @param new_coefficient
 	 * @return true - коэффициент задан. false - не удалось задать
 	 */
-	public boolean setCoefficient(Integer new_coefficient){
+	public boolean setCoefficient(Double new_coefficient){
 		if (new_coefficient <= 1){
 			return false;
 		}
@@ -56,8 +56,8 @@ public class ResultMarket {
 	 * 
 	 * @return
 	 */
-	public Integer getResultId(){
-		return result_id;
+	public Integer getOutcomeId(){
+		return outcome_id;
 	}
 	
 	/**

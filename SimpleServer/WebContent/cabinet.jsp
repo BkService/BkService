@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="juniors.server.core.data.User" %>
+<%@ page import="junior.server.core.data.users.User" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,9 +22,9 @@
 		<img src="imgs/ava.jpg" class="avatar"/>
 		<div class="account">
 			<!-- get info about user from connectionManager -->
-			Your name: <%= " " + user.getUserName() %><br>
-			Your id:   <%= " " + user.getUserId().toString() %><br>
-			User info....
+			Name: 			<%= " " + user.getName() %><br>
+			Surname:   		<%= " " + user.getSurname() %><br>
+			Bank account:	<%= " " + user.getBankAccount() %>
 		</div>
 		<div class="logout"><a href="/SimpleServer/LogoutHandler">Logout</a></div>
 	</div>

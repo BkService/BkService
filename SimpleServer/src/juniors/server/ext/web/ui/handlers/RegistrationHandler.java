@@ -6,11 +6,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import juniors.server.ext.web.stubs.ConnectionManager;
+import junior.server.core.data.users.User;
+import juniors.server.core.logic.ServerFacade;
+import juniors.server.core.logic.services.AccountsService;
 
 public class RegistrationHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
   
     public RegistrationHandler() {
         super();
@@ -22,16 +23,14 @@ public class RegistrationHandler extends HttpServlet {
 		String lname = (String) request.getParameter("lastName");
 		String login = (String) request.getParameter("login");
 		String passwd  = (String) request.getParameter("passwd");
-		String rpasswd  = (String) request.getParameter("rpasswd");
 		String visa = (String) request.getParameter("count");
+		User user = new User(login, name, lname, passwd, visa);
 
-		/*
-		 * Если юзер не существует - добавляем его
-		 * иначе идем на начальную страницу с сообщение об ошибке
-		 */
-		if(!ConnectionManager.getConnection().checkUser(login))
-			ConnectionManager.getConnection().createUser(name, lname, login, passwd, rpasswd, visa);
-		else
+		AccountsService account = ServerFacade.getInstance().getServices().getAccountsService();
+		if(!account.checkUser(user)) {
+			account.addUser(user);
+			request.getSession().setAttribute("msg", new String("User with login <b>" + login + "</b> created successfully"));
+		} else
 			request.getSession().setAttribute("msg", new String("User with login <b>" + login + "</b> exists"));
 		request.getRequestDispatcher("/").forward(request, response);
 	}

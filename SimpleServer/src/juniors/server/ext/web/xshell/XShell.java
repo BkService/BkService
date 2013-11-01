@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import juniors.server.core.logic.ServerFacade;
+
 public class XShell extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -43,9 +45,22 @@ public class XShell extends HttpServlet {
 	protected String execute(String cmd, HttpServletRequest request) {
 		String result = "<br>command not found. input 'man' for get help";
 		if(cmd.equals("startfl")) {
-			/* code starting feed */
+			ServerFacade facade = ServerFacade.getInstance();
+			if(!facade.getStatusFL())
+				facade.start();
 			result = "<br>start feed loader.... success. Date start " + new Date().toString() + "<br>";
 			return result;
+		}
+		if(cmd.equals("stopfl")) {
+			ServerFacade facade = ServerFacade.getInstance();
+			if(facade.getStatusFL())
+				facade.stop();
+			result = "<br>stop feed loader.... success. Date stop " + new Date().toString();
+			return result;
+		}
+		if(cmd.equals("statefl")) {
+			ServerFacade facade = ServerFacade.getInstance();
+			result = facade.getStatusFL() ? "<br>feed is working" : "<br>feed is stoped";
 		}
 		if(cmd.equals("info")) {
 			result = "<br>Server name: " + request.getServerName() + ". " +
@@ -54,8 +69,8 @@ public class XShell extends HttpServlet {
 		}
 		if(cmd.equals("block")) {
 			result = "<br><div id=\"g" +getNextId()+ "\" class=\"grInfo\">" +
-					 "Graphical info. Some graphic will be here." +
-					 "<div class=\"close\" onclick=\"closeGr('g"+ getBack() +"');\">X</div>" +
+					 "description graphic. Some graphic will be here." +
+					 "<div class=\"close\" onclick=\"closeGr('g"+ getBack() +"');\">-</div>" +
 					 "<br><img class=\"graphic\" href=\"/GrServlet?type=test\" />" +
 					 "</div><br>";
 		}
@@ -67,6 +82,8 @@ public class XShell extends HttpServlet {
 	private final String manual = "<br>Manual of the xshell interpretator. Commands:<br>" +
 			"clear 		- delete history.<br>" +
 			"startfl 	- start the feed loader<br>" +
+			"stopfl		- stoop the feed loader<br>" +
+			"statefl	- get state of feed loader" +
 			"info 		- get information about server<br>" +
 			"block 		- test graphics information<br>" +
 			"exit 		- exit from xshell";

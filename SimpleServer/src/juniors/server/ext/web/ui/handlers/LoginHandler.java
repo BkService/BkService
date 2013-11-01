@@ -2,14 +2,14 @@ package juniors.server.ext.web.ui.handlers;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import juniors.server.core.data.User;
+import junior.server.core.data.users.User;
+import juniors.server.core.logic.ServerFacade;
+import juniors.server.core.logic.services.AccountsService;
 
-@WebServlet("/LoginHandler")
 public class LoginHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -20,15 +20,27 @@ public class LoginHandler extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
-		User user = new User(request.getParameter("uname"));
+		String username = request.getParameter("uname");
 		String passwd = request.getParameter("passwd");
-		if(user.getUserName().equals("admin") && passwd.equals("sserver"))
-			request.getRequestDispatcher("/console.jsp").forward(request, response);
+		String path = "/SwitchHandler";
+		User user = null;
+		if(username.equals("admin") && passwd.equals("sserver"))
+			path = "/console.jsp";
 		else {
-			System.out.println(user.getUserName());
-			request.getSession().setAttribute("user", user);
-			request.getRequestDispatcher("/SwitchHandler").forward(request, response);
+			AccountsService accounts = ServerFacade.getInstance().getServices().getAccountsService();
+			if(accounts != null) {
+			user = accounts.getUser(username); // username - is login
+				if(user == null) {
+					path = "index.jsp";
+					request.getSession().setAttribute("msg", "User with the login and password doesn't exists");
+				}
+			} else {
+				path = "index.jsp";
+				request.getSession().setAttribute("msg", "Server not started. Please, contact with admin.");
+			}
 		}
+		request.getSession().setAttribute("user", user);
+		request.getRequestDispatcher(path).forward(request, response);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 

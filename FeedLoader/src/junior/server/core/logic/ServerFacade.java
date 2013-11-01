@@ -58,7 +58,7 @@ public class ServerFacade {
 	public Services getServices() {
 		Services services = null;
 		if (started)
-			services = new Services();
+			services = Services.getInstance();
 		return services;
 	}
 }

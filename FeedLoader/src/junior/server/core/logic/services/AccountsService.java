@@ -46,7 +46,7 @@ public class AccountsService {
 		return hexString.toString();
 	}
 
-	boolean addUser(User user) {
+	public boolean addUser(User user) {
 		String passw = user.getPassword();
 		String hashPassw = getHash(passw);
 		boolean result = DataManager.getInstance().createUser(user.getLogin(),
@@ -55,13 +55,13 @@ public class AccountsService {
 		return result;
 	}
 
-	boolean checkUser(User user) {
+	public boolean checkUser(User user) {
 		User saveUser = DataManager.getInstance().getUser(user.getLogin());
 		String hashPassw = getHash(user.getPassword());
 		return hashPassw.equals(saveUser.getPassword());
 	}
 
-	boolean deleteUser(User user) {
+	public boolean deleteUser(User user) {
 		return false;
 	}
 

@@ -25,17 +25,17 @@ public class Event {
 		description = "No description available.";
 	}
 	
-	public Event(int id, String new_description){
+	public Event(int id, String newDescription){
 		this.id = id;
 		markets = new HashMap<Integer, Market>();
-		description = new_description;
+		description = newDescription;
 	}
 	
 	// а нужен ли такой конструктор
-	public Event(int id, HashMap<Integer, Market> new_markets, String new_description){
+	public Event(int id, HashMap<Integer, Market> newMarkets, String newDescription){
 		this.id = id;
-		markets = new_markets;
-		description = new_description;
+		markets = newMarkets;
+		description = newDescription;
 	}
 	
 	/**
@@ -52,8 +52,8 @@ public class Event {
 	 * @param new_market
 	 * @return ссылка на созданый объект
 	 */
-	public Market addMarket(Market new_market){
-		return markets.put(new_market.getMarketId(), new_market);
+	public Market addMarket(Market newMarket){
+		return markets.put(newMarket.getMarketId(), newMarket);
 	}
 	
 	/**
@@ -61,8 +61,8 @@ public class Event {
 	 * @param new_description
 	 * @return
 	 */
-	public boolean createDescription(String new_description){
-		description = new_description;
+	public boolean createDescription(String newDescription){
+		description = newDescription;
 		return true;
 	}
 	

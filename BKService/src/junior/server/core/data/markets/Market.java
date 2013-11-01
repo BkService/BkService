@@ -1,25 +1,28 @@
 package junior.server.core.data.markets;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import junior.server.core.data.bets.Bet;
 import junior.server.core.data.users.User;
 
 public class Market {
 	private final Integer marketId;
-	private HashMap<Integer, Outcome> outcomesMap;
+	private Map<Integer, Outcome> outcomesMap;
 	private String description;
+	//private long finishTime; 
 	
 	public Market(Integer id){
 		marketId = id;
 		description = "No available description.";
-		outcomesMap = new HashMap<Integer, Outcome>();
+		outcomesMap = new ConcurrentHashMap<Integer, Outcome>();
 	}
 	
 	public Market(Integer id, String newDescription){
 		marketId = id;
 		description = newDescription;
-		outcomesMap = new HashMap<Integer, Outcome>();
+		outcomesMap = new ConcurrentHashMap<Integer, Outcome>();
 	}
 	
 	/**
@@ -55,18 +58,14 @@ public class Market {
 	 * @return true - добавил. false - не добавил
 	 */
 	public boolean addOutcome(Outcome newOutcome){
-		int id = newOutcome.getOutcomeId();
-		if (outcomesMap.containsKey(id)){
-			return false;
-		}
-		else{
-			outcomesMap.put(id, newOutcome);
-			return true;
-		}
+		
+		outcomesMap.put(newOutcome.getOutcomeId(), newOutcome);
+		return true;
+		
 	}
 	
 	// нужна ли такая возможность и как её лучше реализовать?
-	public HashMap<Integer, Outcome> getOutcomeMap(){
+	public Map<Integer, Outcome> getOutcomeMap(){
 		return outcomesMap;
 	}
 	

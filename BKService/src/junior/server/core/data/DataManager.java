@@ -1,17 +1,13 @@
 package junior.server.core.data;
 
+import junior.server.core.data.events.Event;
+
 public class DataManager {
 	private static volatile Data instance;
-	
-    static {
-    	instance = new Data();
-    }
    
     public DataManager(){
     	
-    }
-    
-    
+    }   
     
     public static Data getInstance() {
         Data localInstance = instance;
@@ -22,4 +18,13 @@ public class DataManager {
         }
         return localInstance;
    }
+    
+    /**
+     * для тестов
+     * @param args
+     */
+    public static void main(String [] args){
+    	DataManager.getInstance().addEvent(new Event(2, "dvdfvd"));
+    	String s = DataManager.getInstance().getEvent(2).getDescription();
+    }
 }

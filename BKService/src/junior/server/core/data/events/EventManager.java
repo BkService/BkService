@@ -2,6 +2,10 @@ package junior.server.core.data.events;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import junior.server.core.data.markets.Market;
+import junior.server.core.data.markets.Outcome;
 
 /**
  * Реализация интерфейса EventManagerInterface
@@ -12,22 +16,49 @@ public class EventManager implements EventManagerInterface {
 	Map<Integer, Event> eventsMap;	
 	
 	public EventManager(){
-		eventsMap = new HashMap<Integer, Event>();
+		eventsMap = new ConcurrentHashMap<Integer, Event>();
 	}
 	
 	@Override
-	public Event addEvent(Event new_event) {
-		return eventsMap.put(new_event.getEventId(), new_event);
+	public Event addEvent(Event newEvent) {
+		return eventsMap.put(newEvent.getEventId(), newEvent);
 	}
 
 	@Override
-	public Event getEvent(int event_id) {
-		return eventsMap.get(event_id);
+	public Event getEvent(int eventId) {
+		return eventsMap.get(eventId);
 	}
 
 	@Override
-	public Event removeEvent(int event_id) {
-		return eventsMap.remove(event_id);
+	public Event removeEvent(int eventId) {
+		return eventsMap.remove(eventId);
 	}
 	
+	public void testEventManager(){
+		Event newEvent = new Event(1, "test evest");
+		
+		this.addEvent(newEvent);
+		
+		Event testEvent = this.getEvent(1);
+		
+		Market newMarket = new Market(1, "test market");
+		
+		testEvent.addMarket(newMarket);
+		
+		Market testMarket = testEvent.getMarket(1);
+		Outcome newOutcome = new Outcome(1, 1.0);
+		newOutcome.setDescription("test Outcome");
+		testMarket.addOutcome(newOutcome);
+		
+		
+	}
+	
+	/**
+	 * для тестов
+	 * @param args
+	 */
+	public static void main(String[] args){
+		EventManager manager = new EventManager();
+		manager.testEventManager();
+	}
 }

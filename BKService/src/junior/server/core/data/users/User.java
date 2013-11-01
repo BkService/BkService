@@ -22,23 +22,26 @@ public class User{
 	protected String bank_account; // номер банковского счёта
 	protected LinkedList<Bet> betList; // контейнер с ссылками на ставки, которые делал пользователь
 	protected boolean isAuthorized;	// если авторизован - true
-	Calendar lastTimeActive;	// время последней активности пользователя. 
+	long lastTimeActive;	// время последней активности пользователя. 
 	
 	/**
 	 * 
-	 * @param new_login
-	 * @param new_name
-	 * @param new_surnamebets.Bet
-	 * @param new_bank_account
+	 * @param newLogin
+	 * @param newName
+	 * @param newSurname
+	 * @param newPassword
+	 * @param newBankAccount
 	 */
-	public User(String new_login, String new_name, String new_surname,
-			String new_bank_account){
-		login = new_login;
-		name = new_name;
-		surname = new_surname;
-		bank_account = new_bank_account;
+	public User(String newLogin, String newName, String newSurname, 
+			String newPassword, String newBankAccount){
+		login = newLogin;
+		name = newName;
+		surname = newSurname;
+		bank_account = newBankAccount;
+		password = newPassword;
+		
 		betList = new LinkedList<Bet>();
-		lastTimeActive = Calendar.getInstance();
+		lastTimeActive = System.currentTimeMillis();
 	}
 	
 	/**

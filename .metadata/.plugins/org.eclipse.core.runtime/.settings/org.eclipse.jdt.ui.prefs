@@ -1,0 +1,24 @@
+MemberFilterActionGroup.org.eclipse.jdt.ui.MembersView.1=true
+MemberFilterActionGroup.org.eclipse.jdt.ui.MembersView.2=true
+MemberFilterActionGroup.org.eclipse.jdt.ui.MembersView.4=true
+content_assist_disabled_computers=org.eclipse.jdt.ui.javaAllProposalCategory\u0000org.eclipse.jdt.ui.javaNoTypeProposalCategory\u0000org.eclipse.jdt.ui.textProposalCategory\u0000org.eclipse.jdt.ui.javaTypeProposalCategory\u0000
+content_assist_favorite_static_members=
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="java.util.Map"><rhs name\="java.util.HashMap"/></lhs><lhs name\="java.lang.Exception"><rhs name\="junior.server.core.data.users.LoginIsBusyException"/><rhs name\="junior.server.core.data.users.LengthLoginException"/><rhs name\="junior.server.core.data.users.UserDataExceotion"/></lhs><lhs name\="java.lang.Throwable"><rhs name\="junior.server.core.data.users.LoginIsBusyException"/><rhs name\="junior.server.core.data.users.LengthLoginException"/><rhs name\="junior.server.core.data.users.UserDataExceotion"/></lhs><lhs name\="junior.server.core.data.users.LoginIsBusyException"><rhs name\="junior.server.core.data.users.LoginIsBusyException"/></lhs><lhs name\="junior.server.core.data.users.LengthLoginException"><rhs name\="junior.server.core.data.users.LengthLoginException"/></lhs><lhs name\="junior.server.core.data.users.UserDataExceotion"><rhs name\="junior.server.core.data.users.UserDataExceotion"/></lhs><lhs name\="java.util.List"><rhs name\="java.util.LinkedList"/></lhs><lhs name\="java.util.Deque"><rhs name\="java.util.LinkedList"/></lhs><lhs name\="java.lang.Cloneable"><rhs name\="java.util.LinkedList"/><rhs name\="java.util.HashMap"/></lhs><lhs name\="java.util.Collection"><rhs name\="java.util.LinkedList"/></lhs><lhs name\="java.lang.Iterable"><rhs name\="java.util.LinkedList"/></lhs><lhs name\="java.util.Queue"><rhs name\="java.util.LinkedList"/></lhs><lhs name\="java.util.AbstractSequentialList"><rhs name\="java.util.LinkedList"/></lhs><lhs name\="java.util.AbstractList"><rhs name\="java.util.LinkedList"/></lhs><lhs name\="java.util.AbstractCollection"><rhs name\="java.util.LinkedList"/></lhs><lhs name\="java.util.LinkedList"><rhs name\="java.util.LinkedList"/></lhs><lhs name\="java.util.AbstractMap"><rhs name\="java.util.HashMap"/></lhs><lhs name\="java.util.HashMap"><rhs name\="java.util.HashMap"/></lhs><lhs name\="junior.server.core.data.users.UserInterface"><rhs name\="junior.server.core.data.users.User"/></lhs><lhs name\="junior.server.core.data.users.User"><rhs name\="junior.server.core.data.users.User"/></lhs><lhs name\="junior.server.core.data.users.UserManagerInterface"><rhs name\="junior.server.core.data.users.UserManager"/></lhs><lhs name\="junior.server.core.data.events.EventManagerInterface"><rhs name\="junior.server.core.data.events.EventManager"/></lhs><lhs name\="junior.server.core.data.events.Event"><rhs name\="junior.server.core.data.events.Event"/></lhs><lhs name\="junior.server.core.data.users.UserManager"><rhs name\="junior.server.core.data.users.UserManager"/></lhs><lhs name\="junior.server.core.data.events.EventManager"><rhs name\="junior.server.core.data.events.EventManager"/></lhs><lhs name\="junior.server.core.data.markets.Outcome"><rhs name\="junior.server.core.data.markets.Outcome"/></lhs><lhs name\="junior.server.core.data.DataManager"><rhs name\="junior.server.core.data.DataManager"/></lhs></history>
+content_assist_number_of_computers=21
+content_assist_proposals_background=255,255,255
+content_assist_proposals_foreground=60,60,60
+eclipse.preferences.version=1
+fontPropagated=true
+org.eclipse.jdt.ui.editor.tab.width=
+org.eclipse.jdt.ui.formatterprofiles.version=12
+org.eclipse.jdt.ui.javadoclocations.migrated=true
+org.eclipse.jdt.ui.text.code_templates_migrated=true
+org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+org.eclipse.jdt.ui.text.custom_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+org.eclipse.jdt.ui.text.templates_migrated=true
+org.eclipse.jface.textfont=1|Monospace|10.0|0|GTK|1|;
+proposalOrderMigrated=true
+spelling_locale_initialized=true
+tabWidthPropagated=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true

@@ -1,0 +1,147 @@
+package junior.server.core.data.users;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class UserManager {
+	
+	private Map<String, User> userMap; // Контейнер с пользователями. Ключь для объекта - логин. 
+	// возможно это лучше проверять javascript-ом прям на страничке, но добавлю
+	private final int MAX_LENGTH_LOGIN = 20;
+	private final int MIN_LENGTH_LOGIN = 5;
+	
+	public UserManager(){
+		userMap = new HashMap<String, User>();
+	}
+	
+	/**
+	 * 
+	 * @param login
+	 * @return user с указанным логином 
+	 */
+	public User getUser(String login){
+		return userMap.get(login);
+	}
+	
+	/**
+	 * Добавляет нового пользователя с заданными параметрами.
+	 * Логин у каждого пользователя уникален.
+	 * Так же создаёт для него новый банковский счёт (ещё не реализовано) 
+	 * 
+	 * @param new_login
+	 * @param new_name
+	 * @param new_surname
+	 * @param new_password
+	 * @param new_bank_account
+	 * @return true - пользователь создан. False - произошла ошибка при создании.
+	 */
+	public boolean createUser(String new_login, String new_name, String new_surname, 
+			String new_password, String new_bank_account) 
+					throws LoginIsBusyException 
+	{
+		try {
+			// такой логин существует, генерирую ошибку
+			if (userMap.containsKey(new_login)){
+				throw new LoginIsBusyException(); 
+			}
+			
+			// имя с фамилией - пустые строки
+			if (new_name.length() == 0 || new_surname.length() == 0){
+				throw new UserDataExceotion();
+			}
+		}
+		catch (LoginIsBusyException e){
+			e.getStackTrace();
+			return false;
+		}
+		catch (UserDataExceotion e) {
+			e.getStackTrace();
+			return false;
+		}
+		
+		userMap.put(new_login, 
+				new User(new_login, new_name, new_surname, new_bank_account));
+		
+		return true;
+	}
+	
+	/**
+	 * Заменить login на new_login
+	 * 
+	 * @param login - старый логин
+	 * @param new_login - новый логин
+	 * @return true - замена выполнена. false - произошла ошибка
+	 * @throws LoginIsBusyException
+	 * @throws LengthLoginException 
+	 */
+	public boolean changeLogin(String login, String new_login)
+		throws LoginIsBusyException, LoginIsNotExistException, LengthLoginException
+		{
+		// проверка данных
+		try {
+			// новый логин уже занят
+			if (userMap.containsKey(new_login)){ 
+				throw new LoginIsBusyException(); 
+			}
+			
+			// не существует пользователя с указанным старым логином
+			if (userMap.containsKey(login)){
+				throw new LoginIsNotExistException();
+			}
+			
+			// длина логина не соответствует правилам
+			if (new_login.length() > MAX_LENGTH_LOGIN 
+					|| new_login.length() < MIN_LENGTH_LOGIN){
+				throw new LengthLoginException();
+			}
+		}
+		catch (LoginIsBusyException e){
+			e.getStackTrace();
+			return false;
+		}
+		catch (LoginIsNotExistException e) {
+			e.getStackTrace();
+			return false;
+		}
+		catch (LengthLoginException e) {
+			return false;
+		}
+		
+		// замена логина. Надо доделать
+		userMap.get(login).setLogin(new_login);
+		return true;
+	}
+	
+	/**
+	 * @param login
+	 * @return true - пользователь существует. false - пользователь не существует.
+	 */
+	public boolean containsUser(String login){
+		return userMap.containsKey(login);
+	}
+	
+	/**
+	 * 
+	 * @param login
+	 * @param new_name
+	 * @param new_surname
+	 */
+	public changeUserData(String login, String new_name, String new_surname){
+		
+	}
+	
+	/*
+	public boolean changePassword(String password, String new_password){
+		
+	}*/
+	
+	/**
+	 * для проведения тестов
+	 * @param args - не используется
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -10,19 +10,19 @@ public interface EventManagerInterface {
 	 * @param new_event
 	 * @return ссылка на созданное событие
 	 */
-	public Event addEvent(Event new_event);
+	public Event addEvent(Event newEvent);
 	
 	/**
 	 * Получить ссылку на событие по id
 	 * @param event_id
 	 * @return cсылка на событе. Если такого не существует - возвращает null
 	 */
-	public Event getEvent(int event_id);
+	public Event getEvent(int eventId);
 	
 	/**
 	 * Удалить событие по id
 	 * @param event_id
 	 * @return удалённый объект. Null - если не найден 
 	 */
-	public Event removeEvent(int event_id);
+	public Event removeEvent(int eventId);
 }

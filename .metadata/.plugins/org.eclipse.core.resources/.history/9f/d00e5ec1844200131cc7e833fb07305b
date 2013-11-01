@@ -1,0 +1,49 @@
+package junior.server.core.data.events;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ * Реализация интерфейса EventManagerInterface
+ * @author kovalev
+ *
+ */
+public class EventManager implements EventManagerInterface {
+	Map<Integer, Event> eventsMap;	
+	
+	public EventManager(){
+		eventsMap = new ConcurrentHashMap<Integer, Event>();
+	}
+	
+	@Override
+	public Event addEvent(Event newEvent) {
+		return eventsMap.put(newEvent.getEventId(), newEvent);
+	}
+
+	@Override
+	public Event getEvent(int eventId) {
+		return eventsMap.get(eventId);
+	}
+
+	@Override
+	public Event removeEvent(int eventId) {
+		return eventsMap.remove(eventId);
+	}
+	
+	public void testEventManager(){
+		Event newEvent = new Event(1, "test evest");
+		
+		this.addEvent(newEvent);
+		
+	}
+	
+	/**
+	 * для тестов
+	 * @param args
+	 */
+	public static void main(String[] args){
+		EventManager manager = new EventManager();
+		manager.testEventManager();
+	}
+}

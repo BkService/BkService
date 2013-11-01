@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workingSetManager>
+<workingSet editPageId="org.eclipse.jdt.ui.JavaWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1383033618942_2" label="BKService" name="BKService">
+<item elementID="=BKService" factoryID="org.eclipse.jdt.ui.PersistableJavaElementFactory"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1382968276539_0" label="Window Working Set" name="Aggregate for window 1382968276538"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1382968334470_1" label="Window Working Set" name="Aggregate for window 1382968334470"/>
+<mruList name="BKService"/>
+</workingSetManager>

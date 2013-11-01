@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="junior.server.core.data.users.LoginIsBusyException"/>
+<fullyQualifiedTypeName name="junior.server.core.data.users.LoginIsNotExistException"/>
+<fullyQualifiedTypeName name="junior.server.core.data.users.LengthLoginException"/>
+<fullyQualifiedTypeName name="java.lang.Exception"/>
+<fullyQualifiedTypeName name="junior.server.core.data.users.UserDataExceotion"/>
+<fullyQualifiedTypeName name="junior.server.core.data.users.UserInterface"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.LinkedList"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="junior.server.core.data.markets.ResultMarket"/>
+<fullyQualifiedTypeName name="junior.server.core.data.DataManagerInterface"/>
+<fullyQualifiedTypeName name="java.sql.Time"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="junior.server.core.data.users.UserManagerInterface"/>
+<fullyQualifiedTypeName name="junior.server.core.data.events.EventManagerInterface"/>
+<fullyQualifiedTypeName name="java.lang.Override"/>
+<fullyQualifiedTypeName name="junior.server.core.data.bets.Bet"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="junior.server.core.data.users.User"/>
+<fullyQualifiedTypeName name="junior.server.core.data.users.UserManager"/>
+<fullyQualifiedTypeName name="junior.server.core.data.events.EventManager"/>
+<fullyQualifiedTypeName name="junior.server.core.data.markets.Market"/>
+<fullyQualifiedTypeName name="junior.server.core.data.markets.Outcome"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.concurrent.ConcurrentHashMap"/>
+<fullyQualifiedTypeName name="junior.server.core.data.DataManager"/>
+<fullyQualifiedTypeName name="junior.server.core.data.events.Event"/>
+<fullyQualifiedTypeName name="junior.server.core.data.Data"/>
+</qualifiedTypeNameHistroy>

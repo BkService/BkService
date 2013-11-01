@@ -5,9 +5,7 @@ import junior.server.core.data.users.*;
 
 public class Data implements UserManagerInterface, EventManagerInterface{
 	
-	@SuppressWarnings("unused")
 	private UserManagerInterface userManager;
-	@SuppressWarnings("unused")
 	private EventManagerInterface eventManager;
 	
 	public Data(){
@@ -16,71 +14,60 @@ public class Data implements UserManagerInterface, EventManagerInterface{
 	}
 	
 	@Override
-	public Event addEvent(Event new_event) {
-		// TODO Auto-generated method stub
-		return null;
+	public Event addEvent(Event newEvent) {
+		return eventManager.addEvent(newEvent);
 	}
 
 	@Override
-	public Event getEvent(int event_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Event getEvent(int eventId) {
+		return eventManager.getEvent(eventId);
 	}
 
 	@Override
-	public Event removeEvent(int event_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Event removeEvent(int eventId) {
+		return eventManager.removeEvent(eventId);
 	}
 
 	@Override
 	public boolean containsUser(String login) {
-		// TODO Auto-generated method stub
-		return false;
+		return userManager.containsUser(login);
 	}
 
 	@Override
-	public boolean changeLogin(String login, String new_login) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean createUser(String new_login, String new_name,
-			String new_surname, String new_password, String new_bank_account) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean changeLogin(String login, String newLogin) {
+		return userManager.changeLogin(login, newLogin);
 	}
 
 	@Override
 	public User getUser(String login) {
-		// TODO Auto-generated method stub
-		return null;
+		return userManager.getUser(login);
 	}
 
 	@Override
-	public boolean changeUserData(String login, String new_name,
-			String new_surname, String new_password, String new_bank_account) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean authorizeUser(Integer user_id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean authorizeUser(Integer userId) {
+		return userManager.authorizeUser(userId);
 	}
 
 	@Override
 	public int getCountUsers() {
-		// TODO Auto-generated method stub
-		return 0;
+		return userManager.getCountUsers();
 	}
 
 	@Override
 	public int getCountAuthorizedUsers() {
-		// TODO Auto-generated method stub
-		return 0;
+		return userManager.getCountAuthorizedUsers();
+	}
+
+	@Override
+	public boolean createUser(String newLogin, String newName,
+			String newSurname, String newPassword, String newBankAccount) {
+		return userManager.createUser(newLogin, newName, newSurname, newPassword, newBankAccount);
+	}
+
+	@Override
+	public boolean changeUserData(String login, String newName,
+			String newSurname, String newPassword, String newBankAccount) {
+		return userManager.changeUserData(login, newName, newSurname, newPassword, newBankAccount);
 	}
 	
 }

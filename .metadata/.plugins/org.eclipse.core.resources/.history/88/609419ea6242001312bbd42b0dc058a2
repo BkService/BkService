@@ -1,0 +1,5 @@
+package junior.server.core.data;
+
+public class DataManager {
+
+}

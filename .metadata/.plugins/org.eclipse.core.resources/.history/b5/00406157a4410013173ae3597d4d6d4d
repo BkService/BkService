@@ -1,0 +1,33 @@
+package junior.server.core.data.events;
+
+//import java.sql.Time;
+import java.util.HashMap;
+import java.util.LinkedList;
+
+import junior.server.core.data.markets.*;
+
+public class Event {
+	HashMap<Integer, Market> markets; // контейнер с маркетами. У каждого маркета свой ID
+	String description; // описание события
+//	Time startTime;	// время начала
+//	Time finishTime;	// время окончания
+	
+	public Event(){
+		markets = new HashMap<Integer, Market>();
+		description = "No description available.";
+	}
+	
+	public Event(String new_description){
+		description = new_description;
+	}
+	
+	// а нужен ли такой конструктор
+	public Event(HashMap<Integer, Market> new_markets, String new_description){
+		markets = new_markets;
+		description = new_description;
+	}
+	
+	public Market getMarket(Integer id){
+		return markets.get(id);
+	}
+}

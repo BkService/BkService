@@ -3,6 +3,8 @@ package junior.server.core.data.users;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 
 public class UserManager implements UserManagerInterface{
 	
@@ -10,8 +12,8 @@ public class UserManager implements UserManagerInterface{
 	private Map<Integer, User> authorizedUsers; // контейнер с авторизованными пользователями
 	
 	public UserManager(){
-		userMap = new HashMap<String, User>();
-		authorizedUsers = new HashMap<Integer, User>();
+		userMap = new ConcurrentHashMap<String, User>();
+		authorizedUsers = new ConcurrentHashMap<Integer, User>();		
 	}
 	
 	/**
@@ -35,21 +37,21 @@ public class UserManager implements UserManagerInterface{
 	 * @param new_bank_account
 	 * @return true - пользователь создан. False - произошла ошибка при создании.
 	 */
-	public boolean createUser(String new_login, String new_name, String new_surname, 
-			String new_password, String new_bank_account) 
+	public boolean createUser(String newLogin, String newName, String newSurname, 
+			String newPassword, String newBankAccount) 
 	{
 		// такой логин существует
-		if (userMap.containsKey(new_login)){
+		if (userMap.containsKey(newLogin)){
 			return false;
 		}
 			
 		// имя с фамилией - пустые строки (а эта проверка нужна?)
-		if (new_name.length() == 0 || new_surname.length() == 0){
+		if (newName.length() == 0 || newSurname.length() == 0){
 			return false;
 		}
 		
-		userMap.put(new_login, 
-				new User(new_login, new_name, new_surname, new_bank_account));
+		userMap.put(newLogin, 
+				new User(newLogin, newName, newSurname, newPassword, newBankAccount));
 		
 		return true;
 	}
@@ -63,11 +65,11 @@ public class UserManager implements UserManagerInterface{
 	 * @throws LoginIsBusyException
 	 * @throws LengthLoginException 
 	 */
-	public boolean changeLogin(String login, String new_login)
+	public boolean changeLogin(String login, String newLogin)
 		{
 		// проверка данных
 		// новый логин уже занят
-		if (userMap.containsKey(new_login)){ 
+		if (userMap.containsKey(newLogin)){ 
 			return false;
 		}
 		
@@ -78,9 +80,9 @@ public class UserManager implements UserManagerInterface{
 						
 		// замена логина. Надо доделать
 		User user = userMap.get(login);
-		user.setLogin(new_login);
+		user.setLogin(newLogin);
 		userMap.remove(login);
-		userMap.put(new_login, user);
+		userMap.put(newLogin, user);
 		
 		return true;
 	}
@@ -103,18 +105,18 @@ public class UserManager implements UserManagerInterface{
 	 * Задать пользователю с указаным логином новые имя, фамилию, номер счёти и пароль
 	 */
 	@Override
-	public boolean changeUserData(String login, String new_name,
-			String new_surname, String new_password, String new_bank_account) {
+	public boolean changeUserData(String login, String newName,
+			String newSurname, String newPassword, String newBankAccount) {
 		User user = userMap.get(login);
 		
 		if (user == null){
 			return false;
 		}
 		
-		user.setSurname(new_surname);
-		user.setBankAccount(new_bank_account);
-		user.setName(new_name);
-		user.setPassword(new_password);
+		user.setSurname(newSurname);
+		user.setBankAccount(newBankAccount);
+		user.setName(newName);
+		user.setPassword(newPassword);
 		
 		return true;
 	}
@@ -126,19 +128,19 @@ public class UserManager implements UserManagerInterface{
 	 * @return true - авторизован. false - невозможно авторизовать
 	 */
 	@Override
-	public boolean authorizeUser(Integer user_id) {
-		User user = userMap.get(user_id);
+	public boolean authorizeUser(Integer userId) {
+		User user = userMap.get(userId);
 		
 		// если пользователя не существует или пользователь уже авторизован
 		if (user == null || user.isAuthorized){
 			return false;
 		}
 		
-		user.lastTimeActive = Calendar.getInstance();
+		user.lastTimeActive = System.currentTimeMillis();
 		user.isAuthorized = true;
 		
 		// user_id заменим на какой то ключ
-		authorizedUsers.put(user_id, user);
+		authorizedUsers.put(userId, user);
 		
 		return true;
 	}
@@ -154,11 +156,31 @@ public class UserManager implements UserManagerInterface{
 	}
 	
 	/**
+	 *  Только тестирование.
+	 */
+	public void testUsers(){
+		String newLogin = "TestLog";
+		String newName = "Name";
+		String newSurname = "Surname";
+		String newPassword = "pas";
+		String newBankAccount = "account";
+		
+		this.createUser(newLogin, newName, newSurname, newPassword, newBankAccount);
+		
+		User user = this.getUser(newLogin);
+		
+		
+		
+	}
+	
+	/**
 	 * для проведения тестов
 	 * @param args - не используется
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		UserManager userManager = new UserManager();
+		
+		userManager.testUsers();
 
 	}
 

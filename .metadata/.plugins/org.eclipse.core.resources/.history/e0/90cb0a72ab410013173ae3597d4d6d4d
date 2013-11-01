@@ -1,0 +1,5 @@
+package junior.server.core.data.events;
+
+public class EventManager implements EventManagerInterface {
+	
+}

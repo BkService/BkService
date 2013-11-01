@@ -7,6 +7,7 @@ public class Outcome {
 	private final Integer outcomeId;
 	private Double coefficient; //всегда больше 1
 	private String description;
+	// как это с многопоточностью связать, потом решу
 	private LinkedList<Bet> bets; // контейнер со ставками на данный исход
 	
 	public Outcome(Integer id){
@@ -40,15 +41,15 @@ public class Outcome {
 	
 	/**
 	 * Коэффициент должен быть больше 1 (а надо ли это проверять?)
-	 * @param new_coefficient
+	 * @param newCoefficient
 	 * @return true - коэффициент задан. false - не удалось задать
 	 */
-	public boolean setCoefficient(Double new_coefficient){
-		if (new_coefficient <= 1){
+	public boolean setCoefficient(Double newCoefficient){
+		/*if (new_coefficient <= 1){
 			return false;
-		}
+		}*/
 		
-		coefficient = new_coefficient;
+		coefficient = newCoefficient;
 		return true;
 	}
 	
@@ -73,8 +74,8 @@ public class Outcome {
 	 * @param new_description
 	 * @return true - описание задано. False - произошла ошибка.
 	 */
-	public boolean setDescription(String new_description){
-		description = new_description;
+	public boolean setDescription(String newDescription){
+		description = newDescription;
 		
 		return true;
 	}
@@ -83,8 +84,8 @@ public class Outcome {
 	 * Доработать проверку корректности ставки 
 	 * Создаёт ставку на данный исход 
 	 */
-	public boolean createBet(Bet new_bet){
-		bets.add(new_bet);
+	public boolean createBet(Bet newBet){
+		bets.add(newBet);
 		
 		return true;
 	}

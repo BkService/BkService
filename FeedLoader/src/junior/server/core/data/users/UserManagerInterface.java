@@ -1,5 +1,7 @@
 package junior.server.core.data.users;
 
+import java.util.HashMap;
+import java.util.Map;
 
 public interface UserManagerInterface {	
 	/**
@@ -15,7 +17,7 @@ public interface UserManagerInterface {
 	 * @param new_login - новый логин
 	 * @return 
 	 */
-	public boolean changeLogin(String login, String new_login);
+	public boolean changeLogin(String login, String newLogin);
 	
 	/**
 	 * Создаёт и добавляет пользователя с заданными параметрами. Так же 
@@ -28,8 +30,8 @@ public interface UserManagerInterface {
 	 * @param new_bank_account
 	 * @return true - если пользователь создан удачно. Иначе - false
 	 */
-	public boolean createUser(String new_login, String new_name, String new_surname, 
-			String new_password, String new_bank_account);
+	public boolean createUser(String newLogin, String newName, String newSurname, 
+			String newPassword, String newBankAccount);
 	
 	/**
 	 * 
@@ -48,15 +50,15 @@ public interface UserManagerInterface {
 	 * @param new_bank_account
 	 * @return
 	 */
-	public boolean changeUserData(String login, String new_name, 
-			String new_surname, String new_password, String new_bank_account);
+	public boolean changeUserData(String login, String newName, 
+			String newSurname, String newPassword, String newBankAccount);
 	
 	/**
 	 * 
 	 * @param user_id
 	 * @return true - залогинен. false - уже залогинен, нет такого пользователя и т.д.
 	 */
-	public boolean authorizeUser(Integer user_id);
+	public boolean authorizeUser(Integer userId);
 	
 	/**
 	 * 

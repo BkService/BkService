@@ -4,9 +4,6 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
-  <!-- 
-  		Servlets
-   -->
   <servlet>
     <servlet-name>loginServlet</servlet-name>
     <servlet-class>juniors.server.ext.web.ui.handlers.LoginHandler</servlet-class>
@@ -24,12 +21,17 @@
     <servlet-class>juniors.server.ext.web.ui.handlers.RegistrationHandler</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>switcher</servlet-name>
-  	<servlet-class>juniors.server.ext.web.ui.handlers.SwitchHandler</servlet-class>
+    <servlet-name>switcher</servlet-name>
+    <servlet-class>juniors.server.ext.web.ui.handlers.SwitchHandler</servlet-class>
   </servlet>
-  <!-- 
-  		Mapping servlets
-   -->
+  <servlet>
+  	<servlet-name>xshell</servlet-name>
+  	<servlet-class>juniors.server.ext.web.xshell.XShell</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>xshell</servlet-name>
+  	<url-pattern>/xshell</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>loginServlet</servlet-name>
     <url-pattern>/LoginHandler</url-pattern>
@@ -47,12 +49,9 @@
     <url-pattern>/RegistrationHandler</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>switcher</servlet-name>
-  	<url-pattern>/SwitchHandler</url-pattern>
+    <servlet-name>switcher</servlet-name>
+    <url-pattern>/SwitchHandler</url-pattern>
   </servlet-mapping>
-   <!-- 
-  		Configuration
-   -->
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>

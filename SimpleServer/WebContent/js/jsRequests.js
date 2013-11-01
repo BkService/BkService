@@ -23,7 +23,8 @@ function showChild() {
 	var count = document.getElementsByName('market').length;
 	var elements = document.getElementsByName('market');
 	for(var i = 0; i < count; ++i) {
-		elements[i].setAttribute("class", "itemMarketView");
+		if(elements[i].getAttribute("class") == "itemMarket")
+			elements[i].setAttribute("class", "itemMarketView");
 	}
 }
 
@@ -39,5 +40,18 @@ function showc(marker) {
 		   else
 			   coeffs[i].setAttribute("class", "cell");
 	}
+}
+
+function send(event){
+	event = event || window.event;
+	if(event.keyCode == 13) {
+		document.getElementById('cmdfrm').submit();
+	}
+}
+
+function closeGr(divId) {
+	document.getElementById(divId).style.display='none';
+	document.getElementById(divId).style.margin='0px';
+	document.getElementById('commandline').focus();
 }
 

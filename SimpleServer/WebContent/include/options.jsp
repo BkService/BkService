@@ -24,6 +24,6 @@
 			<td><input id="regvisa" name="count" type="text"/></td>
 		</tr>
 	</table>
-	<input type="submit" value="Set changes" onclick="return false;" />
+	<input type="submit" value="Set changes" onclick="alert('its stub'); return false;" />
 </form>
 <br>

@@ -26,10 +26,13 @@
 	
 	<%
 			for(int j = 0; j < e1.getMarkets().get(i).getResults().size(); ++j) {
+				if(e1.getMarkets().get(i).getResults().get(j).getCoeff() < 5) {
 	%>
-				<div id="c<%= i %>" name="coeff" class="cell"><%= e1.getMarkets().get(i).getResults().get(j).getCoeff() %></div>
+				<div id="c<%= i %>" name="coeff" class="cell"><%= e1.getMarkets().get(i).getResults().get(j).getCoeff() %>
+				____Description:_<%= e1.getMarkets().get(i).getResults().get(j).getDescription() %>
+				</div>
 	<%
-			}
+			}}
 		}
 	%>
 	<div id="all">		

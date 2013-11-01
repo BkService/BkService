@@ -1,2 +1,2 @@
-
-<%= "History of my bets!" %>
+<br>
+<%= "History of my bets is empty" %>

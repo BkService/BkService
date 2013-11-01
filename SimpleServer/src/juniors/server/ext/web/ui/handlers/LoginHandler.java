@@ -21,8 +21,14 @@ public class LoginHandler extends HttpServlet {
 			throws ServletException, IOException {
 		
 		User user = new User(request.getParameter("uname"));
-		request.getSession().setAttribute("user", user);
-		request.getRequestDispatcher("/SwitchHandler").forward(request, response);
+		String passwd = request.getParameter("passwd");
+		if(user.getUserName().equals("admin") && passwd.equals("sserver"))
+			request.getRequestDispatcher("/console.jsp").forward(request, response);
+		else {
+			System.out.println(user.getUserName());
+			request.getSession().setAttribute("user", user);
+			request.getRequestDispatcher("/SwitchHandler").forward(request, response);
+		}
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 

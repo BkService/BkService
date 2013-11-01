@@ -2,6 +2,7 @@ package juniors.server.core.logic;
 
 import junior.server.core.feed.FeedLoader;
 import juniors.server.core.logic.services.Services;
+import juniors.server.core.logic.services.StaticService;
 
 /**
  * 
@@ -12,6 +13,8 @@ public class ServerFacade {
 	private boolean started = false;
 
 	private static volatile ServerFacade instance;
+
+	private Thread feedLoaderThread, staticServiceThread;
 
 	public static ServerFacade getInstance() {
 		ServerFacade localInstance = instance;
@@ -25,40 +28,44 @@ public class ServerFacade {
 		}
 		return localInstance;
 	}
-	
+
 	public ServerFacade() {
-		//executorServices = Executors.newFixedThreadPool(COUNT_SERVICES);
-	}
-	
-	private void runServices() {
 		FeedLoader fl = new FeedLoader();
-		Thread t = new Thread(fl);
-		t.setDaemon(true); 
-		t.start();
+		feedLoaderThread = new Thread(fl);
+		feedLoaderThread.setDaemon(true);
+		StaticService stService = new StaticService();
+		staticServiceThread = new Thread(stService);
 	}
-	
-	private void stopServices() {}
-	
+
+	private void runServices() {
+		feedLoaderThread.start();
+		staticServiceThread.start();
+	}
+
+	private void stopServices() {
+		staticServiceThread.interrupt();
+	}
+
 	public synchronized void start() {
-		if(!started) {		//alex fixed
+		if (!started) {
 			runServices();
 			started = true;
 		}
 	}
-	
-	public boolean getStatusFL() {		//alex add
+
+	public boolean getStatusFL() {
 		return started;
 	}
-	
+
 	public synchronized void stop() {
 		stopServices();
 		started = false;
 	}
-	
+
 	public Services getServices() {
 		Services services = null;
 		if (started)
-			services = new Services();
+			services = Services.getInstance();
 		return services;
 	}
 }

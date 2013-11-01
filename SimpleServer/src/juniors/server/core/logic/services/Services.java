@@ -1,6 +1,5 @@
 package juniors.server.core.logic.services;
 
-import juniors.server.core.logic.ServerFacade;
 
 /**
  * Фабрика сервисов
@@ -9,22 +8,25 @@ import juniors.server.core.logic.ServerFacade;
  */
 public class Services {
 
-	private static volatile ServerFacade instance;
+	private static final Services instance;
+	
+	static{
+		instance = new Services();
+	}
+	
+	private Services() {
+		
+	}
 
-	public static ServerFacade getInstance() {
-		ServerFacade localInstance = instance;
-		if (localInstance == null) {
-			synchronized (ServerFacade.class) {
-				localInstance = instance;
-				if (localInstance == null) {
-					instance = localInstance = new ServerFacade();
-				}
-			}
-		}
-		return localInstance;
+	public static Services getInstance() {
+		return instance;
 	}
 	
 	public AccountsService getAccountsService() {
 		return new AccountsService();
+	}
+	
+	public EventService getEventService() {
+		return new EventService();
 	}
 }

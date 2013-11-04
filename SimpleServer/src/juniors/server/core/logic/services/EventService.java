@@ -3,7 +3,7 @@ package juniors.server.core.logic.services;
 import java.util.Collection;
 import java.util.Map;
 
-import junior.server.core.data.DataManager;
+import juniors.server.core.data.DataManager;
 import juniors.server.core.data.events.Event;
 
 /**

@@ -1,4 +1,4 @@
-package junior.server.core.data;
+package juniors.server.core.data;
 
 import juniors.server.core.data.events.Event;
 

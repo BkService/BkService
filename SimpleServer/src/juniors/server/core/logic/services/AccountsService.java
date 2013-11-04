@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import junior.server.core.data.DataManager;
+import juniors.server.core.data.DataManager;
 import juniors.server.core.data.users.User;
 
 /**

@@ -1,4 +1,4 @@
-package junior.server.core.data;
+package juniors.server.core.data;
 
 import java.util.Collection;
 import java.util.Map;

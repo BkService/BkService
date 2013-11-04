@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
-import junior.server.core.data.DataManager;
+import juniors.server.core.data.DataManager;
 import juniors.server.ext.web.listeners.StatisticInfListener;
 
 public class StatisticService implements Runnable {

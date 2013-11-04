@@ -1,4 +1,4 @@
-package junior.server.core.data.users;
+package juniors.server.core.data.users;
 
 class LoginIsBusyException extends Exception {
 	public LoginIsBusyException(){

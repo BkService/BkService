@@ -3,8 +3,8 @@ package junior.server.core.data;
 import java.util.Collection;
 import java.util.Map;
 
-import junior.server.core.data.events.*;
-import junior.server.core.data.users.*;
+import juniors.server.core.data.events.*;
+import juniors.server.core.data.users.*;
 
 public class Data implements UserManagerInterface, EventManagerInterface{
 	

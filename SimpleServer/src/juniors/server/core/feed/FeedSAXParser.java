@@ -1,8 +1,8 @@
-package junior.server.core.feed;
+package juniors.server.core.feed;
 import junior.server.core.data.DataManager;
-import junior.server.core.data.events.Event;
-import junior.server.core.data.markets.Market;
-import junior.server.core.data.markets.Outcome;
+import juniors.server.core.data.events.Event;
+import juniors.server.core.data.markets.Market;
+import juniors.server.core.data.markets.Outcome;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

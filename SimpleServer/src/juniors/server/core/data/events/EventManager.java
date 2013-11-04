@@ -1,12 +1,12 @@
-package junior.server.core.data.events;
+package juniors.server.core.data.events;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import junior.server.core.data.markets.Market;
-import junior.server.core.data.markets.Outcome;
+import juniors.server.core.data.markets.Market;
+import juniors.server.core.data.markets.Outcome;
 
 /**
  * Реализация интерфейса EventManagerInterface

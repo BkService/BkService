@@ -1,18 +1,20 @@
 package juniors.server.ext.web.ui.handlers;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import junior.server.core.data.users.User;
+import juniors.server.core.data.users.User;
 import juniors.server.core.logic.ServerFacade;
 import juniors.server.core.logic.services.AccountsService;
 
 public class LoginHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
     public LoginHandler() {
     	super();
     }
@@ -33,6 +35,7 @@ public class LoginHandler extends HttpServlet {
 				if(user == null) {
 					path = "index.jsp";
 					request.getSession().setAttribute("msg", "User with the login and password doesn't exists");
+					
 				}
 			} else {
 				path = "index.jsp";

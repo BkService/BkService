@@ -1,4 +1,4 @@
-package junior.server.core.data.users;
+package juniors.server.core.data.users;
 
 import java.util.Calendar;
 import java.util.HashMap;

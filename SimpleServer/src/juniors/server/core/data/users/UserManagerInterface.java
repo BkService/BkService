@@ -1,4 +1,4 @@
-package junior.server.core.data.users;
+package juniors.server.core.data.users;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ public interface UserManagerInterface {
 	 * @param new_surname
 	 * @param new_password
 	 * @param new_bank_account
-	 * @return true - если пользователь создан удачно. Иначе - false
+	 * @return true - если пользователь создан удачно. �?наче - false
 	 */
 	public boolean createUser(String newLogin, String newName, String newSurname, 
 			String newPassword, String newBankAccount);

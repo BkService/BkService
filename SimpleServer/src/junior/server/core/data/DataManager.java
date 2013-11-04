@@ -1,6 +1,6 @@
 package junior.server.core.data;
 
-import junior.server.core.data.events.Event;
+import juniors.server.core.data.events.Event;
 
 public class DataManager {
 	private static volatile Data instance;

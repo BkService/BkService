@@ -1,7 +1,7 @@
-package junior.server.core.data.bets;
+package juniors.server.core.data.bets;
 
-import junior.server.core.data.markets.*;
-import junior.server.core.data.users.*;
+import juniors.server.core.data.markets.*;
+import juniors.server.core.data.users.*;
 
 /**
  * 

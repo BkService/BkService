@@ -40,7 +40,11 @@ public class Services {
 		return new EventService();
 	}
 	
-	public StatisticService getStaticService() {
+	public StatisticService getStatisticService() {
 	    	return staticService;
+	}
+	
+	public BetsService BetsService() {
+	    	return new BetsService();
 	}
 }

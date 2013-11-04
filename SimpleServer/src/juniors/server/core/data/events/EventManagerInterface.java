@@ -1,4 +1,4 @@
-package junior.server.core.data.events;
+package juniors.server.core.data.events;
 
 import java.util.Collection;
 import java.util.Map;

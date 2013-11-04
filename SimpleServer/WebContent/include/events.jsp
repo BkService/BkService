@@ -1,4 +1,4 @@
-<%@ page import="junior.server.core.data.events.*" %>
+<%@ page import="juniors.server.core.data.events.*" %>
 <%@ page import="java.util.*" %>
 <br>
 	<div style="font-size: xx-large; color: rgb(255, 100, 100);">

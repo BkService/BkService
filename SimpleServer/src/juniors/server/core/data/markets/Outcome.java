@@ -1,7 +1,8 @@
-package junior.server.core.data.markets;
+package juniors.server.core.data.markets;
 
 import java.util.LinkedList;
-import junior.server.core.data.bets.*;
+
+import juniors.server.core.data.bets.*;
 
 public class Outcome {
 	private final Integer outcomeId;

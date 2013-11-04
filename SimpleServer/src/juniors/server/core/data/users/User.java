@@ -1,11 +1,11 @@
-package junior.server.core.data.users;
+package juniors.server.core.data.users;
 
 import java.sql.Time;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-import junior.server.core.data.bets.Bet;
+import juniors.server.core.data.bets.Bet;
 
 /**
  * Хранит данные о пользователе, его ставки, даёт возможность

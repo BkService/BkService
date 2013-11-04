@@ -1,4 +1,4 @@
-package junior.server.core.feed;
+package juniors.server.core.feed;
 import java.io.IOException;
 import java.io.InputStream;
 

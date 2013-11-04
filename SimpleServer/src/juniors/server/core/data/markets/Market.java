@@ -1,11 +1,11 @@
-package junior.server.core.data.markets;
+package juniors.server.core.data.markets;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import junior.server.core.data.bets.Bet;
-import junior.server.core.data.users.User;
+import juniors.server.core.data.bets.Bet;
+import juniors.server.core.data.users.User;
 
 public class Market {
 	private final Integer marketId;

@@ -1,4 +1,4 @@
-package junior.server.core.feed;
+package juniors.server.core.feed;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;

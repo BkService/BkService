@@ -1,52 +1,94 @@
 package juniors.server.core.logic.services;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
 import junior.server.core.data.DataManager;
-import juniors.server.ext.web.listeners.SessionsListener;
+import juniors.server.ext.web.listeners.StatisticInfListener;
 
 public class StatisticService implements Runnable {
 
-	private static int countsAuthUsers = 0, countsLogouts = 0, countsUsers = 0,
-			countsConnects = 0;
+    private static AtomicInteger countsAuthUsers, countsLogouts, countsUsers;
+    static {
+	countsAuthUsers = new AtomicInteger(0);
+	countsLogouts = new AtomicInteger(0);
+	countsUsers = new AtomicInteger(0);
+    }
 
-	private Logger log = Logger.getLogger(StatisticService.class.getSimpleName());
+    private Logger log = Logger.getLogger(StatisticService.class
+	    .getSimpleName());
 
-	private static final int DELAY = 1000;
+    private static final int DELAY = 1000;
 
-	public StatisticService() {
+    private static long lastTime;
+    private static SimpleDateFormat dateFormat;
+    static {
+	lastTime = System.currentTimeMillis();
+    }
 
-	}
-
-	public int getCountsAuthUsers() {
-		return countsAuthUsers;
-	}
-
-	public int getCountsUsers() {
-		return countsUsers;
-	}
-
-	public int getCountsConnects() {
-		return countsConnects;
-	}
+    public StatisticService() {
+    }
+    
+    private void saveStaticInfPerSecond() {
 	
-	public int getCountsLogouts() {
-		return countsLogouts;
-	}
+    }
+    
+    private void saveStaticInfPerMinute() { 
+	
+    }
+    
+    
+    private void saveStaticInfPerDay() {
+	
+    }
+    
+    private void saveStaticInfPerMonth() {
+	
+    }
+    
 
-	// FIXME Не получаем количества успешных авторизаций. 
-	@Override
-	public void run() {
-		while (!Thread.interrupted()) {
-			countsUsers = DataManager.getInstance().getCountUsers();
-			countsConnects = SessionsListener.getCountConnects();
-			countsLogouts = SessionsListener.getCountDisconnects();			
-			SessionsListener.clearStaticInf();
-			try {
-				Thread.sleep(DELAY);
-			} catch (InterruptedException e) {
-				log.info("Stop static service.");
-			}
-		}
+    private void saveStaticInf() {
+	long currentTime = System.currentTimeMillis();
+	long deleayTime = lastTime - currentTime;
+	
+	lastTime = currentTime;
+	Calendar formatter = Calendar.getInstance();
+	formatter.setTimeInMillis(lastTime);
+	formatter.get(Calendar.MONTH);
+    }
+
+    public int getCountsUsers() {
+	return countsUsers.get();
+    }
+
+    public int getCountsAuthUsers() {
+	return countsAuthUsers.get();
+    }
+
+    public int getCountsLogouts() {
+	return countsLogouts.get();
+    }
+
+    @Override
+    public void run() {
+	while (!Thread.interrupted()) {
+	    countsUsers.set(DataManager.getInstance().getCountUsers());
+	    int lastCountsAuthUsers = countsAuthUsers.get();
+	    int intCountsAuthUsers = countsAuthUsers
+		    .addAndGet(StatisticInfListener.getCountAuthUsers());
+	    countsLogouts.set(intCountsAuthUsers - lastCountsAuthUsers);
+	    StatisticInfListener.resetStaticInf();
+
+	    saveStaticInf();
+	    try {
+		Thread.sleep(DELAY);
+		System.out.println(countsAuthUsers);
+	    } catch (InterruptedException e) {
+		log.info("Stop static service.");
+	    }
 	}
+    }
 }

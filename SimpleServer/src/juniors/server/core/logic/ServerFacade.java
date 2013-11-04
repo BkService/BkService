@@ -67,7 +67,7 @@ public class ServerFacade {
     }
 
     public boolean getStatusFL() {
-	return started;
+	return feedLoaderThread.isAlive();
     }
 
     public synchronized void stop() {
@@ -79,7 +79,6 @@ public class ServerFacade {
 	Services services = null;
 	if (started) {
 	    services = Services.getInstance();
-
 	}
 	return services;
     }

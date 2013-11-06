@@ -1,6 +1,7 @@
 package juniors.server.core.data.events;
 
 //import java.sql.Time;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -89,20 +90,16 @@ public class Event {
 	public int getMarketsCount(){
 		return markets.size();
 	}
+	
+	public HashMap<Integer, Market> getMarketsMap(){
+	    return markets;
+	}
+	
+	public Collection<Market> getMarketsCollection(){
+	    return markets.values();
+	}
+        
+        public boolean containsMarket(int marketId){
+            return markets.containsKey(marketId);
+        }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

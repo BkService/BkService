@@ -63,6 +63,11 @@ public class EventManager implements EventManagerInterface {
 	public Collection<Event> getEventsCollection() {
 		return eventsMap.values();
 	}
+        
+        @Override
+        public boolean containsEvent(int eventId){
+            return eventsMap.containsKey(eventId);
+        }
 	
 	/**
 	 * для тестов
@@ -72,6 +77,7 @@ public class EventManager implements EventManagerInterface {
 		EventManager manager = new EventManager();
 		manager.testEventManager();
 	}
+        
 
 	
 }

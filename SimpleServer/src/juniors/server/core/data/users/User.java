@@ -4,6 +4,8 @@ import java.sql.Time;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import juniors.server.core.data.bets.Bet;
 
@@ -19,8 +21,8 @@ public class User{
 	protected String name;
 	protected String surname;
 	protected String password; // научиться правильно хранить пароль
-	protected String bank_account; // номер банковского счёта
-	protected LinkedList<Bet> betList; // контейнер с ссылками на ставки, которые делал пользователь
+	protected String bankAccount; // номер банковского счёта
+	protected Set<Bet> bets; // контейнер с ссылками на ставки, которые делал пользователь
 	protected boolean isAuthorized;	// если авторизован - true
 	long lastTimeActive;	// время последней активности пользователя. 
 	
@@ -37,10 +39,10 @@ public class User{
 		login = newLogin;
 		name = newName;
 		surname = newSurname;
-		bank_account = newBankAccount;
+		bankAccount = newBankAccount;
 		password = newPassword;
 		
-		betList = new LinkedList<Bet>();
+		bets = new ConcurrentSkipListSet<Bet>();
 		lastTimeActive = System.currentTimeMillis();
 	}
 	
@@ -56,8 +58,8 @@ public class User{
 	 * 
 	 * @param String new_login
 	 */
-	public void setLogin(String new_login){
-		login = new_login;
+	public void setLogin(String newLogin){
+		login = newLogin;
 	}
 	
 	/**
@@ -72,8 +74,8 @@ public class User{
 	 * 
 	 * @param String new_name
 	 */
-	public void setName(String new_name){
-		name = new_name;
+	public void setName(String newName){
+		name = newName;
 	}
 	
 	/**
@@ -86,10 +88,10 @@ public class User{
 	
 	/**
 	 * 
-	 * @param new_surname
+	 * @param newSurname
 	 */
-	public void setSurname(String new_surname){
-		surname = new_surname;
+	public void setSurname(String newSurname){
+		surname = newSurname;
 	}
 	
 	/**
@@ -97,15 +99,15 @@ public class User{
 	 * @return String bank_account
 	 */
 	public String getBankAccount(){
-		return bank_account;
+		return bankAccount;
 	}
 	
 	/**
 	 * 
-	 * @param new_bank_account
+	 * @param newBankAccount
 	 */
-	public void setBankAccount(String new_bank_account){
-		bank_account = new_bank_account;
+	public void setBankAccount(String newBankAccount){
+		bankAccount = newBankAccount;
 	}
 
 	
@@ -114,18 +116,18 @@ public class User{
 	}
 
 	
-	public void setPassword(String new_password) {
-		password = new_password;
+	public void setPassword(String newPassword) {
+		password = newPassword;
 	}
 
 	
-	public void addBet(Bet new_bet) {
-		betList.add(new_bet);
+	public boolean addBet(Bet newBet) {
+		return bets.add(newBet);
 	}
 
 	
-	public List<Bet> getBets() {
-		return betList;
+	public Set<Bet> getBets() {
+		return bets;
 	}
 	
 	

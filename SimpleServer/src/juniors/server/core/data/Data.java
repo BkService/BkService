@@ -5,11 +5,20 @@ import java.util.Map;
 
 import juniors.server.core.data.events.*;
 import juniors.server.core.data.users.*;
+import juniors.server.core.data.markets.*;
+import juniors.server.core.data.bets.*;
 
+/**
+ * Класс содержет методы, позволяющие управлять всеми данными, хранящимися на сервере
+ * @author kovalev
+ *
+ */
 public class Data implements UserManagerInterface, EventManagerInterface{
 	
 	private UserManagerInterface userManager;
 	private EventManagerInterface eventManager;
+        // при сравнении double что бы убрать погрешность
+        private final double DOUBLE_DELTA = 0.000001;
 	
 	public Data(){
 		userManager = new UserManager();
@@ -83,4 +92,72 @@ public class Data implements UserManagerInterface, EventManagerInterface{
 		return eventManager.getEventsCollection();
 	}
 	
+	/**
+	 * 
+	 * @param eventId - id события, маркеты которого нужны.
+	 * @return
+	 */
+	public Map<Integer, Market> getMarketsMap(Integer eventId){
+	    return eventManager.getEvent(eventId).getMarketsMap();
+	}
+	
+	/**
+	 * 
+	 * @param eventId
+	 * @param marketId
+	 * @return Map со списком исходов для маркета marketId
+	 */
+	public Map<Integer, Outcome> getOutcomeMap(Integer eventId, Integer marketId){
+	    return eventManager.getEvent(eventId).getMarket(marketId).getOutcomeMap();
+	}
+        
+        @Override
+        public boolean containsEvent(int eventId){
+            return eventManager.containsEvent(eventId);
+        }       
+        
+        protected Outcome getOutcome(int eventId, int markedId, int outcomeId){
+            return eventManager.getEvent(eventId).getMarket(eventId).getOutcome(outcomeId);
+        }
+        
+        /**
+         * 
+         * @param userId
+         * @param eventId
+         * @param marketId
+         * @param outcomeId
+         * @return 
+         */
+        public boolean makeBet(String userLogin, int eventId, int marketId, int outcomeId, double coefficient){
+            // корректны ли данные запрса
+            if (!containsUser(userLogin) || !containsEvent(eventId)
+                    || !getEvent(eventId).containsMarket(marketId)
+                    || !getEvent(eventId).getMarket(marketId).containsOutcome(outcomeId)){
+                return false;
+            }
+            
+            Outcome currentOutcome = getOutcome(eventId, marketId, outcomeId);
+            
+            // если коеффициенты не совпадают
+            if (Math.abs(currentOutcome.getCoefficient() - coefficient) > 
+                    DOUBLE_DELTA){
+                return false;
+            }
+            
+            Bet newBet = new Bet(getUser(userLogin), currentOutcome, currentOutcome.getCoefficient());
+            
+            // Записываю везде ставку. Если не удалось - тоже ошибка
+            if (!currentOutcome.addBet(newBet)){
+                return false;
+            }
+            
+            if (!getUser(userLogin).addBet(newBet)){
+                currentOutcome.removeBet(newBet);
+                return false;
+            }
+            
+            return true;
+        }
 }
+
+

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import juniors.server.core.data.bets.*;
+
 
 public class UserManager implements UserManagerInterface{
 	
@@ -156,6 +158,16 @@ public class UserManager implements UserManagerInterface{
 	public int getCountAuthorizedUsers(){
 		return authorizedUsers.size();
 	}
+        
+        /**
+         * 
+         * @param login
+         * @param newBet
+         * @return true - ставка добавлена
+         */
+        public boolean addBet(String login, Bet newBet){
+            return getUser(login).addBet(newBet);
+        }
 	
 	/**
 	 *  Только тестирование.
@@ -174,6 +186,8 @@ public class UserManager implements UserManagerInterface{
 		
 		
 	}
+        
+        
 	
 	/**
 	 * для проведения тестов

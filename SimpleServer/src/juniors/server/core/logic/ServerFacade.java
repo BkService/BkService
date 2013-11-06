@@ -56,6 +56,7 @@ public class ServerFacade {
 
     private void stopServices() {
 	staticServiceThread.interrupt();
+	fl.stop();
 	feedLoaderThread.interrupt();
     }
 
@@ -67,6 +68,9 @@ public class ServerFacade {
     }
 
     public boolean getStatusFL() {
+	System.out.println(feedLoaderThread.isAlive());
+	System.out.println(feedLoaderThread.isInterrupted());
+	System.out.println(feedLoaderThread.getState());
 	return feedLoaderThread.isAlive();
     }
 

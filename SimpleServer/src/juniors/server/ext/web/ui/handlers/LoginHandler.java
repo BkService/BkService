@@ -1,7 +1,6 @@
 package juniors.server.ext.web.ui.handlers;
 
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

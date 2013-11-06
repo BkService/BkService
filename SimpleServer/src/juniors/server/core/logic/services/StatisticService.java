@@ -2,7 +2,6 @@ package juniors.server.core.logic.services;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 

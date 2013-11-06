@@ -25,6 +25,7 @@ public class DataManager {
      */
     public static void main(String [] args){
     	DataManager.getInstance().addEvent(new Event(2, "dvdfvd"));
-    	String s = DataManager.getInstance().getEvent(2).getDescription();
+    	DataManager.getInstance().getEvent(2).getDescription();
+    	
     }
 }

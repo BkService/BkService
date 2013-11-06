@@ -1,7 +1,5 @@
 package juniors.server.core.data.users;
 
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -179,11 +177,7 @@ public class UserManager implements UserManagerInterface{
 		String newPassword = "pas";
 		String newBankAccount = "account";
 		
-		this.createUser(newLogin, newName, newSurname, newPassword, newBankAccount);
-		
-		User user = this.getUser(newLogin);
-		
-		
+		this.createUser(newLogin, newName, newSurname, newPassword, newBankAccount);		
 		
 	}
         

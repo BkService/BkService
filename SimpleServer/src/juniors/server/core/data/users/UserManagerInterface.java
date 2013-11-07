@@ -24,6 +24,7 @@ public interface UserManagerInterface {
 	/**
 	 * Создаёт и добавляет пользователя с заданными параметрами. Так же 
 	 * 
+	 * 
 	 * @param newLogin
 	 * @param newName
 	 * @param newSurname

@@ -3,8 +3,9 @@ package juniors.server.core.data.events;
 //import java.sql.Time;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 
-import juniors.server.core.data.markets.Market;
+import juniors.server.core.data.markets.*;
 /**
  * Описывает событие (любое). Есть строковое описание события (пока что только так)
  * Так же есть контейнер с маркетами, время начала и время конца (предполагаемое) событие

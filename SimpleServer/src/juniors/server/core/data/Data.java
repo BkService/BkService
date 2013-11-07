@@ -7,22 +7,27 @@ import juniors.server.core.data.events.*;
 import juniors.server.core.data.users.*;
 import juniors.server.core.data.markets.*;
 import juniors.server.core.data.bets.*;
+import juniors.server.core.data.statistics.Note;
+import juniors.server.core.data.statistics.StatisticsManager;
+import juniors.server.core.data.statistics.StatisticsManagerInterface;
 
 /**
  * Класс содержет методы, позволяющие управлять всеми данными, хранящимися на сервере
  * @author kovalev
  *
  */
-public class Data implements UserManagerInterface, EventManagerInterface{
+public class Data implements UserManagerInterface, EventManagerInterface , StatisticsManagerInterface{
 	
 	private UserManagerInterface userManager;
 	private EventManagerInterface eventManager;
+        private StatisticsManagerInterface statistcsManager;
         // при сравнении double что бы убрать погрешность
         private final double DOUBLE_DELTA = 0.000001;
 	
 	public Data(){
 		userManager = new UserManager();
 		eventManager = new EventManager();
+                statistcsManager = new StatisticsManager();
 	}
 	
 	@Override
@@ -158,6 +163,143 @@ public class Data implements UserManagerInterface, EventManagerInterface{
             
             return true;
         }
+
+    @Override
+    public long setCountLoginPerHour(long newValue) {
+        return statistcsManager.setCountLoginPerHour(newValue);
+    }
+
+    @Override
+    public long getCountLoginPerHour() {
+        return statistcsManager.getCountLoginPerHour();
+    }
+
+    @Override
+    public Note getLoginPerHour() {
+        return statistcsManager.getLoginPerHour();
+    }
+
+    @Override
+    public long setCountLoginPerDay(long newValue) {
+        return statistcsManager.setCountLoginPerDay(newValue);
+    }
+
+    @Override
+    public long getCountLoginPerDay() {
+        return statistcsManager.getCountLoginPerDay();
+    }
+
+    @Override
+    public Note getLoginPerDay() {
+        return statistcsManager.getLoginPerDay();
+    }
+
+    @Override
+    public long setCountLoginPerMonth(long newValue) {
+        return statistcsManager.setCountLoginPerMonth(newValue);
+    }
+
+    @Override
+    public long getCountLoginPerMonth() {
+        return statistcsManager.getCountLoginPerMonth();
+    }
+
+    @Override
+    public Note getLoginPerMonth() {
+        return statistcsManager.getLoginPerMonth();
+    }
+
+    @Override
+    public long setCountRequestPerSecond(long newValue) {
+        return statistcsManager.setCountRequestPerSecond(newValue);
+    }
+
+    @Override
+    public long getCountRequestPerSecond() {
+        return statistcsManager.getCountRequestPerSecond();
+    }
+
+    @Override
+    public Note getRequestPerSecond() {
+        return statistcsManager.getRequestPerSecond();
+    }
+
+    @Override
+    public long setCountRequestPerMinute(long newValue) {
+        return statistcsManager.setCountRequestPerMinute(newValue);
+    }
+
+    @Override
+    public long getCountRequestPerMinute() {
+        return statistcsManager.getCountRequestPerMinute();
+    }
+
+    @Override
+    public Note getRequestPerMinute() {
+        return statistcsManager.getRequestPerMinute();
+    }
+
+    @Override
+    public long setCountRequestPerHour(long newValue) {
+        return statistcsManager.setCountRequestPerHour(newValue);
+    }
+
+    @Override
+    public long getCountRequestPerHour() {
+        return statistcsManager.getCountRequestPerHour();
+    }
+
+    @Override
+    public Note getRequestPerHour() {
+        return statistcsManager.getRequestPerHour();
+    }
+
+    @Override
+    public long setCountRequestPerDay(long newValue) {
+        return statistcsManager.setCountRequestPerDay(newValue);
+    }
+
+    @Override
+    public long getCountRequestPerDay() {
+        return statistcsManager.getCountRequestPerDay();
+    }
+
+    @Override
+    public Note getRequestPerDay() {
+        return statistcsManager.getRequestPerDay();
+    }
+
+    @Override
+    public long setCountBetPerSecond(long newValue) {
+        return statistcsManager.setCountBetPerSecond(newValue);
+    }
+
+    @Override
+    public long getCountBetPerSecond() {
+        return statistcsManager.getCountBetPerSecond();
+    }
+
+    @Override
+    public Note getBetPerSecond() {
+        return statistcsManager.getBetPerSecond();
+    }
+
+    @Override
+    public long setCountBetPerMinute(long newValue) {
+        return statistcsManager.setCountBetPerMinute(newValue);
+    }
+
+    @Override
+    public long getCountBetPerMinute() {
+        return statistcsManager.getCountBetPerMinute();
+    }
+
+    @Override
+    public Note getBetPerMinute() {
+        return statistcsManager.getBetPerMinute();
+    }
+
+    
 }
 
 

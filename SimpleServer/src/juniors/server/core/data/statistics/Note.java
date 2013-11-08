@@ -6,8 +6,9 @@ package juniors.server.core.data.statistics;
  * @author kovalev
  */
 public class Note {
-    protected long value; // величина
-    protected long measurTime; // время получения данных
+
+    protected volatile long value; // величина
+    protected volatile long measurTime; // время получения данных
     
     /**
      * Создание статистической записи
@@ -52,5 +53,23 @@ public class Note {
         value = newValue;
         measurTime = System.currentTimeMillis();
         return measurTime;
+    }
+    
+    /** 
+     * обнуляет поле value
+     */
+    public void setToZero(){
+        value = 0;
+        measurTime = System.currentTimeMillis();
+    }
+    
+    /**
+     * Добавляет указанное значение к value, не меняя время обновления
+     * @param n - величина, добавляемая к value
+     * @return - новое value
+     */
+    public long addToValue(long n){
+        value += n;
+        return value;
     }
 }

@@ -1,7 +1,10 @@
 package juniors.server.core.data.statistics;
 
 /**
- *
+ * Инструменты для получения, хранения и редактирования статистических данных.
+ * Все данные, которые обновляются реже, чем раз в минути вычисляются автоматически.
+ * Но для каждого типа данных всё равно данные с минимальной частотой надо обновлять 
+ * вручную (если данные обновляются раз в час, день и месяц, то раз в час обновлять надо руками)
  * @author kovalev
  */
 public class StatisticsManager implements StatisticsManagerInterface{
@@ -37,6 +40,10 @@ public class StatisticsManager implements StatisticsManagerInterface{
     
     @Override
     public long setCountLoginPerHour(long newValue) {
+        
+        loginPerDay.addToValue(newValue);
+        loginPerMonth.addToValue(newValue);
+        
         return loginPerHour.setValue(newValue);
     }
 
@@ -102,6 +109,9 @@ public class StatisticsManager implements StatisticsManagerInterface{
     
     @Override
     public long setCountRequestPerMinute(long newValue) {
+        requestPerHour.addToValue(newValue);
+        requestPerDay.addToValue(newValue);
+        
         return requestPerMinute.setValue(newValue);
     }
 

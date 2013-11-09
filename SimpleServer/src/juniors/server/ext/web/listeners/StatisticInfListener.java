@@ -28,14 +28,10 @@ public class StatisticInfListener implements HttpSessionAttributeListener,
 	if (arg0.getName().equals("user") && arg0.getValue() != null) {
 	    countAuthUsers.incrementAndGet();
 	}
-
     }
 
     @Override
     public void attributeRemoved(HttpSessionBindingEvent arg0) {
-	if (arg0.getName().equals("user") && arg0.getValue() == null) {
-	    countAuthUsers.decrementAndGet();
-	}
     }
 
     @Override

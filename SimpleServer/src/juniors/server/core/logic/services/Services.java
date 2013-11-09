@@ -1,6 +1,5 @@
 package juniors.server.core.logic.services;
 
-import juniors.server.core.logic.ServerFacade;
 
 
 /**
@@ -10,26 +9,20 @@ import juniors.server.core.logic.ServerFacade;
  */
 public class Services {
 
-	private static volatile Services instance;
+	private static final Services instance;
+	static{
+	    instance = new Services();
+	}
 	
-	private StatisticService staticService;
+	private StatisticService statisticService;
 
 	public static Services getInstance() {
-		Services localInstance = instance;
-		if (localInstance == null) {
-			synchronized (ServerFacade.class) {
-				localInstance = instance;
-				if (localInstance == null) {
-					instance = localInstance = new Services();
-				}
-			}
-		}
-		return localInstance;
+		return instance;
 	}
 	
 	
 	private Services() {
-		staticService = new StatisticService();
+		statisticService = new StatisticService();
 	}
 	
 	public AccountsService getAccountsService() {
@@ -41,7 +34,7 @@ public class Services {
 	}
 	
 	public StatisticService getStatisticService() {
-	    	return staticService;
+	    	return statisticService;
 	}
 	
 	public BetsService BetsService() {

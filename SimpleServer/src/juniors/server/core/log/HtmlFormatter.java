@@ -17,9 +17,8 @@ public class HtmlFormatter extends Formatter {
     public HtmlFormatter() {
 	super();
     }
-
-    @Override
-    public String format(LogRecord record) {
+    
+    public static String formatRecord(LogRecord record) {
 	StringBuilder result=new StringBuilder();
 	Date d = new Date();
 	Level level = record.getLevel();
@@ -86,11 +85,15 @@ public class HtmlFormatter extends Formatter {
 	
 	// Конец строки
 	result.append("</tr>\n");
-	return result.toString();
+	return result.toString();	
     }
 
     @Override
-    public String getHead(Handler h) {
+    public String format(LogRecord record) {
+	return HtmlFormatter.formatRecord(record);
+    }
+    
+    public static String getHTMLHead() {
 	/**
 	 * Записываем заголовок HTML файла, мета информацию и начало таблицы.
 	 */
@@ -99,16 +102,24 @@ public class HtmlFormatter extends Formatter {
 		+ "</head><body>"
 		+ "<table border=1>"
 		+ "<tr bgcolor=CYAN><td>date</td><td>level</td><td>class</td><td>method</td>"
-		+ "<td>message</td><td>thrown message</td><td>stacktrace</td></tr>";
+		+ "<td>message</td><td>thrown message</td><td>stacktrace</td></tr>";	
+    }
 
+    @Override
+    public String getHead(Handler h) {
+	return getHTMLHead();
+    }
+    
+    public static String getHTMLTail() {
+	/**
+	 * Записываем окончание таблицы и конец HTML файла.
+	 */
+	return "</table></body></html>";	
     }
 
     @Override
     public String getTail(Handler h) {
-	/**
-	 * Записываем окончание таблицы и конец HTML файла.
-	 */
-	return "</table></body></html>";
+	return getHTMLTail();
     }
 
 }

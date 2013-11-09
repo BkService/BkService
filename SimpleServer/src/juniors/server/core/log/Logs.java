@@ -1,31 +1,27 @@
 package juniors.server.core.log;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.logging.FileHandler;
+import java.util.AbstractMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
+/**
+ * Буфферизированный логгер. 
+ * @author Dmitrii Shakshin (trueCoder)<d.shakshin@gmail.com>
+ *
+ */
 public class Logs {
 
     private static final Logs instance;
-
-    public static final String PATH_LOGFILE = "%t/simpleServerLogs/java%u%g.log";
+    
     static {
 	instance = new Logs();
     }
 
-    private HashMap<String, Logger> mapLoggers;
+    private AbstractMap<String,Logger> mapLoggers;
     
-    private FileHandler fh;
 
     private Logs() {
-	mapLoggers = new HashMap<String, Logger>(5);
-	try {
-	    fh = new FileHandler(PATH_LOGFILE);
-	    fh.setFormatter(new HtmlFormatter());
-	} catch (SecurityException | IOException e) {
-	    e.printStackTrace();
-	}
+	mapLoggers = new ConcurrentHashMap<String, Logger>(5);
     }
 
     public static Logs getInstance() {

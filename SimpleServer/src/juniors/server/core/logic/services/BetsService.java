@@ -17,13 +17,13 @@ public class BetsService {
 	countBets = new AtomicInteger(0);
     }
 
-    public boolean makeBet(User user, Event event, Market market, Outcome come) {	
-/*	boolean result = DataManager.getInstance().makeBet(user, event, market,
-		come, coefficient);*/
-	boolean result = false;
-	if(result)
-	    countBets.incrementAndGet();
-	return result;
+    public boolean makeBet(User user, Event event, Market market, Outcome come) {
+	/*
+	if(DataManager.getInstance().getUser(User)user.getName())
+	boolean result = DataManager.getInstance().makeBet(user, event, market,
+		come, 	come.getCoefficient());
+		*/
+	return false;
     }
 
     public static int getCountBets() {

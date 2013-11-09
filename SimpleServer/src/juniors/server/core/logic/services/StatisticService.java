@@ -8,18 +8,18 @@ import java.util.logging.Logger;
 import juniors.server.core.data.DataManager;
 import juniors.server.core.logic.RunnableService;
 import juniors.server.core.logic.ServerFacade;
-import juniors.server.ext.web.listeners.StatisticInfListener;
 
 public class StatisticService implements RunnableService {
 
     private static Logger log = Logger.getLogger(StatisticService.class
 	    .getSimpleName());
-    
+
+    public static final int DELAY = 1;
+    public static final TimeUnit TIME_UNIT_DELAY = TimeUnit.SECONDS;
+
     private ScheduledExecutorService executor;
 
-    public static final int DELAY = 30;
-    public static final TimeUnit TIME_UNIT_DELAY = TimeUnit.MINUTES;
-    
+    private boolean started = false;
 
     public StatisticService() {
 	executor = Executors.newSingleThreadScheduledExecutor();
@@ -35,34 +35,69 @@ public class StatisticService implements RunnableService {
 	BetsService.resetCountBets();
     }
 
-    public int getCountsUsers() {
-	return DataManager.getInstance().getCountUsers();
+    public long getCountLoginsPerHour() {
+	return DataManager.getInstance().getCountLoginPerHour();
     }
 
-    public int getCountsAuthUsers() {
-	return StatisticInfListener.getCountAuthUsers();
+    public long getCountLoginsPerDay() {
+	return DataManager.getInstance().getCountLoginPerDay();
+    }
+
+    public long getCountLoginsPerMonth() {
+	return DataManager.getInstance().getCountLoginPerMonth();
+    }
+
+    public long getCountRequestsPerSecond() {
+	return DataManager.getInstance().getCountRequestPerSecond();
+    }
+
+    public long getCountRequestsPerMinute() {
+	return DataManager.getInstance().getCountRequestPerMinute();
+    }
+
+    public long getCountRequestsPerHour() {
+	return DataManager.getInstance().getCountRequestPerHour();
+    }
+
+    public long getCountRequestsPerDay() {
+	return DataManager.getInstance().getCountRequestPerDay();
+    }
+
+    public long getCountBetsPerSeconds() {
+	return DataManager.getInstance().getCountBetPerSecond();
+    }
+
+    public int getCountsUsers() {
+	return DataManager.getInstance().getCountUsers();
     }
 
     private class Task implements Runnable {
 	@Override
 	public void run() {
-		saveStaticInf();
+	    saveStaticInf();
 	}
     }
 
     @Override
     public void start() {
-	executor.schedule(new Task(), DELAY, TIME_UNIT_DELAY);
+	if (!started) {
+	    executor.scheduleWithFixedDelay(new Task(), 0, DELAY,
+		    TIME_UNIT_DELAY);
+	    started = true;
+	}
     }
 
     @Override
     public void stop() {
-	executor.shutdown();
+	if (started) {
+	    executor.shutdown();
+	    started = false;
+	}
     }
 
     @Override
     public boolean isStarted() {
-	return !executor.isShutdown();	
+	return started;
     }
 
     @Override

@@ -3,9 +3,9 @@ package juniors.server.core.logic.services;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 import juniors.server.core.data.DataManager;
+import juniors.server.core.log.Logger;
 import juniors.server.core.log.Logs;
 import juniors.server.core.logic.RunnableService;
 import juniors.server.core.logic.ServerFacade;

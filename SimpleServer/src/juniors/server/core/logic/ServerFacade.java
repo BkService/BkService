@@ -26,11 +26,10 @@ public class ServerFacade {
 
     private HashMap<Integer, RunnableService> runnableServices;
 
-    private FeedLoader fl;
+    private FeedLoader feedLoader;
 
     // FIXME добавить интерфейс RunnableService
     // в службу и удалить поле
-    private Thread feedLoaderThread;
 
     public static final int COUNT_SERVICES;
 
@@ -52,17 +51,16 @@ public class ServerFacade {
     }
 
     private ServerFacade() {
-	fl = new FeedLoader();
+	feedLoader = new FeedLoader();
 	runnableServices = new HashMap<Integer, RunnableService>(COUNT_SERVICES);
 	runnableServices.put(ID_SERVICE_STATISTIC, (RunnableService) Services
 		.getInstance().getStatisticService());
-	// services.put(ID_SERVICE_FEEDLOADER, value)
+	runnableServices.put(ID_SERVICE_FEEDLOADER, feedLoader);
     }
 
     private void runAllServices() {
-	feedLoaderThread = new Thread(fl);
-	feedLoaderThread.setDaemon(true);
-	feedLoaderThread.start();
+	
+	feedLoader.start();
 	for (RunnableService service : runnableServices.values()) {
 	    if (!service.isStarted()) {
 		service.start();
@@ -71,7 +69,7 @@ public class ServerFacade {
     }
 
     private void stopAllServices() {
-	fl.stop();
+	feedLoader.stop();
     }
 
     public synchronized void start() {
@@ -88,7 +86,7 @@ public class ServerFacade {
      */
     @Deprecated
     public boolean getStatusFL() {
-	return feedLoaderThread.isAlive();
+	return feedLoader.isStarted();
     }
 
     public boolean runService(Integer id) {

@@ -66,7 +66,7 @@ public class Logs {
     }
     
     public static void main(String[] args) {
-	org.apache.log4j.Logger.getLogger(Logs.class).info("hello log4j");
+	//org.apache.log4j.Logger.getLogger(Logs.class).info("hello log4j");
     }
     
 }

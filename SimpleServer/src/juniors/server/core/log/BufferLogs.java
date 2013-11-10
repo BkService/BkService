@@ -72,6 +72,15 @@ public class BufferLogs extends Handler /* implements RunnableService */{
     public int countsRecords() {
 	return buffer.size();
     }
+    
+    public void setMaxSize(int size) {
+	if(size > 0)
+	    this.size = size;
+    }
+    
+    public int getMaxSize() {
+	return size;
+    }
 
 /*    public void setPath(String path) {
 	this.path = path;

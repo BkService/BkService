@@ -14,14 +14,15 @@ import juniors.server.core.logic.services.Services;
  */
 public class ServerFacade {
 
-    private boolean started = false;    
+    private boolean started = false;
 
     private static final ServerFacade instance;
     static {
 	instance = new ServerFacade();
     }
-    
-    private static final Logger log = Logs.getInstance().getLogger(ServerFacade.class.getSimpleName());
+
+    private static final Logger log = Logs.getInstance().getLogger(
+	    ServerFacade.class.getSimpleName());
 
     private HashMap<Integer, RunnableService> runnableServices;
 
@@ -34,9 +35,9 @@ public class ServerFacade {
     public static final int COUNT_SERVICES;
 
     public static final Integer ID_SERVICE_FEEDLOADER, ID_SERVICE_STATISTIC;
-    static{
+    static {
 	COUNT_SERVICES = 2;
-	 
+
 	ID_SERVICE_FEEDLOADER = 1;
 	ID_SERVICE_STATISTIC = 2;
     }
@@ -62,7 +63,7 @@ public class ServerFacade {
 	feedLoaderThread = new Thread(fl);
 	feedLoaderThread.setDaemon(true);
 	feedLoaderThread.start();
-	for(RunnableService service: runnableServices.values()) {
+	for (RunnableService service : runnableServices.values()) {
 	    if (!service.isStarted()) {
 		service.start();
 	    }
@@ -77,7 +78,7 @@ public class ServerFacade {
 	if (!started) {
 	    runAllServices();
 	    started = true;
-	    log.info("Server started");
+	    log.info("Server start");
 	}
     }
 
@@ -135,6 +136,7 @@ public class ServerFacade {
     public synchronized void stop() {
 	stopAllServices();
 	started = false;
+	log.info("Server stop");
     }
 
     public Services getServices() {

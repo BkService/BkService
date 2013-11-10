@@ -53,6 +53,7 @@ public class StatisticInfListener implements HttpSessionAttributeListener,
 
     @Override
     public void sessionDestroyed(HttpSessionEvent arg0) {
+	System.out.println("session destroy");
 	countAuthUsers.decrementAndGet();
     }
 

@@ -20,6 +20,7 @@ public class LogoutHandler extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("user", null); // FIXME  Dmitrii: add call method session.invalidate();
+		session.invalidate();
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 		
 	}

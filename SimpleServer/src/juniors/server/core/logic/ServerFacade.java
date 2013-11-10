@@ -26,11 +26,6 @@ public class ServerFacade {
 
     private HashMap<Integer, RunnableService> runnableServices;
 
-    private FeedLoader feedLoader;
-
-    // FIXME добавить интерфейс RunnableService
-    // в службу и удалить поле
-
     public static final int COUNT_SERVICES;
 
     public static final Integer ID_SERVICE_FEEDLOADER, ID_SERVICE_STATISTIC;
@@ -38,7 +33,7 @@ public class ServerFacade {
 	COUNT_SERVICES = 2;
 
 	ID_SERVICE_FEEDLOADER = 1;
-	ID_SERVICE_STATISTIC = 2;
+	ID_SERVICE_STATISTIC = 2;	
     }
 
     private static AtomicInteger countRequests;
@@ -51,16 +46,13 @@ public class ServerFacade {
     }
 
     private ServerFacade() {
-	feedLoader = new FeedLoader();
 	runnableServices = new HashMap<Integer, RunnableService>(COUNT_SERVICES);
 	runnableServices.put(ID_SERVICE_STATISTIC, (RunnableService) Services
 		.getInstance().getStatisticService());
-	runnableServices.put(ID_SERVICE_FEEDLOADER, feedLoader);
+	runnableServices.put(ID_SERVICE_FEEDLOADER, new FeedLoader());
     }
 
     private void runAllServices() {
-	
-	feedLoader.start();
 	for (RunnableService service : runnableServices.values()) {
 	    if (!service.isStarted()) {
 		service.start();
@@ -69,7 +61,11 @@ public class ServerFacade {
     }
 
     private void stopAllServices() {
-	feedLoader.stop();
+	for (RunnableService service : runnableServices.values()) {
+	    if (!service.isStarted()) {
+		service.stop();
+	    }
+	}
     }
 
     public synchronized void start() {
@@ -86,7 +82,7 @@ public class ServerFacade {
      */
     @Deprecated
     public boolean getStatusFL() {
-	return feedLoader.isStarted();
+	return runnableServices.get(ID_SERVICE_FEEDLOADER).isStarted();
     }
 
     public boolean runService(Integer id) {

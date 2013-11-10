@@ -2,9 +2,9 @@ package juniors.server.core.logic;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Logger;
 
 import juniors.server.core.feed.FeedLoader;
+import juniors.server.core.log.Logger;
 import juniors.server.core.log.Logs;
 import juniors.server.core.logic.services.Services;
 

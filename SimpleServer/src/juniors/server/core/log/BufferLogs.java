@@ -8,7 +8,7 @@ import java.util.logging.LogRecord;
 
 public class BufferLogs extends Handler /* implements RunnableService */{
 
-//    private static final BufferLogs instance;
+    // private static final BufferLogs instance;
 
     // public static final String ENCODING = "UTF-8";
 
@@ -21,31 +21,30 @@ public class BufferLogs extends Handler /* implements RunnableService */{
     //
     // private ScheduledExecutorService executor;
 
-/*    static {
-	instance = new BufferLogs();
-    }
-*/
-    private Deque<LogRecord> buffer;
+    /*
+     * static { instance = new BufferLogs(); }
+     */
+    private Deque<LogsRecord> buffer;
     private int size;
 
     // private String path;
 
     public BufferLogs(int size) {
-//	executor = Executors.newSingleThreadScheduledExecutor();
-	buffer = new ConcurrentLinkedDeque<LogRecord>();
+	// executor = Executors.newSingleThreadScheduledExecutor();
+	buffer = new ConcurrentLinkedDeque<LogsRecord>();
 	this.size = size;
 	// path = DEFAULT_PATH;
     }
 
-/*    public static BufferLogs getInstance() {
-	return instance;
-    }*/
+    /*
+     * public static BufferLogs getInstance() { return instance; }
+     */
 
     @Override
     public void publish(LogRecord record) {
-	if(buffer.size() > size)
+	if (buffer.size() > size)
 	    buffer.pop();
-	buffer.push(record);
+	buffer.push(LogsRecord.valueOf(record));
     }
 
     @Override
@@ -58,33 +57,33 @@ public class BufferLogs extends Handler /* implements RunnableService */{
 	buffer.clear();
     }
 
-    public String[] getLastRecords(int count) {
+    public LogsRecord[] getLastRecords(int count) {
 	int size = (buffer.size() < count) ? buffer.size() : count;
-	String[] result = new String[size];
+	LogsRecord[] result = new LogsRecord[size];
 	if (size == 0)
 	    return result;
-	Iterator<LogRecord> iter = buffer.iterator();
+	Iterator<LogsRecord> iter = buffer.iterator();
 	for (int i = 0; i < size; i++)
-	    result[i] = iter.next().getMessage();
+	    result[i] = iter.next();
 	return result;
     }
 
     public int countsRecords() {
 	return buffer.size();
     }
-    
+
     public void setMaxSize(int size) {
-	if(size > 0)
+	if (size > 0)
 	    this.size = size;
     }
-    
+
     public int getMaxSize() {
 	return size;
     }
 
-/*    public void setPath(String path) {
-	this.path = path;
-    }*/
+    /*
+     * public void setPath(String path) { this.path = path; }
+     */
 
     /*
      * private class Task implements Runnable {

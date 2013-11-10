@@ -298,6 +298,21 @@ public class Data implements UserManagerInterface, EventManagerInterface , Stati
     public Note getBetPerMinute() {
         return statistcsManager.getBetPerMinute();
     }
+    
+    /**
+    * Временный способ работы с финансами!
+    * Меняет balance на величину sum.
+    * Если надо  снять, то sum отрицательна.
+    * Balance должен быть >= 0 (надо ли это?)
+    * 
+    * @param login - логин пользователя
+    * @param sum - сумма операции
+    * @return - новый balance, или -1 в случае ошибки операции 
+    */
+    @Override
+    public float changeBalance(String login, float sum) {
+        return userManager.changeBalance(login, sum);
+    }
 
     
 }

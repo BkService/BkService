@@ -22,6 +22,7 @@ public class User{
 	protected String surname;
 	protected String password; // научиться правильно хранить пароль
 	protected String bankAccount; // номер банковского счёта
+        protected float balance;    // баланс (деньги), balance >= 0
 	protected Set<Bet> bets; // контейнер с ссылками на ставки, которые делал пользователь
 	protected boolean isAuthorized;	// если авторизован - true
 	long lastTimeActive;	// время последней активности пользователя. 
@@ -41,6 +42,7 @@ public class User{
 		surname = newSurname;
 		bankAccount = newBankAccount;
 		password = newPassword;
+                balance = 1000f;
 		
 		bets = new ConcurrentSkipListSet<Bet>();
 		lastTimeActive = System.currentTimeMillis();
@@ -130,7 +132,26 @@ public class User{
 		return bets;
 	}
 	
-	
+        /**
+         * Временный способ работы с финансами!
+         * Меняет balance на величину sum.
+         * Если надо  снять, то sum отрицательна.
+         * Balance должен быть >= 0 (надо ли это?)
+         * 
+         * @param sum - сумма операции.
+         * @return - новый balance, или -1 в случае ошибки операции 
+         */
+	public float changeBalance(float sum){
+            float tempBalance = balance + sum;
+            
+            // если баланс стал отрицательный - ошибка!
+            if (tempBalance < 0){
+                return -1;
+            }
+            else {
+                return balance = tempBalance;
+            }
+        }
 	
 	
 	

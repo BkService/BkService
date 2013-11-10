@@ -187,7 +187,21 @@ public class UserManager implements UserManagerInterface{
 		
 	}
         
-        
+        /**
+         * Временный способ работы с финансами!
+         * Меняет balance на величину sum.
+         * Если надо  снять, то sum отрицательна.
+         * Balance должен быть >= 0 (надо ли это?)
+         * 
+         * @param login - логин пользователя
+         * @param sum - сумма операции
+         * @return - новый balance, или -1 в случае ошибки операции 
+         */
+        @Override
+        public float changeBalance(String login, float sum) {
+            return userMap.get(login).changeBalance(sum);
+        }
+
 	
 	/**
 	 * для проведения тестов
@@ -200,5 +214,6 @@ public class UserManager implements UserManagerInterface{
 
 	}
 
+    
 	
 }

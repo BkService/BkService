@@ -36,7 +36,7 @@ public class EventManager implements EventManagerInterface {
 	}
 	
 	public void testEventManager(){
-		Event newEvent = new Event(1, "test evest");
+		Event newEvent = new Event(1, 1555555L, "test evest");
 		
 		this.addEvent(newEvent);
 		
@@ -75,7 +75,7 @@ public class EventManager implements EventManagerInterface {
 	 */
 	public static void main(String[] args){
 		EventManager manager = new EventManager();
-		manager.testEventManager();
+	//	manager.testEventManager();
 	}
         
 

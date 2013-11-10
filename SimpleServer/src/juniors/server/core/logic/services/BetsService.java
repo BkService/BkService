@@ -23,6 +23,7 @@ public class BetsService {
 	 */
 	DataManager.getInstance().makeBet(login, eventId, marketId,
 		outcomeId, coefficient);
+	
 	return false;
     }
 

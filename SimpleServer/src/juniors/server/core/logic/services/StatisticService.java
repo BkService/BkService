@@ -69,6 +69,10 @@ public class StatisticService implements RunnableService {
     public int getCountsUsers() {
 	return DataManager.getInstance().getCountUsers();
     }
+    
+    public int getCountOnlineUsers() {
+	return StatisticInfListener.getCountOnlineUsers();
+    }
 
     private class TaskDelaySecond implements Runnable {
 	@Override

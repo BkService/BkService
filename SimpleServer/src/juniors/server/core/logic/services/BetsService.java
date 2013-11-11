@@ -33,6 +33,16 @@ public class BetsService implements RunnableService {
     public static void resetCountBets() {
 	countBets.set(0);
     }
+    
+    private class Task implements Runnable {
+
+	@Override
+	public void run() {
+	    //for(DataManager.getInstance().)
+	    
+	}
+	
+    }
 
     @Override
     public void start() {

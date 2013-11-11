@@ -46,21 +46,21 @@ public class XShell extends HttpServlet {
 		String result = "<br>command not found. input 'man' for get help";
 		if(cmd.equals("startfl")) {
 			ServerFacade facade = ServerFacade.getInstance();
-			if(facade.getStatusService(ServerFacade.ID_SERVICE_FEEDLOADER))
+			if(facade.getStatusService(ServerFacade.TypeRunService.SERVICE_FEEDLOADER))
 				facade.start();
 			result = "<br>start feed loader.... success. Date start " + new Date().toString() + "<br>";
 			return result;
 		}
 		if(cmd.equals("stopfl")) {
 			ServerFacade facade = ServerFacade.getInstance();
-			if(!facade.getStatusService(ServerFacade.ID_SERVICE_FEEDLOADER))
+			if(!facade.getStatusService(ServerFacade.TypeRunService.SERVICE_FEEDLOADER))
 				facade.stop();
 			result = "<br>stop feed loader.... success. Date stop " + new Date().toString();
 			return result;
 		}
 		if(cmd.equals("statefl")) {
 			ServerFacade facade = ServerFacade.getInstance();
-			result = facade.getStatusService(ServerFacade.ID_SERVICE_FEEDLOADER) ? "<br>feed is working" : "<br>feed is stoped";
+			result = facade.getStatusService(ServerFacade.TypeRunService.SERVICE_FEEDLOADER) ? "<br>feed is working" : "<br>feed is stoped";
 		}
 		if(cmd.equals("info")) {
 			result = "<br>Server name: " + request.getServerName() + ". " +

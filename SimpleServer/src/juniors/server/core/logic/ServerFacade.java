@@ -7,19 +7,18 @@ import juniors.server.core.feed.FeedLoader;
 import juniors.server.core.log.Logger;
 import juniors.server.core.log.Logs;
 import juniors.server.core.logic.services.Services;
+import juniot.server.core.resultprovider.ResultProvider;
 
 /**
  * 
  * @author Dmitrii Shakshin (trueCoder)<d.shakshin@gmail.com>
  */
 public class ServerFacade {
-    static {
-	COUNT_SERVICES = 2;
 
-	ID_SERVICE_FEEDLOADER = 1;
-	ID_SERVICE_STATISTIC = 2;	
+    public static enum TypeRunService {
+	SERVICE_FEEDLOADER, SERVICE_STATISTIC, RESULT_PROVIDER
     }
-    
+
     private boolean started = false;
 
     private static final ServerFacade instance;
@@ -30,11 +29,7 @@ public class ServerFacade {
     private static final Logger log = Logs.getInstance().getLogger(
 	    ServerFacade.class.getSimpleName());
 
-    private HashMap<Integer, RunnableService> runnableServices;
-
-    public static final int COUNT_SERVICES;
-
-    public static final Integer ID_SERVICE_FEEDLOADER, ID_SERVICE_STATISTIC ;
+    private HashMap<TypeRunService, RunnableService> runnableServices;
 
     private static AtomicInteger countRequests;
     static {
@@ -46,10 +41,12 @@ public class ServerFacade {
     }
 
     private ServerFacade() {
-	runnableServices = new HashMap<Integer, RunnableService>(COUNT_SERVICES);
-	runnableServices.put(ID_SERVICE_STATISTIC, (RunnableService) Services
+	runnableServices = new HashMap<TypeRunService, RunnableService>(
+		TypeRunService.values().length);
+	runnableServices.put(TypeRunService.SERVICE_STATISTIC, (RunnableService) Services
 		.getInstance().getStatisticService());
-	runnableServices.put(ID_SERVICE_FEEDLOADER, new FeedLoader());
+	runnableServices.put(TypeRunService.SERVICE_FEEDLOADER, new FeedLoader());
+	runnableServices.put(TypeRunService.RESULT_PROVIDER, new ResultProvider());
     }
 
     private void runAllServices() {
@@ -82,37 +79,42 @@ public class ServerFacade {
      */
     @Deprecated
     public boolean getStatusFL() {
-	return runnableServices.get(ID_SERVICE_FEEDLOADER).isStarted();
+	return runnableServices.get(TypeRunService.SERVICE_FEEDLOADER).isStarted();
     }
 
-    public boolean runService(Integer id) {
+    public boolean runService(TypeRunService typeService) {
 	if (started) {
-	    RunnableService service = runnableServices.get(id);
-	    if (!service.isStarted())
-		return false;
-	    service.start();
-	}
-	return false;
-    }
-
-    public boolean stopService(Integer id) {
-	if (started) {
-	    RunnableService service = runnableServices.get(id);
+	    RunnableService service = runnableServices.get(typeService);
 	    if (service.isStarted())
 		return false;
 	    service.start();
+	    return true;
 	}
 	return false;
     }
 
     /**
-     * Получение статуса службы
-     * 
-     * @param id
-     * @return если службы запущена - возвращает true
+     * Остановка службы
+     * @param typeService
+     * @return
      */
-    public boolean getStatusService(Integer id) {
-	RunnableService service = runnableServices.get(id);
+    public boolean stopService(TypeRunService typeService) {
+	if (started) {
+	    RunnableService service = runnableServices.get(typeService);
+	    if (!service.isStarted())
+		return false;
+	    service.stop();
+	    return true;
+	}
+	return false;
+    }
+
+    /**
+     * @param typeService
+     * @return
+     */
+    public boolean getStatusService(TypeRunService typeService) {
+	RunnableService service = runnableServices.get(typeService);
 	return (started == false) || (service == null) ? false : service
 		.isStarted();
     }
@@ -121,8 +123,8 @@ public class ServerFacade {
 	return started;
     }
 
-    public void stop(Integer id) {
-	RunnableService service = runnableServices.get(id);
+    public void stop(TypeRunService typeService) {
+	RunnableService service = runnableServices.get(typeService);
 	if (service != null)
 	    service.stop();
     }

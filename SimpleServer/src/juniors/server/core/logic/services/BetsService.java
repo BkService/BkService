@@ -15,6 +15,7 @@ public class BetsService implements RunnableService {
     static {
 	countBets = new AtomicInteger(0);
     }
+        
 
     public boolean makeBet(String login, int eventId, int marketId,
 	    int outcomeId, int coefficient) {

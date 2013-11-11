@@ -13,7 +13,13 @@ import juniors.server.core.logic.services.Services;
  * @author Dmitrii Shakshin (trueCoder)<d.shakshin@gmail.com>
  */
 public class ServerFacade {
+    static {
+	COUNT_SERVICES = 2;
 
+	ID_SERVICE_FEEDLOADER = 1;
+	ID_SERVICE_STATISTIC = 2;	
+    }
+    
     private boolean started = false;
 
     private static final ServerFacade instance;
@@ -28,13 +34,7 @@ public class ServerFacade {
 
     public static final int COUNT_SERVICES;
 
-    public static final Integer ID_SERVICE_FEEDLOADER, ID_SERVICE_STATISTIC;
-    static {
-	COUNT_SERVICES = 2;
-
-	ID_SERVICE_FEEDLOADER = 1;
-	ID_SERVICE_STATISTIC = 2;	
-    }
+    public static final Integer ID_SERVICE_FEEDLOADER, ID_SERVICE_STATISTIC ;
 
     private static AtomicInteger countRequests;
     static {
@@ -62,7 +62,7 @@ public class ServerFacade {
 
     private void stopAllServices() {
 	for (RunnableService service : runnableServices.values()) {
-	    if (!service.isStarted()) {
+	    if (service.isStarted()) {
 		service.stop();
 	    }
 	}

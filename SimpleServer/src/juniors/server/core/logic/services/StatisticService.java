@@ -95,6 +95,7 @@ public class StatisticService implements RunnableService {
     @Override
     public void start() {
 	if (!started) {
+	    executor = Executors.newScheduledThreadPool(2);
 	    executor.scheduleWithFixedDelay(new TaskDelaySecond(), 0, DELAY,
 		    TIME_UNIT_DELAY);
 	    executor.scheduleWithFixedDelay(new TaskDelayHour(), 0,

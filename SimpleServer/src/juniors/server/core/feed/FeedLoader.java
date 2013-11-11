@@ -18,6 +18,8 @@ public class FeedLoader implements RunnableService {
     private FeedParser feedParser;
     private int periodSec = 60;
     ScheduledExecutorService service;
+    boolean isStarted = false;
+    
     
     public FeedLoader() {
 	feedWorker = new FeedWorker(2 * periodSec / 60);
@@ -33,6 +35,7 @@ public class FeedLoader implements RunnableService {
     @Override
     public void start() {
 	service = Executors.newScheduledThreadPool(5, new DaemonThreadFactory());
+	isStarted = true;
 	service.scheduleAtFixedRate(new Runnable() {
 	    @Override
 	    public void run() {
@@ -43,12 +46,14 @@ public class FeedLoader implements RunnableService {
 
     @Override
     public void stop() {
+	isStarted = false;
 	service.shutdown();
+	
     }
     
     @Override
     public boolean isStarted() {
-	return !service.isShutdown();
+	return isStarted;
     }
 
     @Override

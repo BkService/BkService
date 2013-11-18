@@ -21,7 +21,7 @@ public class FeedSAXParser extends DefaultHandler {
 
 	@Override 
 	public void startDocument() throws SAXException { 
-	  System.out.println("Start parse XML..."); 
+	  //System.out.println("Start parse XML..."); 
 	}
 	
 	public void startElement(String namespaceURI, String localName, String qName, Attributes atts) throws SAXException {
@@ -48,7 +48,7 @@ public class FeedSAXParser extends DefaultHandler {
 	public void endElement(String namespaceURI, String localName, String qName) throws SAXException { 
 		if (qName.equals("m")) {
 			DataManager.getInstance().addEvent(curEvent);
-			System.out.println(curEvent);
+			//System.out.println(curEvent);
 		}
 		if (qName.equals("t")) {
 			curEvent.addMarket(curMarket);
@@ -64,7 +64,7 @@ public class FeedSAXParser extends DefaultHandler {
 	}
 	@Override 
 	public void endDocument() { 
-	  System.out.println("Stop parse XML..."); 
+	  //System.out.println("Stop parse XML..."); 
 	}
 	
 	public long parseTime(String s) {
@@ -77,7 +77,6 @@ public class FeedSAXParser extends DefaultHandler {
 		System.err.println("Cannot parse date, cause");
 		e.printStackTrace();
 	    }
-	    System.out.println(date.toString());
 	    return date.getTime();
 	}
 	

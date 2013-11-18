@@ -1,4 +1,4 @@
-package juniot.server.core.resultprovider;
+package juniors.server.core.resultprovider;
 
 import java.util.Iterator;
 import java.util.Map;

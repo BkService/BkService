@@ -15,9 +15,11 @@ import juniors.server.core.data.markets.Outcome;
  */
 public class EventManager implements EventManagerInterface {
 	Map<Integer, Event> eventsMap;	
+	//Map<Integer, Outcome> outcomeMap;
 	
 	public EventManager(){
 		eventsMap = new ConcurrentHashMap<Integer, Event>();
+	//	outcomeMap = new ConcurrentHashMap<Integer, Outcome>();
 	}
 	
 	@Override
@@ -68,6 +70,8 @@ public class EventManager implements EventManagerInterface {
         public boolean containsEvent(int eventId){
             return eventsMap.containsKey(eventId);
         }
+        
+        
 	
 	/**
 	 * для тестов

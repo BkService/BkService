@@ -13,12 +13,13 @@ public class Bet{
 	private final User user;
 	private final Outcome outcome;
 	private final Double coefficient;
-//	private sum; // как работать с финансами - потом решим
+	private final Float sum; // сумма ставки
 	
-	public Bet(User user, Outcome outcome, double current_coefficient){
+	public Bet(User user, Outcome outcome, double current_coefficient, Float sum){
 		this.user = user;
 		this.outcome = outcome;
 		this.coefficient = current_coefficient;
+		this.sum = sum;
 	}
 	
 	/**
@@ -43,5 +44,13 @@ public class Bet{
 	 */
 	public Double getCoefficient(){
 		return coefficient;
+	}
+	
+	/**
+	 * 
+	 * @return - сумма ставки
+	 */
+	public Float getSum(){
+	    return sum;
 	}
 }

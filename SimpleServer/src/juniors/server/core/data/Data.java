@@ -133,7 +133,7 @@ public class Data implements UserManagerInterface, EventManagerInterface , Stati
          * @param outcomeId
          * @return 
          */
-        public boolean makeBet(String userLogin, int eventId, int marketId, int outcomeId, double coefficient){
+        public boolean makeBet(String userLogin, int eventId, int marketId, int outcomeId, Float sum, double coefficient){
             // корректны ли данные запрса
             if (!containsUser(userLogin) || !containsEvent(eventId)
                     || !getEvent(eventId).containsMarket(marketId)
@@ -149,13 +149,12 @@ public class Data implements UserManagerInterface, EventManagerInterface , Stati
                 return false;
             }
             
-            Bet newBet = new Bet(getUser(userLogin), currentOutcome, currentOutcome.getCoefficient());
+            Bet newBet = new Bet(getUser(userLogin), currentOutcome, currentOutcome.getCoefficient(), sum);
             
             // Записываю везде ставку. Если не удалось - тоже ошибка
             if (!currentOutcome.addBet(newBet)){
                 return false;
-            }
-            
+            }            
             if (!getUser(userLogin).addBet(newBet)){
                 currentOutcome.removeBet(newBet);
                 return false;
@@ -298,7 +297,7 @@ public class Data implements UserManagerInterface, EventManagerInterface , Stati
     public Note getBetPerMinute() {
         return statistcsManager.getBetPerMinute();
     }
-    
+
     /**
     * Временный способ работы с финансами!
     * Меняет balance на величину sum.
@@ -309,10 +308,10 @@ public class Data implements UserManagerInterface, EventManagerInterface , Stati
     * @param sum - сумма операции
     * @return - новый balance, или -1 в случае ошибки операции 
     */
-    @Override
+  /*  @Override
     public float changeBalance(String login, float sum) {
         return userManager.changeBalance(login, sum);
-    }
+    }*/
 
     
 }

@@ -197,10 +197,10 @@ public class UserManager implements UserManagerInterface{
          * @param sum - сумма операции
          * @return - новый balance, или -1 в случае ошибки операции 
          */
-        @Override
+      /*  @Override
         public float changeBalance(String login, float sum) {
             return userMap.get(login).changeBalance(sum);
-        }
+        }*/
 
 	
 	/**

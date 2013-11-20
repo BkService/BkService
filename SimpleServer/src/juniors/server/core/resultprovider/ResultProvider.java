@@ -1,4 +1,4 @@
-package juniot.server.core.resultprovider;
+package juniors.server.core.resultprovider;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -18,10 +18,9 @@ public class ResultProvider implements RunnableService {
 
     ScheduledExecutorService service;
     boolean isStarted = false;;
-    int periodSec = 60;
+    long periodSec = 60;
     TimeChecker timeChecker;
-    
-    
+
     public ResultProvider() {
 	timeChecker = new TimeChecker();
     }
@@ -54,30 +53,44 @@ public class ResultProvider implements RunnableService {
 
     @Override
     public long getDelay() {
-	// TODO Auto-generated method stub
-	return 0;
+	return periodSec;
     }
 
     @Override
     public TimeUnit getTimeUnitDelay() {
-	// TODO Auto-generated method stub
-	return null;
+	return TimeUnit.SECONDS;
     }
+
     private void update() {
+	Random r = new Random();
 	Map<Integer, Event> events = DataManager.getInstance().getEventsMap();
 	for (Event event : events.values()) {
 	    if (timeChecker.checkOccured(event)) {
 		for (Market market : event.getMarketsMap().values()) {
-		    Random r = new Random();
-		    Map<Integer, Outcome> outcomes = market.getOutcomeMap();
-		    int outcomeIndex = r.nextInt(outcomes.size());
-		    Iterator<Outcome> iterator = outcomes.values().iterator();
-		    for (int i = 0; i < outcomeIndex; i++) {
-			iterator.next();
+		    if (!market.isEmpty()) {
+			market.finish(generateResult(market));
 		    }
-		    market.finish(iterator.next());
 		}
 	    }
 	}
     }
+
+    private Outcome generateResult(Market market) {
+	Random r = new Random();
+	Map<Integer, Outcome> outcomes = market.getOutcomeMap();
+	double sumCoef = 0;
+	for (Outcome outcome : outcomes.values()) {
+	    sumCoef += outcome.getCoefficient();
+	}
+	double value = r.nextDouble() * sumCoef;
+	for (Outcome outcome : outcomes.values()) {
+	    value -= outcome.getCoefficient();
+	    if (value <= 0) {
+		return outcome;
+	    }
+	}
+	//It shouldn't be
+	return outcomes.values().iterator().next();
+    }
+
 }

@@ -73,6 +73,11 @@ public class Market {
 	    return outcomesMap.values();
 	}
         
+	public boolean isEmpty() {
+	    return outcomesMap.size() == 0;
+	}
+	
+	
         public boolean containsOutcome(int outcomeId){
             return outcomesMap.containsKey(outcomeId);
         }
@@ -81,6 +86,11 @@ public class Market {
             return outcomesMap.get(outcomeId);
         }
 	
+        
+        /**
+         * This method finished market with win outcome.
+         * @param win
+         */
         public void finish(Outcome win) {
             for (Outcome out : outcomesMap.values()) {
         	if (out == win) {
@@ -92,12 +102,15 @@ public class Market {
             isFinished = true;            
         }
         
-	/**
-	 * заглушка
-	 * @param idWinOutcame
-	 * @return
-	 */
-	public boolean calculateMarket(int idWinOutcame){
-		return false;
-	}
+        @Override       
+        public String toString() {
+            String ans = "";
+            ans += description + "\n";
+            ans += outcomesMap.size() + "outcomes" + "\n";
+            for (Outcome outcome : outcomesMap.values()) {
+        	ans += outcome + "\n";
+            }
+            return ans;
+        }
+        
 }

@@ -7,7 +7,7 @@ import juniors.server.core.feed.FeedLoader;
 import juniors.server.core.log.Logger;
 import juniors.server.core.log.Logs;
 import juniors.server.core.logic.services.Services;
-import juniot.server.core.resultprovider.ResultProvider;
+import juniors.server.core.resultprovider.ResultProvider;
 
 /**
  * 

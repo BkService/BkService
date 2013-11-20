@@ -1,13 +1,8 @@
 package juniors.server.core.feed;
-import java.util.Date;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
 
 
 public class Main {
-	public static void main(String[] args) throws ParserConfigurationException, SAXException {
+	public static void main(String[] args)  {
 	        System.out.println("start");
 		FeedLoader fl = new FeedLoader();
 		fl.start();

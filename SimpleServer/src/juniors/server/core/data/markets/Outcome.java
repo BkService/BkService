@@ -118,6 +118,10 @@ public class Outcome {
 	public String toString() {
 	    return description + " " + coefficient + " " + isFinished + " " + isWin;  
 	}
+
+	public boolean isWin() {
+	    return isWin;
+	}
 }
 
 

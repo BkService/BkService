@@ -34,6 +34,28 @@ public class Data implements UserManagerInterface, EventManagerInterface , Stati
 	public Event addEvent(Event newEvent) {
 		return eventManager.addEvent(newEvent);
 	}
+	
+	/**
+	 * Добавляет новый исход в маркет и в общий контейнер.
+	 * @param newOutcome
+	 * @param eventId
+	 * @param marketId
+	 * @return - true - если всё корректно добавлено
+	 */
+	@Override
+	public boolean addOutcome(Outcome newOutcome, int eventId, int marketId){
+	    return eventManager.addOutcome(newOutcome, eventId, marketId);
+	}
+	
+	@Override
+	public boolean containsOutcome(int outcomeId){
+	    return eventManager.containsOutcome(outcomeId);
+	}
+	
+	@Override
+	public Outcome getOutcome(int outcomeId){
+	    return eventManager.getOutcome(outcomeId);
+	}
 
 	@Override
 	public Event getEvent(int eventId) {
@@ -133,15 +155,13 @@ public class Data implements UserManagerInterface, EventManagerInterface , Stati
          * @param outcomeId
          * @return 
          */
-        public boolean makeBet(String userLogin, int eventId, int marketId, int outcomeId, Float sum, double coefficient){
+        public boolean makeBet(String userLogin, int outcomeId, Float sum, double coefficient){
             // корректны ли данные запрса
-            if (!containsUser(userLogin) || !containsEvent(eventId)
-                    || !getEvent(eventId).containsMarket(marketId)
-                    || !getEvent(eventId).getMarket(marketId).containsOutcome(outcomeId)){
+            if (!containsUser(userLogin) || containsOutcome(outcomeId)){
                 return false;
             }
             
-            Outcome currentOutcome = getOutcome(eventId, marketId, outcomeId);
+            Outcome currentOutcome = getOutcome(outcomeId);
             
             // если коеффициенты не совпадают
             if (Math.abs(currentOutcome.getCoefficient() - coefficient) > 

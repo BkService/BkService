@@ -54,7 +54,7 @@ public class FeedSAXParser extends DefaultHandler {
 			curEvent.addMarket(curMarket);
 		}
 		if (qName.equals("l")) {
-			curMarket.addOutcome(curOutcome);
+		    	DataManager.getInstance().addOutcome(curOutcome, curEvent.getEventId(), curMarket.getMarketId());
 		}
 	} 
 	public void characters(char[] ch, int start, int length) throws SAXException { 

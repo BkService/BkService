@@ -144,7 +144,7 @@ public class Data implements UserManagerInterface, EventManagerInterface , Stati
         }       
         
         protected Outcome getOutcome(int eventId, int markedId, int outcomeId){
-            return eventManager.getEvent(eventId).getMarket(eventId).getOutcome(outcomeId);
+            return eventManager.getEvent(eventId).getMarket(markedId).getOutcome(outcomeId);
         }
         
         /**

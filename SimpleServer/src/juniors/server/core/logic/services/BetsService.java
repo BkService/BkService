@@ -17,14 +17,12 @@ public class BetsService implements RunnableService {
     }
         
 
-    public boolean makeBet(String login, int eventId, int marketId,
-	    int outcomeId, int coefficient) {
+    public boolean makeBet(String login, int outcomeId, int sum) {
 	// если событие началось
-	if (DataManager.getInstance().getEvent(eventId).getStartTime() < System
-		.currentTimeMillis())
-	    return false;
-	return DataManager.getInstance().makeBet(login, eventId, marketId,
-		outcomeId, coefficient);
+	//if (DataManager.getInstance().getEvent(eventId).getStartTime() < System
+	//	.currentTimeMillis())
+	//    return false;
+	return DataManager.getInstance().makeBet(login, outcomeId, sum);
     }
 
     public static int getCountBets() {

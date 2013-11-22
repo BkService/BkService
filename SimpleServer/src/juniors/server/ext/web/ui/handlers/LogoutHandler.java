@@ -1,7 +1,6 @@
 package juniors.server.ext.web.ui.handlers;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,6 @@ public class LogoutHandler extends HttpServlet {
 			throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		session.setAttribute("user", null); // FIXME  Dmitrii: add call method session.invalidate();
 		session.invalidate();
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 		

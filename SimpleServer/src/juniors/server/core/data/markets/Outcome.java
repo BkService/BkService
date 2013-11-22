@@ -90,7 +90,6 @@ public class Outcome {
 	 */
 	public boolean addBet(Bet newBet){
 		bets.add(newBet);
-		
 		return true;
 	}
 	
@@ -117,6 +116,14 @@ public class Outcome {
 	@Override
 	public String toString() {
 	    return description + " " + coefficient + " " + isFinished + " " + isWin;  
+	}
+	
+	public boolean getWin() {
+		return this.isWin;
+	}
+	
+	public boolean getFinish() {
+		return this.isFinished;
 	}
 }
 

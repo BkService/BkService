@@ -18,10 +18,9 @@ import javax.servlet.http.HttpSessionListener;
 public class StatisticInfListener implements HttpSessionAttributeListener,
 	HttpSessionListener {
 
-    private static AtomicInteger countAuthUsers, countOnlineUsers;
+    private static AtomicInteger countAuthUsers;
     static {
 	countAuthUsers = new AtomicInteger(0);
-	countOnlineUsers = new AtomicInteger(0);
     }
 
     @Override
@@ -42,10 +41,6 @@ public class StatisticInfListener implements HttpSessionAttributeListener,
     public static int getCountAuthUsers() {
 	return countAuthUsers.get();
     }
-    
-    public static int getCountOnlineUsers() {
-	return countOnlineUsers.get();
-    }
 
     public static void resetStaticInf() {
 	countAuthUsers.set(0);
@@ -58,7 +53,7 @@ public class StatisticInfListener implements HttpSessionAttributeListener,
 
     @Override
     public void sessionDestroyed(HttpSessionEvent arg0) {
-	countOnlineUsers.decrementAndGet();
+	countAuthUsers.decrementAndGet();
     }
 
 }

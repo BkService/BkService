@@ -1,7 +1,6 @@
 package juniors.server.core.data.events;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -117,6 +116,9 @@ public class EventManager implements EventManagerInterface {
 	//	manager.testEventManager();
 	}
         
-
+	public String toString() {
+		return outcomeMap.keySet().toString();
+		
+	}
 	
 }

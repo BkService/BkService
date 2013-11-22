@@ -31,11 +31,13 @@ public class FeedSAXParser extends DefaultHandler {
 			  long time = parseTime(atts.getValue("dt"));
 			  String name = atts.getValue("n"); 
 			  curEvent = new Event(id, time, name);
+			  DataManager.getInstance().addEvent(curEvent);
 		  }
 		  if (qName.equals("t")) {
 			  int id = Integer.parseInt(atts.getValue("id"));
 			  String name = atts.getValue("n");
 			  curMarket = new Market(id, name);
+			  curEvent.addMarket(curMarket);
 		  }
 		  if (qName.equals("l")) {
 			  int id = Integer.parseInt(atts.getValue("id"));
@@ -46,15 +48,9 @@ public class FeedSAXParser extends DefaultHandler {
 
 	@Override 
 	public void endElement(String namespaceURI, String localName, String qName) throws SAXException { 
-		if (qName.equals("m")) {
-			DataManager.getInstance().addEvent(curEvent);
-			//System.out.println(curEvent);
-		}
-		if (qName.equals("t")) {
-			curEvent.addMarket(curMarket);
-		}
 		if (qName.equals("l")) {
-			curMarket.addOutcome(curOutcome);
+		    	DataManager.getInstance().addOutcome(curOutcome, curEvent.getEventId(), curMarket.getMarketId());
+		    	//curMarket.addOutcome(curOutcome);
 		}
 	} 
 	public void characters(char[] ch, int start, int length) throws SAXException { 

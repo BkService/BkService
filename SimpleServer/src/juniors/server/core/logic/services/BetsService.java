@@ -39,8 +39,7 @@ public class BetsService {
 		}
 	    } else {
 		for (Bet bet : outcome.getBets()) {
-		    bet.getSum();
-		    Double sum = bet.getOutcome().getCoefficient();
+		    Float sum = bet.getSum();
 		    // create transaction
 		}
 	    }

@@ -7,20 +7,17 @@ public class Bookmaker extends User {
     public Bookmaker(String newLogin, String newName, String newSurname,
 	    String newPassword, String newBankAccount) {
 	super(newLogin, newName, newSurname, newPassword, newBankAccount);
-	balance.available = 1000000;
+	balance.changeBalance(999000);
     }
 
     /**
      * прибавляет sum к доступному балансу
      * @param sum
-     * @return -1, если операция невозможно. Иначе новый счёт.
+     * @return новый счёт. У букмекера он может быть отрицательный
      */
     public float changeBalance(float sum){
-	if (sum > balance.available){
-	    return -1f;
-	}
 	
-	return balance.available += sum;	
+	return balance.changeBalance(sum);	
     }
     
     /**
@@ -38,45 +35,43 @@ public class Bookmaker extends User {
 	    return false;
 	}
 	// проверка существования такого резерва и ставки 
-	if (!balance.reserve.containsKey(bet.getBetId())){
+	if (!balance.containsReserve(bet.getBetId())){
 	    return false;
 	}
 	    
         // если ставка проиграна, cумма зачисляется букмекеру
 	if (sum == 0){
 	    // возвращается резерв и плюс деньги игрока
-	    balance.available += bet.getSum() + balance.reserve.get(bet.getBetId());
-	    balance.reserve.remove(bet.getBetId());
+	    float test = balance.getSumOfBet(bet.getBetId());
+	    balance.changeBalance(bet.getSum() + balance.getSumOfBet(bet.getBetId()));
+	    balance.removeFromReserve(bet.getBetId());
 	    
 	    
-	    int bbb = balance.reserve.size();
+	    //int bbb = balance.reserve.size();
 	    return true;
         }
 	else { // ставка выиграна, резерв просто удаляется
-	    balance.reserve.remove(bet.getBetId());
+	    balance.removeFromReserve(bet.getBetId());
 	    
-	    int bbb = balance.reserve.size();
+	   // int bbb = balance.reserve.size();
 	    return true;
 	}
     }
     
     /**
-	 * Добавляет новую ставку и резервирует необходимую сумму в балансе
-	 * @param newBet
-	 * @return true - всё добавлено без ошибок.
-	 */
+     * Добавляет новую ставку и резервирует необходимую сумму в балансе
+     * @param newBet
+     * @return true - всё добавлено без ошибок. false - ставка уже существует
+     */
     @Override
     public boolean addBet(Bet newBet) {
-	if (balance.reserve.containsKey(newBet.getBetId())){
+	if (balance.containsReserve(newBet.getBetId())){
 	    return false;
 	}
 	
 	// у букмекера резервируется сумма с учётом коэффициента
 	float sum = (float) (newBet.getSum() * newBet.getCoefficient());
-	
-	balance.available -= sum;
-	balance.reserve.put(newBet.getBetId(), sum);
-	    
+	balance.addToReserve(newBet.getBetId(), sum);	    
 	
 	return true;
     }

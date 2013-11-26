@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import juniors.server.core.data.events.*;
-import juniors.server.core.data.finance.TransactMaker;
+import juniors.server.core.data.finance.TransactSaver;
 import juniors.server.core.data.users.*;
 import juniors.server.core.data.markets.*;
 import juniors.server.core.data.bets.*;
@@ -24,14 +24,14 @@ public class Data implements UserManagerInterface, EventManagerInterface , Stati
         private StatisticsManagerInterface statistcsManager;
         // при сравнении double что бы убрать погрешность
         private final double DOUBLE_DELTA = 0.000001;
-        private TransactMaker transactMaker;
+        private TransactSaver transactSaver;
 	
 	public Data(){
 		userManager = new UserManager();
 		eventManager = new EventManager();
                 statistcsManager = new StatisticsManager();
                 
-                transactMaker = new TransactMaker(getBookmaker());
+                transactSaver = new TransactSaver(getBookmaker());
                 
 	}
 	
@@ -330,32 +330,57 @@ public class Data implements UserManagerInterface, EventManagerInterface , Stati
     }
     
     /**
-     * Временный способ реализации транзакций
+     * Реализация транзакции самописным способом
      * 
-     * @param login
-     * @param betId
-     * @param sum
+     * @param login - логин Игрока
+     * @param betId - id ставки
+     * @param sum - если 0, то ставка Игрока проиграна. Иначе счёт его увеличивается на sum
      * @return true - транзакция прошла успешно
+     * @throws InterruptedException 
      */
-    public boolean makeTransact(String login, int betId, float sum){
+    public boolean makeTransact(String login, int betId, float sum) throws InterruptedException{
 	// получаю User
 	if (!containsUser(login)){
 	    return false;
 	}
 	User user = getUser(login);
 	Bet bet = user.getBet(betId);
+	Bookmaker bookmaker = getBookmaker();
 	
 	// есть ли такая ставка и не рассчитывалась ли она
-	if (bet == null || !transactMaker.addTransact(betId)){
+	if (bet == null || !transactSaver.addTransact(bet)){
 	    return false;
 	}
 	
-	if (user.calculateBet(bet, sum)){
-	    getBookmaker().calculateBet(bet, sum);
-	    return true;
+	user.getBalance().lockBalance();
+	bookmaker.getBalance().lockBalance();	
+	
+	// если ошибка у игрока, транзакция прерывается и сохраняется ошибка
+	if (!user.calculateBet(bet, sum)){
+	    transactSaver.addFailTransact(bet);
+	    
+	    user.getBalance().unlockBalance();
+	    bookmaker.getBalance().unlockBalance();
+	    
+	    return false;
+	}	    
+	
+	// если ошибка у букмекера, игроку возвращается ставка
+	// операция отменяется и сохраняется ошибка
+	if (!bookmaker.calculateBet(bet, sum)){
+	    transactSaver.addFailTransact(bet);
+	    user.addBetAgain(bet, sum);
+	    
+	    user.getBalance().unlockBalance();
+	    bookmaker.getBalance().unlockBalance();
+	    
+	    return false;
 	}
 	
-	return false;	
+	user.getBalance().unlockBalance();
+	bookmaker.getBalance().unlockBalance();
+	
+	return true;	
     }
     
     @Override
@@ -364,21 +389,11 @@ public class Data implements UserManagerInterface, EventManagerInterface , Stati
     }
 
     /**
-    * Временный способ работы с финансами!
-    * Меняет balance на величину sum.
-    * Если надо  снять, то sum отрицательна.
-    * Balance должен быть >= 0 (надо ли это?)
-    * 
-    * @param login - логин пользователя
-    * @param sum - сумма операции
-    * @return - новый balance, или -1 в случае ошибки операции 
-    */
-  /*  @Override
-    public float changeBalance(String login, float sum) {
-        return userManager.changeBalance(login, sum);
-    }*/
-
-    public static void main(String [] args){
+     * Метод для тестирования
+     * @param args
+     * @throws InterruptedException 
+     */
+    public static void main(String [] args) throws InterruptedException{
 	Data data = new Data();
 	int eventId = 10;
 	long startTime = 10L;
@@ -401,7 +416,7 @@ public class Data implements UserManagerInterface, EventManagerInterface , Stati
 	
 	Bet bet = (Bet) user.getBet(1);
 	
-	boolean tran = data.makeTransact(user.getLogin(), bet.getBetId(), 15);
+	boolean tran = data.makeTransact(user.getLogin(), bet.getBetId(), 0);
 	
 	
 	

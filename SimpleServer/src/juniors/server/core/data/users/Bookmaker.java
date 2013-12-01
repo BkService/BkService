@@ -22,7 +22,7 @@ public class Bookmaker extends User {
     
     /**
     * Если sum = 0, то ставка списывается, иначе ставка удаляется, а available 
-	 * пополняется на sum.
+    * пополняется на sum.
     * 
     * @param bet - ставка, с которой производится работа
     * @param sum - сумма операции (строго > 0).
@@ -42,18 +42,14 @@ public class Bookmaker extends User {
         // если ставка проиграна, cумма зачисляется букмекеру
 	if (sum == 0){
 	    // возвращается резерв и плюс деньги игрока
-	    float test = balance.getSumOfBet(bet.getBetId());
 	    balance.changeBalance(bet.getSum() + balance.getSumOfBet(bet.getBetId()));
 	    balance.removeFromReserve(bet.getBetId());
 	    
-	    
-	    //int bbb = balance.reserve.size();
 	    return true;
         }
 	else { // ставка выиграна, резерв просто удаляется
 	    balance.removeFromReserve(bet.getBetId());
-	    
-	   // int bbb = balance.reserve.size();
+	   
 	    return true;
 	}
     }

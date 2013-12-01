@@ -71,6 +71,9 @@ public class EventManager implements EventManagerInterface {
 		return eventsMap.remove(eventId);
 	}
 	
+	/**
+	 * тестирование 
+	 */
 	public void testEventManager(){
 		Event newEvent = new Event(1, 1555555L, "test evest");
 		

@@ -1,9 +1,8 @@
 package juniors.server.core.data.users;
 
+import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 import juniors.server.core.data.bets.Bet;
 
@@ -48,76 +47,42 @@ public class User{
 		lastTimeActive = System.currentTimeMillis();
 	}
 	
-	/**
-	 * 
-	 * @return String login
-	 */
 	public String getLogin(){
 		return login;
 	}
 	
-	/**
-	 * 
-	 * @param String new_login
-	 */
 	public void setLogin(String newLogin){
 		login = newLogin;
 	}
 	
-	/**
-	 * 
-	 * @return String name
-	 */
 	public String getName(){
 		return name;
 	}
 	
-	/**
-	 * 
-	 * @param String new_name
-	 */
 	public void setName(String newName){
 		name = newName;
 	}
 	
-	/**
-	 * 
-	 * @return String surname
-	 */
 	public String getSurname(){
 		return surname;
 	}
 	
-	/**
-	 * 
-	 * @param newSurname
-	 */
 	public void setSurname(String newSurname){
 		surname = newSurname;
 	}
 	
-	/**
-	 * 
-	 * @return String bank_account
-	 */
 	public String getBankAccount(){
 		return bankAccount;
 	}
 	
-	/**
-	 * 
-	 * @param newBankAccount
-	 */
 	public void setBankAccount(String newBankAccount){
 		bankAccount = newBankAccount;
 	}
 
-	
 	public String getPassword() {
 		return password;
 	}
 
-	
 	public void setPassword(String newPassword) {
 		password = newPassword;
 	}
@@ -139,14 +104,14 @@ public class User{
 	/**
 	 * 
 	 * @param betId
-	 * @return
+	 * @return - объект ставки с таким id
 	 */
 	public Bet getBet(int betId){
 	    return bets.get(betId);
 	}
 	
-	public Set<Bet> getBets() {
-		return (Set) bets.values();
+	public Collection<Bet> getBets() {
+		return bets.values();
 	}
 	
         /**
@@ -163,7 +128,6 @@ public class User{
 		return false;
 	    }
 	    
-	    Bet testBet = bets.get(1);
 	    // проверка существования такого резерва и ставки 
 	    if (!balance.containsReserve(bet.getBetId()) || !bets.containsKey(bet.getBetId())){
 		return false;
@@ -174,7 +138,6 @@ public class User{
 	    	balance.removeFromReserve(bet.getBetId());
 	    	bets.remove(bet.getBetId());
 	    	
-	    	int bbb = bets.size();
 	    	return true;
             }
 	    else { // ставка выиграна
@@ -182,7 +145,6 @@ public class User{
 		balance.removeFromReserve(bet.getBetId());
 		bets.remove(bet.getBetId());	    
 		
-		int bbb = bets.size();
 		return true;
 	    }
      }

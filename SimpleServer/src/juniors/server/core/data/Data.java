@@ -31,7 +31,7 @@ public class Data implements UserManagerInterface, EventManagerInterface , Stati
 		eventManager = new EventManager();
                 statistcsManager = new StatisticsManager();
                 
-                transactSaver = new TransactSaver(getBookmaker());
+                transactSaver = new TransactSaver();
                 
 	}
 	

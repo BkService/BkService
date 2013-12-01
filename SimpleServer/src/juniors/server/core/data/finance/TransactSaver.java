@@ -4,23 +4,19 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import juniors.server.core.data.bets.Bet;
-import juniors.server.core.data.users.Bookmaker;
-import juniors.server.core.data.users.User;
 
 /**
- * Хранит историю операций, ошибочные операции и букмекера
+ * Хранит историю операций и ошибочные операции
  * @author kovalev
  *
  */
 public class TransactSaver {
-    private Bookmaker bookmaker;
     private Set<Bet> transactions;
     private Set<Bet> failTransact;
     
-    public TransactSaver(Bookmaker bookmaker){
+    public TransactSaver(){
 	transactions = new ConcurrentSkipListSet<Bet>();
 	failTransact = new ConcurrentSkipListSet<Bet>();
-	this.bookmaker = bookmaker;
     }
     
     /**

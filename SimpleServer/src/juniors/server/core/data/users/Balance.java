@@ -1,11 +1,16 @@
 package juniors.server.core.data.users;
 
-import juniors.server.core.data.bets.Bet;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * Класс для хранения финансовой информации. 
+ * Содержит 2 поля для финансовой информации.
+ * Одно поле для хранения доступного счёта, другое - для хранения резерва.
+ * В резерве сохраняется id ставки и сумма ставки, которая вычитается из 
+ * доступных средств.
+ * Так же для организации транзакций добавлена блокировка баланса
+ * 
  * @author kovalev
  *
  */
@@ -94,7 +99,11 @@ public class Balance {
 	return !(reserve.remove(betId) == null);
     }
     
-    
+    /**
+     * Зарезервирована ли сумма для этой ставки
+     * @param betId - id ставки
+     * @return - true - зарезервирована 
+     */
     public boolean containsReserve(int betId){
 	return reserve.containsKey(betId);
     }
@@ -110,8 +119,10 @@ public class Balance {
     
     /**
      * @return - доступный баланс в формате int 
+     * @throws InterruptedException 
      */
-    public int getBalanceValue() {
+    public int getBalanceValue() throws InterruptedException {
+	waitUnlockedBalance();
     	return (int)this.available;
     }
     

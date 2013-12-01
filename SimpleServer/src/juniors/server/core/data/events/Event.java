@@ -53,7 +53,7 @@ public class Event {
 	/**
 	 * Добавить новый маркет.
 	 * @param new_market
-	 * @return ссылка на созданый объект
+	 * @return ссылка на прошлый маркет с таким id. Т. е. если не null - то уже такой был
 	 */
 	public Market addMarket(Market newMarket){
 		return markets.put(newMarket.getMarketId(), newMarket);

@@ -48,7 +48,7 @@ public class EventManager implements EventManagerInterface {
 	    getEvent(eventId).getMarket(marketId).addOutcome(newOutcome);
 	    outcomeMap.put(newOutcome.getOutcomeId(), newOutcome);
 	    
-	    return false;
+	    return true;
 	}
 	
 	@Override

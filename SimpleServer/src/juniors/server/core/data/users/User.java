@@ -1,7 +1,8 @@
 package juniors.server.core.data.users;
 
-import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import juniors.server.core.data.bets.Bet;
 
@@ -19,7 +20,7 @@ public class User{
 	protected String password; // научиться правильно хранить пароль
 	protected String bankAccount; // номер банковского счёта
     protected Balance balance;    // баланс (деньги), balance >= 0
-	protected Set<Bet> bets; // контейнер с ссылками на ставки, которые делал пользователь
+	protected Map<Integer, Bet> bets; // контейнер с ссылками на ставки, которые делал пользователь
 	protected boolean isAuthorized;	// если авторизован - true
 	long lastTimeActive;	// время последней активности пользователя. 
 	
@@ -32,89 +33,56 @@ public class User{
 	 * @param newBankAccount
 	 */
 	public User(String newLogin, String newName, String newSurname, 
-			String newPassword, String newBankAccount){
+			String newPassword, String newBankAccount)
+	{
 		login = newLogin;
 		name = newName;
 		surname = newSurname;
 		bankAccount = newBankAccount;
 		password = newPassword;
                 balance = new Balance();
-                balance.available = 1000f;
+                balance.changeBalance(1000f);
 		
-		bets = new ConcurrentSkipListSet<Bet>();
+		bets = new ConcurrentHashMap<Integer, Bet>();
 		lastTimeActive = System.currentTimeMillis();
 	}
 	
-	/**
-	 * 
-	 * @return String login
-	 */
 	public String getLogin(){
 		return login;
 	}
 	
-	/**
-	 * 
-	 * @param String new_login
-	 */
 	public void setLogin(String newLogin){
 		login = newLogin;
 	}
 	
-	/**
-	 * 
-	 * @return String name
-	 */
 	public String getName(){
 		return name;
 	}
 	
-	/**
-	 * 
-	 * @param String new_name
-	 */
 	public void setName(String newName){
 		name = newName;
 	}
 	
-	/**
-	 * 
-	 * @return String surname
-	 */
 	public String getSurname(){
 		return surname;
 	}
 	
-	/**
-	 * 
-	 * @param newSurname
-	 */
 	public void setSurname(String newSurname){
 		surname = newSurname;
 	}
 	
-	/**
-	 * 
-	 * @return String bank_account
-	 */
 	public String getBankAccount(){
 		return bankAccount;
 	}
 	
-	/**
-	 * 
-	 * @param newBankAccount
-	 */
 	public void setBankAccount(String newBankAccount){
 		bankAccount = newBankAccount;
 	}
 
-	
 	public String getPassword() {
 		return password;
 	}
 
-	
 	public void setPassword(String newPassword) {
 		password = newPassword;
 	}
@@ -122,22 +90,28 @@ public class User{
 	/**
 	 * Добавляет новую ставку и резервирует необходимую сумму в балансе
 	 * @param newBet
-	 * @return true - всё добавлено без ошибок.
+	 * @return true - всё добавлено без ошибок. false - ставка уже зарезервирована
 	 */
 	public boolean addBet(Bet newBet) {
-	    if (balance.reserve.containsKey(newBet) || bets.contains(newBet)){
-	    	return false;
+	    if (!balance.addToReserve(newBet.getBetId(), newBet.getSum())){
+		return false;
 	    }
 	    
-	    balance.available -= newBet.getSum();
-	    balance.reserve.put(newBet, newBet.getSum());
-		this.bets.add(newBet);
-		return true;
+	    this.bets.put(newBet.getBetId(), newBet);
+	    return true;
 	}
-
 	
-	public Set<Bet> getBets() {
-		return bets;
+	/**
+	 * 
+	 * @param betId
+	 * @return - объект ставки с таким id
+	 */
+	public Bet getBet(int betId){
+	    return bets.get(betId);
+	}
+	
+	public Collection<Bet> getBets() {
+		return bets.values();
 	}
 	
         /**
@@ -145,7 +119,7 @@ public class User{
 	 * пополняется на sum.
          * 
          * @param bet - ставка, с которой производится работа
-         * @param sum - сумма операции (строго > 0).
+         * @param sum - сумма операции (>= 0)
          * @return - true - операция прошла успешно. False - произошла ошибка 
          */
 	public boolean calculateBet(Bet bet, float sum){
@@ -153,26 +127,47 @@ public class User{
 	    if (sum < 0){
 		return false;
 	    }
+	    
 	    // проверка существования такого резерва и ставки 
-	    if (!balance.reserve.containsKey(bet) || bets.contains(bet)){
+	    if (!balance.containsReserve(bet.getBetId()) || !bets.containsKey(bet.getBetId())){
 		return false;
 	    }
 	    
             // если ставка проиграна, она просто удаляется
 	    if (sum == 0){
-	    	balance.reserve.remove(bet);
-	    	bets.remove(bet);
+	    	balance.removeFromReserve(bet.getBetId());
+	    	bets.remove(bet.getBetId());
+	    	
 	    	return true;
             }
 	    else { // ставка выиграна
-		balance.available += sum;
-		balance.reserve.remove(bet);
-		bets.remove(bet);
+		balance.changeBalance(sum);
+		balance.removeFromReserve(bet.getBetId());
+		bets.remove(bet.getBetId());	    
+		
 		return true;
 	    }
      }
 	
 	public Balance getBalance() {
 		return this.balance;
+	}
+	
+	/**
+	 * Отменяет рассчёт ставки. Меняет баланс и возвращает ставку в резерв
+	 *  
+	 * @param bet 
+	 * @param sum
+	 * @return true - ставка добавлена успешно
+	 */
+	public boolean addBetAgain(Bet bet, float sum){
+	    if (sum > 0){
+		balance.addToReserve(bet.getBetId(), sum);		    
+		this.bets.put(bet.getBetId(), bet);
+		
+		return true;
+	    }
+	    
+	    return false;
 	}
 }

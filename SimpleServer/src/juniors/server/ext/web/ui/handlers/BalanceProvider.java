@@ -1,6 +1,7 @@
 package juniors.server.ext.web.ui.handlers;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,12 @@ public class BalanceProvider extends HttpServlet {
 			response.getWriter().write("login error");
 			return;
 		}
-		response.getWriter().write(String.valueOf(user.getBalance().getBalanceValue()));
+		try {
+			response.getWriter().write(String.valueOf(user.getBalance().getBalanceValue()));
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 

@@ -6,6 +6,7 @@ public class Bookmaker extends User {
     
     public Bookmaker(String newLogin, String newName, String newSurname,
 	    String newPassword, String newBankAccount) {
+
 		super(newLogin, newName, newSurname, newPassword, newBankAccount);
 		balance.changeBalance(999000);
     }
@@ -16,8 +17,8 @@ public class Bookmaker extends User {
      * @return новый счёт. У букмекера он может быть отрицательный
      */
     public float changeBalance(float sum){
-	
     	return balance.changeBalance(sum);	
+
     }
     
     /**

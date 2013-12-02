@@ -32,17 +32,17 @@ public class FeedLoader implements RunnableService {
 
     @Override
     public void start() {
-	if (!isStarted) {
-	    service = Executors.newScheduledThreadPool(5,
-		    new DaemonThreadFactory());
-	    isStarted = true;
-	    service.scheduleAtFixedRate(new Runnable() {
-		@Override
-		public void run() {
-		    update();
+		if (!isStarted) {
+			service = Executors.newScheduledThreadPool(5,
+					new DaemonThreadFactory());
+			isStarted = true;
+			service.scheduleAtFixedRate(new Runnable() {
+				@Override
+				public void run() {
+					update();
+				}
+			}, 0, periodSec, TimeUnit.SECONDS);
 		}
-	    }, 0, periodSec, TimeUnit.SECONDS);
-	}
     }
 
     @Override

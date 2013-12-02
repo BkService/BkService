@@ -11,7 +11,7 @@
 <body onload="document.getElementById('commandline').focus();">
 <div class="main">
 	<div class="head">
-		__simple server console__ XShell v 1.0.0
+		<u style="margin-left: 10px;">WebShell v 1.1.0</u>
 		<div class="close">
 			<a href="/SimpleServer/LogoutHandler">X</a>
 		</div>
@@ -22,11 +22,13 @@
 		String history = (String)request.getSession().getAttribute("shell");
 		if(history == null) {
 			history = "";
+			request.getSession().setAttribute("shell", "");
 		}
 	%>
-	<%= history %>
+	<%= history.equals("null") ? "" : history %>
 	<form id="cmdfrm" action="/SimpleServer/xshell" method="post">
-		<%= startLine %> <input autocomplete="off" id="commandline" type="text" name="command" class="xshell" onkeypress="send(event);"/> 
+		<%= startLine %> <input autocomplete="off" id="commandline" type="text" 
+							name="command" class="xshell" onkeypress="send(event);"/> 
 	</form>
 </div>
 </body>

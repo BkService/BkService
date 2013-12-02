@@ -15,8 +15,8 @@ public class TransactSaver {
     private Set<Bet> failTransact;
     
     public TransactSaver(){
-	transactions = new ConcurrentSkipListSet<Bet>();
-	failTransact = new ConcurrentSkipListSet<Bet>();
+		transactions = new ConcurrentSkipListSet<Bet>();
+		failTransact = new ConcurrentSkipListSet<Bet>();
     }
     
     /**
@@ -25,7 +25,7 @@ public class TransactSaver {
      * @return true - если она ещё не осуществлялась
      */
     public boolean addTransact(Bet bet){
-	return transactions.add(bet);
+    	return transactions.add(bet);
     }
     
     /**
@@ -34,8 +34,8 @@ public class TransactSaver {
      * @return - true - если в ошибках её ещё не было
      */
     public boolean addFailTransact(Bet bet){
-	transactions.remove(bet);
-	return failTransact.add(bet);
+		transactions.remove(bet);
+		return failTransact.add(bet);
     }
     
     /**
@@ -43,6 +43,6 @@ public class TransactSaver {
      * @return - возвращает контейнер с ошибочными транзактциями
      */
     public Set<Bet> getFailTransact(){
-	return failTransact;
+    	return failTransact;
     }
 }

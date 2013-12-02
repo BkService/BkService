@@ -37,7 +37,7 @@ public class BalanceProvider extends HttpServlet {
 			response.getWriter().write("login error");
 			return;
 		}
-		response.getWriter().write(String.valueOf(user.getBalance().getBalanceValue()));
+		response.getWriter().write(String.valueOf(user.getBalance().getBalance()));
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 

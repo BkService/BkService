@@ -356,8 +356,7 @@ public class Data implements UserManagerInterface, EventManagerInterface,
 	 * @return true - транзакция прошла успешно
 	 * @throws InterruptedException
 	 */
-	public boolean makeTransact(String login, int betId, float sum)
-			throws InterruptedException {
+	public boolean makeTransact(String login, int betId, float sum){
 		// получаю User
 		if (!containsUser(login)) {
 			return false;

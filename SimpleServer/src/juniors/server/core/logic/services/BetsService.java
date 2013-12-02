@@ -34,12 +34,14 @@ public class BetsService {
 			if (!outcome.getWin()) {
 				for (Bet bet : outcome.getBets()) {
 					Float sum = (float) 0;
-					TransactionHelper.makeTransaction(bet, sum);
+					DataManager.getInstance().makeTransact(
+							bet.getUser().getLogin(), bet.getBetId(), sum);
 				}
 			} else {
 				for (Bet bet : outcome.getBets()) {
 					Float sum = bet.getSum() * outcome.getCoefficient().floatValue();
-					TransactionHelper.makeTransaction(bet, sum);
+					DataManager.getInstance().makeTransact(
+							bet.getUser().getLogin(), bet.getBetId(), sum);
 				}
 			}
 		}

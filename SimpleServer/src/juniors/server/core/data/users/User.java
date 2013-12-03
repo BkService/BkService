@@ -170,4 +170,14 @@ public class User{
 	    
 	    return false;
 	}
+	
+	/**
+     * Проверяет, банкрот ли пользователь. Если доступные средства меньше 
+     * величины минимальной ставки и ресервы пусты, то пользователь банкрот
+     * 
+     * @return - true - да, банкрот
+     */
+    public boolean isBankrupt(){
+    	return balance.isBankrupt();
+    }
 }

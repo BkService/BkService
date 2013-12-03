@@ -38,12 +38,8 @@ public class BalanceProvider extends HttpServlet {
 			response.getWriter().write("login error");
 			return;
 		}
-		try {
-			response.getWriter().write(String.valueOf(user.getBalance().getBalanceValue()));
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		response.getWriter().write(String.valueOf(user.getBalance().getBalanceValue()));
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 

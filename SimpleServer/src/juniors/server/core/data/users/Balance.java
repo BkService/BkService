@@ -1,5 +1,7 @@
 package juniors.server.core.data.users;
 
+import juniors.server.core.data.Data;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -30,38 +32,48 @@ public class Balance {
      * лочит доступ к балансу. ПОСЛЕ ВЫПОЛНЕНИЯ САМ ДОЛЖЕН РАЗЛОЧИТЬ!
      * @throws InterruptedException
      */
-    public void lockBalance() throws InterruptedException{
-	while (lockBalance){
-	    Thread.sleep(100);
-	}
+    public void lockBalance(){
+		while (lockBalance){
+		    try {
+		    	Thread.sleep(100);
+		    }
+		    catch (InterruptedException e){
+		    	
+		    }
+		}
 	
-	lockBalance = true;
+		lockBalance = true;
     }
     
     /**
      * освободить баланс
      */
     public void unlockBalance() {
-	lockBalance = false;
+    	lockBalance = false;
     }
     
     /**
      * Ждёт освобождения баланса
      * @throws InterruptedException
      */
-    private void waitUnlockedBalance() throws InterruptedException{
-	while (lockBalance){
-	    Thread.sleep(100);
-	}
+    private void waitUnlockedBalance() {
+		while (lockBalance){
+		    try {
+		    	Thread.sleep(100);
+		    }
+		    catch (InterruptedException e){
+		    	
+		    }
+		}
     }
     
     /**
      * @return - доступный баланс
      * @throws InterruptedException 
      */
-    public float getBalance() throws InterruptedException{
-	waitUnlockedBalance();
-	return available;
+    public float getBalance(){
+		waitUnlockedBalance();
+		return available;
     }
     
     /**
@@ -70,7 +82,7 @@ public class Balance {
      * @return - новый баланс
      */
     public float changeBalance(float sum){
-	return available += sum;
+    	return available += sum;
     }
     
     /**
@@ -80,14 +92,14 @@ public class Balance {
      * @return - false - ставка уже существует
      */
     public boolean addToReserve(int betId, float sum){
-	if (reserve.containsKey(betId)){
-	    return false;
-	}
-	
-	available -= sum;
-	reserve.put(betId, sum);
-	
-	return true;
+		if (reserve.containsKey(betId)){
+		    return false;
+		}
+		
+		available -= sum;
+		reserve.put(betId, sum);
+		
+		return true;
     }
     
     /**
@@ -96,7 +108,7 @@ public class Balance {
      * @return - false - если не существовало такой ставки
      */
     public boolean removeFromReserve(int betId){
-	return !(reserve.remove(betId) == null);
+		return !(reserve.remove(betId) == null);
     }
     
     /**
@@ -105,7 +117,7 @@ public class Balance {
      * @return - true - зарезервирована 
      */
     public boolean containsReserve(int betId){
-	return reserve.containsKey(betId);
+		return reserve.containsKey(betId);
     }
     
     /**
@@ -114,17 +126,30 @@ public class Balance {
      * @return сумма ставки
      */
     public float getSumOfBet(int betId){
-	return reserve.get(betId);
+		return reserve.get(betId);
     }
     
     /**
      * @return - доступный баланс в формате int 
      * @throws InterruptedException 
      */
-    public int getBalanceValue() throws InterruptedException {
-	waitUnlockedBalance();
+    public int getBalanceValue()  {
+		waitUnlockedBalance();
+		
     	return (int)this.available;
     }
     
-    
+    /**
+     * Проверяет, банкрот ли пользователь. Если доступные средства меньше 
+     * величины минимальной ставки и ресервы пусты, то пользователь банкрот
+     * 
+     * @return - true - да, банкрот
+     */
+    public boolean isBankrupt(){
+    	if (available < Data.MIN_BET && reserve.isEmpty()){
+    		return true;
+    	}
+    	
+    	return false;
+    }
 }

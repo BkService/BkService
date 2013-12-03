@@ -192,7 +192,7 @@ public class UserManager implements UserManagerInterface{
 		
 		
 	}
-        
+	
 	/**
 	 * для проведения тестов
 	 * @param args - не используется

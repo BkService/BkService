@@ -129,6 +129,7 @@ public class Balance {
 		return reserve.get(betId);
     }
     
+    
     /**
      * @return - доступный баланс в формате int 
      * @throws InterruptedException 

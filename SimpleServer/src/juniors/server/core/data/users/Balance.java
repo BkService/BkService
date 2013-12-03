@@ -78,6 +78,7 @@ public class Balance {
     
     /**
      * Изменяет доступный баланс
+     * 
      * @param sum - сумма операции
      * @return - новый баланс
      */
@@ -128,7 +129,6 @@ public class Balance {
     public float getSumOfBet(int betId){
 		return reserve.get(betId);
     }
-    
     
     /**
      * @return - доступный баланс в формате int 

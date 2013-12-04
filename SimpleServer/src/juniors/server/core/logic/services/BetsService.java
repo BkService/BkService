@@ -26,7 +26,6 @@ public class BetsService {
 		if(bet == null)
 			return false;
 		return DataManager.getInstance().getBookmaker().addBet(bet);
-		
 	}
 
 	public static void evalBets(Market market) {

@@ -9,5 +9,4 @@ public class TransactionHelper {
 		if (DataManager.getInstance().getBookmaker().calculateBet(bet, sum))
 			bet.getUser().getBalance().changeBalance(sum);
 	}
-	
 }

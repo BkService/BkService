@@ -13,10 +13,11 @@ import juniors.server.core.data.users.User;
 import juniors.server.core.logic.DaemonThreadFactory;
 
 /**
- * Implementation of robot.
- * It has one abstract method generateBet(), which has different implementation depends on strategy of robot.
+ * Implementation of robot. It has one abstract method generateBet(), which has
+ * different implementation depends on strategy of robot.
+ * 
  * @author watson
- *
+ * 
  */
 
 public abstract class AbstractRobot {
@@ -24,52 +25,54 @@ public abstract class AbstractRobot {
 	 * User to make a bets.
 	 */
 	User user;
-	
+
 	/**
-	 * State, which shows launch robot or not. 
+	 * State, which shows launch robot or not.
 	 */
 	boolean isStarted;
-	
+
 	/**
-	 * Service to make activity every minute.  
+	 * Service to make activity every minute.
 	 */
 	ScheduledExecutorService service;
-	
+
 	/**
 	 * Delay in seconds between activities.
 	 */
 	int delaySec;
-	
+
 	/**
 	 * Sum of bet. It is constant to all bets.
 	 */
 	int sum;
-	
+
 	/**
-	 *	Events, received from server. 
+	 * Events, received from server.
 	 */
 	Map<Integer, Event> events;
-	
+
 	/**
 	 * It is provide interface to interact with server.
 	 */
 	ConnectorHelper connector;
-	
+
 	/**
-	 * Set of markets, which contains all markets on that we have bet.
-	 * (In greedy and safety strategy we don't allow robot to bet on one market twice). 
+	 * Set of markets, which contains all markets on that we have bet. (In
+	 * greedy and safety strategy we don't allow robot to bet on one market
+	 * twice).
 	 */
 	Set<Market> hasBets;
-	
+
 	/**
 	 * Current market on that we want to bet.
 	 */
 	Market curMarket;
-	
-	
+
 	/**
 	 * Constructs a robot.
-	 * @param user - user to make a bets.
+	 * 
+	 * @param user
+	 *            - user to make a bets.
 	 */
 	public AbstractRobot(User user) {
 		connector = new ConnectorHelper();
@@ -78,27 +81,6 @@ public abstract class AbstractRobot {
 		delaySec = 60;
 		sum = 100;
 	}
-	
-	
-	/**
-	 * Runs robot.
-	 */
-	public void run() {
-		if (!isStarted) {
-			service = Executors.newSingleThreadScheduledExecutor(new DaemonThreadFactory());
-			isStarted = true;
-			service.scheduleAtFixedRate(new Runnable() {
-				@Override
-				public void run() {
-					getEvents();
-					if (makeBet(generateOutcome())) {
-						markMarket();
-					}
-				}
-			}, 0, delaySec, TimeUnit.SECONDS);
-		}
-	}
-	
 	/**
 	 * Stops robot.
 	 */
@@ -108,43 +90,95 @@ public abstract class AbstractRobot {
 			isStarted = false;
 		}
 	}
+
 	public boolean isStarted() {
 		return isStarted;
 	}
+
+	/**
+	 * Runs robot.
+	 */
+	public void run() {
+		if (!isStarted) {
+			service = Executors
+					.newSingleThreadScheduledExecutor(new DaemonThreadFactory());
+			isStarted = true;
+			service.scheduleAtFixedRate(new Runnable() {
+				/**
+				 * Robot gets all available bets.
+				 * If robots is bankrupt he logs it and die.
+				 * Then he get sum of next bet and outcome to bet.
+				 * And sends request to make a bet.
+				 * If robots get acknowledgment that the bet accepts, he add market to sets which contains markets on that robots has bets.   
+				 */
+				
+				@Override
+				public void run() {
+					getEvents();
+					if (!user.getBalance().isBankrupt()) {
+						double sum = getSum();
+						Outcome outcome = generateOutcome();
+						if (makeBet(outcome, sum)) {
+							markMarket();
+						}
+					} else {
+						System.out.println("I'm a bunkrot, i die now"); // Change to log
+						stop();
+					}
+				}
+			}, 0, delaySec, TimeUnit.SECONDS);
+		}
+	}
+
 	
 	/**
-	 * Tries to make a bet.
-	 * Sends request to server to make a bet with defined outcome.
-	 * @return - true - if we make a bet, false - otherwise(we don't make a bet) .  
+	 * Returns sum of bet. 
+	 * @return - sum to bet. If user has balance > sum returns sum. Otherwise returns balance.
 	 */
+	public double getSum()  {
+		try {
+			return Math.min(sum, user.getBalance().getBalanceValue());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return sum;
+	}
 	
-	public boolean makeBet(Outcome outcome) { 
+	/**
+	 * Tries to make a bet. Sends request to server to make a bet with defined
+	 * outcome and sum.
+	 * 
+	 * @return - true - if we make a bet, false - otherwise(we didn't make this
+	 *         bet).
+	 */
+	public boolean makeBet(Outcome outcome, double sum) {
 		if (outcome != null) {
-			return connector.sendMakeBetRequest(user.getLogin(), user.getName(), outcome.getOutcomeId(), 100);
+			return connector.sendMakeBetRequest(user.getLogin(),
+					user.getName(), outcome.getOutcomeId(), sum);
 		}
 		return false;
 	}
-	
+
 	/**
-	 * Tries to get all events.
-	 * Sends request to server to get all events.   
+	 * Tries to get all events. Sends request to server to get all events.
 	 */
-	void getEvents() {	
+	void getEvents() {
 		events = connector.sendGetBetsRequest();
 	}
-	
-	
+
 	/**
-	 * Adds current market to set of markets.
-	 * This set of markets indicates in what markets we have bets.
+	 * Adds current market to set of markets. This set of markets indicates in
+	 * what markets we have bets.
 	 */
 	void markMarket() {
 		hasBets.add(curMarket);
 	}
-	
+
 	/**
 	 * Generates outcome to bet.
-	 * @return - outcome to make a bet, or null - it indicates that now we don't want/can to bet. 
+	 * 
+	 * @return - outcome to make a bet, or null - it indicates that now we don't
+	 *         want/can to bet.
 	 */
-	public abstract Outcome generateOutcome();	
+	public abstract Outcome generateOutcome();
 }

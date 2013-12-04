@@ -6,8 +6,9 @@ public class Bookmaker extends User {
     
     public Bookmaker(String newLogin, String newName, String newSurname,
 	    String newPassword, String newBankAccount) {
-	super(newLogin, newName, newSurname, newPassword, newBankAccount);
-	balance.changeBalance(999000);
+
+		super(newLogin, newName, newSurname, newPassword, newBankAccount);
+		balance.changeBalance(999000);
     }
 
     /**
@@ -16,8 +17,8 @@ public class Bookmaker extends User {
      * @return новый счёт. У букмекера он может быть отрицательный
      */
     public float changeBalance(float sum){
-	
-	return balance.changeBalance(sum);	
+    	return balance.changeBalance(sum);	
+
     }
     
     /**
@@ -30,28 +31,28 @@ public class Bookmaker extends User {
     */
     @Override
     public boolean calculateBet(Bet bet, float sum){
-	// на случай отрицательной суммы нужна ли здесь проверка?
-	if (sum < 0){
-	    return false;
-	}
-	// проверка существования такого резерва и ставки 
-	if (!balance.containsReserve(bet.getBetId())){
-	    return false;
-	}
-	    
-        // если ставка проиграна, cумма зачисляется букмекеру
-	if (sum == 0){
-	    // возвращается резерв и плюс деньги игрока
-	    balance.changeBalance(bet.getSum() + balance.getSumOfBet(bet.getBetId()));
-	    balance.removeFromReserve(bet.getBetId());
-	    
-	    return true;
-        }
-	else { // ставка выиграна, резерв просто удаляется
-	    balance.removeFromReserve(bet.getBetId());
-	   
-	    return true;
-	}
+		// на случай отрицательной суммы нужна ли здесь проверка?
+		if (sum < 0){
+		    return false;
+		}
+		// проверка существования такого резерва и ставки 
+		if (!balance.containsReserve(bet.getBetId())){
+		    return false;
+		}
+		    
+	        // если ставка проиграна, cумма зачисляется букмекеру
+		if (sum == 0){
+		    // возвращается резерв и плюс деньги игрока
+		    balance.changeBalance(bet.getSum() + balance.getSumOfBet(bet.getBetId()));
+		    balance.removeFromReserve(bet.getBetId());
+		    
+		    return true;
+	        }
+		else { // ставка выиграна, резерв просто удаляется
+		    balance.removeFromReserve(bet.getBetId());
+		   
+		    return true;
+		}
     }
     
     /**
@@ -61,14 +62,14 @@ public class Bookmaker extends User {
      */
     @Override
     public boolean addBet(Bet newBet) {
-	if (balance.containsReserve(newBet.getBetId())){
-	    return false;
-	}
-	
-	// у букмекера резервируется сумма с учётом коэффициента
-	float sum = (float) (newBet.getSum() * newBet.getCoefficient());
-	balance.addToReserve(newBet.getBetId(), sum);	    
-	
-	return true;
+		if (balance.containsReserve(newBet.getBetId())){
+		    return false;
+		}
+		
+		// у букмекера резервируется сумма с учётом коэффициента
+		float sum = (float) (newBet.getSum() * newBet.getCoefficient());
+		balance.addToReserve(newBet.getBetId(), sum);	    
+		
+		return true;
     }
 }

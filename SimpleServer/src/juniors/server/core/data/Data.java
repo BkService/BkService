@@ -25,20 +25,20 @@ public class Data implements UserManagerInterface, EventManagerInterface,
 
 	private UserManagerInterface userManager;
 	private EventManagerInterface eventManager;
-	private StatisticsManagerInterface statistcsManager;
-	// при сравнении double что бы убрать погрешность
-	private final double DOUBLE_DELTA = 0.000001;
-	private TransactSaver transactSaver;
 
-	public Data() {
+    private StatisticsManagerInterface statistcsManager;
+    // при сравнении double что бы убрать погрешность
+    private final double DOUBLE_DELTA = 0.000001;
+    private TransactSaver transactSaver;
+    public static final float MIN_BET = 10f; // минимальная ставка
+	
+	public Data(){
 		userManager = new UserManager();
 		eventManager = new EventManager();
-		statistcsManager = new StatisticsManager();
-
-		transactSaver = new TransactSaver();
-
+        statistcsManager = new StatisticsManager();                
+        transactSaver = new TransactSaver();                
 	}
-
+	
 	/**
 	 * @return - предыдущие событие c таким id
 	 */
@@ -150,6 +150,7 @@ public class Data implements UserManagerInterface, EventManagerInterface,
 	 * @param marketId
 	 * @return Map со списком исходов для маркета marketId
 	 */
+
 	public Map<Integer, Outcome> getOutcomeMap(Integer eventId, Integer marketId) {
 		return eventManager.getEvent(eventId).getMarket(marketId)
 				.getOutcomeMap();
@@ -356,8 +357,7 @@ public class Data implements UserManagerInterface, EventManagerInterface,
 	 * @return true - транзакция прошла успешно
 	 * @throws InterruptedException
 	 */
-	public boolean makeTransact(String login, int betId, float sum)
-			throws InterruptedException {
+	public boolean makeTransact(String login, int betId, float sum){
 		// получаю User
 		if (!containsUser(login)) {
 			return false;
@@ -479,18 +479,19 @@ public class Data implements UserManagerInterface, EventManagerInterface,
 							+ userLogin);
 		}
 
-/*		// делаю ставки
-		if (!data.makeBet(user.getLogin(), o.getOutcomeId(), sum,
+		// делаю ставки
+		if (null == data.makeBet(user.getLogin(), o.getOutcomeId(), sum, 
 				o.getCoefficient())) {
 			throw new Exception("Ставка не ставится user = " + user.getLogin()
 					+ " Outcome " + o.getOutcomeId());
 		}
 
-		if (!data.makeBet(user.getLogin(), o1.getOutcomeId(), sum,
+		if (null == data.makeBet(user.getLogin(), o1.getOutcomeId(), sum, 
 				o1.getCoefficient())) {
 			throw new Exception("Ставка не ставится user = " + user.getLogin()
 					+ " Outcome " + o1.getOutcomeId());
-		}*/
+		}
+		
 		b1 = o.getBets().iterator().next();
 		b2 = o1.getBets().iterator().next();
 

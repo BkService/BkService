@@ -136,12 +136,7 @@ public abstract class AbstractRobot {
 	 * @return - sum to bet. If user has balance > sum returns sum. Otherwise returns balance.
 	 */
 	public double getSum()  {
-		try {
-			return Math.min(sum, user.getBalance().getBalanceValue());
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		return sum;
+		return Math.min(sum, user.getBalance().getBalanceValue());
 	}
 	
 	/**

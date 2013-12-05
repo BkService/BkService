@@ -517,4 +517,9 @@ public class Data implements UserManagerInterface, EventManagerInterface,
 		testUser(data);
 	}
 
+	@Override
+	public void addValues(long countLogins, long countRequests, long countBets) {
+		statistcsManager.addValues(countLogins, countRequests, countBets);		
+	}
+
 }

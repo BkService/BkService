@@ -21,11 +21,11 @@ public class Note {
     }
     
     /**
-     * Величина поумолчанию равна 0. Время - время создания
+     * Величина поумолчанию равна 0. Время - 0
      */
     public Note(){
         value = 0;
-        measurTime = System.currentTimeMillis();
+        measurTime = 0;
     }
     
     /**

@@ -2,6 +2,7 @@ package juniors.server.core.log;
 
 import java.io.IOException;
 import java.util.AbstractMap;
+import java.util.Calendar;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.FileHandler;
 
@@ -67,12 +68,20 @@ public class Logs {
 
 	public static void main(String[] args) {
 		// org.apache.log4j.Logger.getLogger(Logs.class).info("hello log4j");
-		Logs.getInstance().getLogger("example").info("example1");
-		Logs.getInstance().getLogger("example").warning("error");
-		for (LogsRecord x : Logs.getInstance().getBuffer().getLastRecords(2)) {
-			System.out.println(x.getMessage());
+/*		for(int i = 0; i < 1000; i++) {
+			
+			Logs.getInstance().getLogger("example").info("example1");
 		}
-
+		int i = 0;
+		for (LogsRecord x : Logs.getInstance().getBuffer().getLastRecords(L)) {
+			System.out.println("test " + x.getMessage() + i);
+			i++;
+		}*/
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(000);
+		System.out.println(calendar.get(Calendar.MONTH));
+		System.out.println(calendar.get(Calendar.HOUR_OF_DAY));
+		//final long deltaTime = System.currentTimeMillis() - measureTime;
 	}
 
 }

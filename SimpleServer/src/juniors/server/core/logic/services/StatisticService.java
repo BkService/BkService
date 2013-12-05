@@ -76,22 +76,12 @@ public class StatisticService implements RunnableService {
 	private class TaskDelaySecond implements Runnable {
 		@Override
 		public void run() {
-			DataManager.getInstance().setCountRequestPerSecond(
-					ServerFacade.getCountRequest());
-			ServerFacade.resetCountRequest();
-
-			DataManager.getInstance().setCountBetPerSecond(
-					BetsService.getCountBets());
-			BetsService.resetCountBets();
-		}
-	}
-
-	private class TaskDelayHour implements Runnable {
-		@Override
-		public void run() {
-			DataManager.getInstance().setCountLoginPerHour(
-					StatisticInfListener.getCountAuthUsers());
+			DataManager.getInstance().addValues(StatisticInfListener.getCountAuthUsers(),
+					ServerFacade.getCountRequest(), BetsService.getCountBets());
+			
 			StatisticInfListener.resetStaticInf();
+			ServerFacade.resetCountRequest();
+			BetsService.resetCountBets();
 		}
 	}
 
@@ -101,8 +91,6 @@ public class StatisticService implements RunnableService {
 			executor = Executors.newScheduledThreadPool(2);
 			executor.scheduleWithFixedDelay(new TaskDelaySecond(), 0, DELAY,
 					TIME_UNIT_DELAY);
-			executor.scheduleWithFixedDelay(new TaskDelayHour(), 0,
-					DELAY_UPDATE_LOGINS, TIME_UNIT_DELAY_UPDATE_LOGINS);
 			started = true;
 		}
 	}
